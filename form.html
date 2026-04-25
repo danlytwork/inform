@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>INFORM — Apply to Test</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;700;800&family=Doto:wght@700&family=VT323&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:    #0C0C0E;
+      --white:  #FFFFFF;
+      --orange: #E85028;
+      --muted:  #5E5E5A;
+      --border: #2a2a2a;
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--ink);
+      color: var(--white);
+      font-family: 'Geist', sans-serif;
+      overflow: hidden;
+    }
+
+    /* ── Progress bar ── */
+    #progress-bar {
+      position: fixed;
+      top: 0; left: 0;
+      height: 3px;
+      background: var(--orange);
+      width: 0%;
+      transition: width 0.45s ease;
+      z-index: 100;
+    }
+
+    /* ── Corner markers ── */
+    .corner {
+      position: fixed;
+      width: 18px; height: 18px;
+      opacity: 0.5;
+      z-index: 50;
+      pointer-events: none;
+    }
+    .corner--tl {
+      top: 28px; left: 28px;
+      background: var(--white) 0 0/5px 5px no-repeat,
+                  var(--white) 13px 13px/5px 5px no-repeat;
+    }
+    .corner--tr {
+      top: 28px; right: 28px;
+      background: var(--white) 13px 0/5px 5px no-repeat,
+                  var(--white) 0 13px/5px 5px no-repeat;
+    }
+
+    /* ── Page grid ── */
+    #page {
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      padding: 24px clamp(24px, 5vw, 60px) 28px;
+    }
+
+    /* ── Header ── */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 8px 0 16px;
+    }
+
+    .header-logo { width: 165px; display: block; }
+    .header-logo svg { width: 100%; height: auto; display: block; }
+
+    .step-counter {
+      position: absolute;
+      left: 0;
+      font-family: 'VT323', monospace;
+      font-size: 14px;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+    }
+
+    /* ── Step container ── */
+    #step-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* ── Individual step ── */
+    .step {
+      position: absolute;
+      width: 100%;
+      max-width: 660px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      transition: transform 0.35s ease, opacity 0.35s ease;
+    }
+
+    .step.hidden        { opacity: 0; pointer-events: none; transform: translateY(0); }
+    .step.exit-up       { transform: translateY(-52px); opacity: 0; pointer-events: none; }
+    .step.exit-down     { transform: translateY(52px);  opacity: 0; pointer-events: none; }
+    .step.enter-from-below { transform: translateY(52px);  opacity: 0; }
+    .step.enter-from-above { transform: translateY(-52px); opacity: 0; }
+
+    /* ── Step number label ── */
+    .step-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Doto', monospace;
+      font-weight: 700;
+      font-size: 12px;
+      color: var(--orange);
+      letter-spacing: 0.1em;
+    }
+
+    .step-label span { color: var(--muted); font-family: 'VT323', monospace; font-size: 14px; }
+
+    /* ── Question text ── */
+    .question {
+      font-family: 'Geist', sans-serif;
+      font-weight: 800;
+      font-size: 20px;
+      letter-spacing: -0.04em;
+      line-height: 1.2;
+    }
+
+    /* ── Text input ── */
+    .text-input {
+      background: none;
+      border: none;
+      border-bottom: 1px solid var(--border);
+      color: var(--white);
+      font-family: 'Geist', sans-serif;
+      font-size: 20px;
+      letter-spacing: -0.02em;
+      padding: 12px 0;
+      width: 100%;
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+    .text-input::placeholder { color: var(--muted); font-size: 16px; }
+    .text-input:focus { border-bottom-color: var(--white); }
+    .text-input.error { border-bottom-color: var(--orange); }
+
+    /* ── Contact fields ── */
+    .contact-fields { display: flex; flex-direction: column; gap: 16px; }
+
+    /* ── Choices ── */
+    .choices { display: flex; flex-direction: column; gap: 8px; }
+
+    .choice-btn {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      width: 100%;
+      padding: 13px 16px;
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--white);
+      cursor: pointer;
+      text-align: left;
+      transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+    }
+    .choice-btn:hover { border-color: #555; }
+    .choice-btn.selected {
+      border-color: var(--white);
+      background: var(--white);
+      color: var(--ink);
+    }
+    .choice-btn.selected .choice-key { color: var(--ink); }
+
+    .choice-key {
+      font-family: 'Doto', monospace;
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--orange);
+      min-width: 16px;
+      flex-shrink: 0;
+    }
+    .choice-text {
+      font-family: 'Geist', sans-serif;
+      font-size: 15px;
+      letter-spacing: -0.02em;
+    }
+
+    /* ── Hint ── */
+    .hint {
+      font-family: 'VT323', monospace;
+      font-size: 13px;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* ── Footer nav ── */
+    footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 16px;
+    }
+
+    .back-btn {
+      font-family: 'VT323', monospace;
+      font-size: 15px;
+      color: var(--muted);
+      background: none;
+      border: none;
+      cursor: pointer;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 8px 0;
+      transition: color 0.2s ease;
+    }
+    .back-btn:hover { color: var(--white); }
+    .back-btn:disabled { opacity: 0; pointer-events: none; }
+
+    .next-btn {
+      font-family: 'Doto', monospace;
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--white);
+      background: none;
+      border: 1px solid var(--white);
+      cursor: pointer;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 13px 32px;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+    .next-btn:hover { background: var(--white); color: var(--ink); }
+
+    /* ── Success screen ── */
+    #success {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: var(--ink);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 18px;
+      padding: 24px;
+    }
+    #success.show { display: flex; animation: fadeUp 0.5s ease forwards; }
+
+    #success h1 {
+      font-family: 'Geist', sans-serif;
+      font-weight: 800;
+      font-size: clamp(28px, 4vw, 48px);
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+    }
+    #success p {
+      font-family: 'Geist', sans-serif;
+      font-size: 20px;
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+      max-width: 480px;
+      line-height: 1.3;
+    }
+    #success a {
+      font-family: 'Doto', monospace;
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--white);
+      border: 1px solid var(--white);
+      text-decoration: none;
+      padding: 13px 32px;
+      letter-spacing: 0.1em;
+      margin-top: 10px;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+    #success a:hover { background: var(--white); color: var(--ink); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Mobile ── */
+    @media (max-width: 767px) {
+      html, body { overflow: auto; }
+      .corner { display: none; }
+      .question { font-size: 18px; }
+      .text-input { font-size: 18px; }
+      #page { min-height: 100dvh; padding: 20px 20px 24px; }
+      #step-container { min-height: 420px; align-items: flex-start; padding-top: 24px; }
+      .step { max-width: 100%; }
+      .choice-text { font-size: 14px; }
+      .header-logo { width: 120px; }
+      .next-btn { padding: 12px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="progress-bar"></div>
+  <div class="corner corner--tl" aria-hidden="true"></div>
+  <div class="corner corner--tr" aria-hidden="true"></div>
+
+  <div id="page">
+
+    <header>
+      <div class="step-counter" id="step-counter">01 / 08</div>
+      <a href="index.html" class="header-logo" aria-label="Back to INFORM">
+        <svg width="513" height="100" viewBox="0 0 513 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M243.471 0C271.479 8.44234e-05 292.791 20.3366 292.791 50C292.791 79.6632 271.479 99.9999 243.471 100C215.614 99.9999 194.303 79.6632 194.303 50C194.303 20.3367 215.614 0.000146969 243.471 0ZM23.1377 98.165H0V1.83496H23.1377V98.165ZM94.126 59.6328V1.83496H115.284V98.165H96.8662L52.417 36.6973V98.165H31.1064V1.83496H53.3301L94.126 59.6328ZM194.243 20.9482H146.294V42.3545H182.676V61.3154H146.294V98.165H123.309V1.83496H194.243V20.9482ZM342.842 1.83496C367.653 1.83525 379.831 13.4568 379.831 31.958C379.831 46.1777 370.849 55.0452 359.128 56.5742C369.327 58.562 375.111 64.5269 376.177 75.8418C377.547 90.0608 378.004 94.6484 381.2 98.165H357.759C355.78 95.5657 354.561 89.2963 353.8 79.0518C353.039 68.1957 348.168 64.6777 338.578 64.6777H319.247V98.165H296.565V1.83496H342.842ZM459.723 59.3262L491.688 1.5293H513V97.8584H491.688V40.0596L459.723 97.8584H438.411V40.0596L406.444 97.8584H385.134L438.411 1.5293H459.723V59.3262ZM243.471 20.3359C227.944 20.3361 218.049 32.1103 218.049 50C218.049 67.8895 227.944 79.662 243.471 79.6621C259.149 79.662 269.044 67.8896 269.044 50C269.044 32.1103 259.149 20.336 243.471 20.3359ZM319.247 46.79H339.188C351.213 46.79 357.149 43.2724 357.149 33.793C357.149 25.2303 351.213 20.4902 339.188 20.4902H319.247V46.79Z" fill="#E9EFEE"/>
+          <path d="M243.471 0C271.479 8.44234e-05 292.791 20.3366 292.791 50C292.791 79.6632 271.479 99.9999 243.471 100C215.614 99.9999 194.303 79.6632 194.303 50C194.303 20.3367 215.614 0.000146969 243.471 0ZM23.1377 98.165H0V1.83496H23.1377V98.165ZM94.126 59.6328V1.83496H115.284V98.165H96.8662L52.417 36.6973V98.165H31.1064V1.83496H53.3301L94.126 59.6328ZM194.243 20.9482H146.294V42.3545H182.676V61.3154H146.294V98.165H123.309V1.83496H194.243V20.9482ZM342.842 1.83496C367.653 1.83525 379.831 13.4568 379.831 31.958C379.831 46.1777 370.849 55.0452 359.128 56.5742C369.327 58.562 375.111 64.5269 376.177 75.8418C377.547 90.0608 378.004 94.6484 381.2 98.165H357.759C355.78 95.5657 354.561 89.2963 353.8 79.0518C353.039 68.1957 348.168 64.6777 338.578 64.6777H319.247V98.165H296.565V1.83496H342.842ZM459.723 59.3262L491.688 1.5293H513V97.8584H491.688V40.0596L459.723 97.8584H438.411V40.0596L406.444 97.8584H385.134L438.411 1.5293H459.723V59.3262ZM243.471 20.3359C227.944 20.3361 218.049 32.1103 218.049 50C218.049 67.8895 227.944 79.662 243.471 79.6621C259.149 79.662 269.044 67.8896 269.044 50C269.044 32=1103 259.149 20.336 243.471 20.3359ZM319.247 46.79H339.188C351.213 46.79 357.149 43.2724 357.149 33.793C357.149 25.2303 351.213 20.4902 339.188 20.4902H319.247V46.79Z" stroke="#121213"/>
+        </svg>
+      </a>
+    </header>
+
+    <div id="step-container"></div>
+
+    <footer>
+      <button class="back-btn" id="back-btn" onclick="back()" disabled>← BACK</button>
+      <button class="next-btn" id="next-btn" onclick="advance()">OK ↵</button>
+    </footer>
+
+  </div>
+
+  <div id="success">
+    <h1>APPLICATION RECEIVED.</h1>
+    <p>WE REVIEW EVERY APPLICATION.<br>YOU'LL HEAR FROM US.</p>
+    <a href="index.html">← BACK TO INFORM</a>
+  </div>
+
+  <script>
+  (function () {
+
+    var STEPS = [
+      {
+        id: 'contact',
+        type: 'contact',
+        question: "Let's start. Who are we talking to?"
+      },
+      {
+        id: 'training',
+        type: 'text',
+        question: "How often do you train or exercise in a normal week?",
+        placeholder: "e.g. 5 days a week, daily runs..."
+      },
+      {
+        id: 'injury',
+        type: 'text',
+        question: "What's your current injury or condition?",
+        placeholder: "Describe what you're dealing with..."
+      },
+      {
+        id: 'physio',
+        type: 'choice',
+        question: "Are you currently seeing a physiotherapist?",
+        options: [
+          { key: 'A', text: 'Yes, actively' },
+          { key: 'B', text: 'I have been, but stopped' },
+          { key: 'C', text: "Referred but haven't started" },
+          { key: 'D', text: 'Managing on my own' }
+        ]
+      },
+      {
+        id: 'between',
+        type: 'choice',
+        question: "What happens between your physio appointments?",
+        options: [
+          { key: 'A', text: 'I follow the program they gave me' },
+          { key: 'B', text: 'I do some of it but lose track' },
+          { key: 'C', text: 'I mostly forget and wing it' },
+          { key: 'D', text: "I haven't had clear guidance" },
+          { key: 'E', text: "I'm not seeing a physio" }
+        ]
+      },
+      {
+        id: 'frustration',
+        type: 'text',
+        question: "What's the most frustrating part of your recovery right now?",
+        placeholder: "Be honest..."
+      },
+      {
+        id: 'pay',
+        type: 'text',
+        question: "What would you expect to pay per month for access to a personalised physio system for your rehab?",
+        placeholder: "e.g. $20/month, same as a gym membership..."
+      },
+      {
+        id: 'keen',
+        type: 'choice',
+        question: "How keen are you to test Inform?",
+        options: [
+          { key: 'A', text: 'Ready now, where do I sign' },
+          { key: 'B', text: 'Interested, want to know more' },
+          { key: 'C', text: 'Curious but skeptical' },
+          { key: 'D', text: 'Just looking for now' }
+        ]
+      }
+    ];
+
+    var current = 0;
+    var answers = {};
+    var animating = false;
+    var container = document.getElementById('step-container');
+
+    /* ── Build step DOM ── */
+    function buildStep(step, index) {
+      var el = document.createElement('div');
+      el.className = 'step hidden';
+      el.dataset.index = index;
+
+      var num = String(index + 1).padStart(2, '0');
+
+      var html = '<div class="step-label">' + num + '</div>'
+               + '<div class="question">' + step.question + '</div>';
+
+      if (step.type === 'contact') {
+        html += '<div class="contact-fields">'
+              + '<input class="text-input" id="f-name"  type="text"  placeholder="First name"        autocomplete="given-name">'
+              + '<input class="text-input" id="f-email" type="email" placeholder="Email address"     autocomplete="email">'
+              + '<input class="text-input" id="f-phone" type="tel"   placeholder="Phone (optional)"  autocomplete="tel">'
+              + '</div>'
+              + '<div class="hint">PRESS ENTER ↵ TO CONTINUE</div>';
+      } else if (step.type === 'text') {
+        html += '<input class="text-input" id="f-' + step.id + '" type="text" placeholder="' + (step.placeholder || '') + '">'
+              + '<div class="hint">PRESS ENTER ↵ TO CONTINUE</div>';
+      } else if (step.type === 'choice') {
+        html += '<div class="choices">';
+        step.options.forEach(function (opt) {
+          html += '<button class="choice-btn" data-key="' + opt.key + '" data-step="' + step.id + '">'
+                + '<span class="choice-key">' + opt.key + '</span>'
+                + '<span class="choice-text">' + opt.text + '</span>'
+                + '</button>';
+        });
+        html += '</div>';
+      }
+
+      el.innerHTML = html;
+
+      /* choice click handler */
+      el.querySelectorAll('.choice-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          selectChoice(btn, step.id, btn.dataset.key);
+        });
+      });
+
+      return el;
+    }
+
+    STEPS.forEach(function (step, i) {
+      container.appendChild(buildStep(step, i));
+    });
+
+    function stepEls() { return Array.from(container.querySelectorAll('.step')); }
+
+    /* ── Update header / progress ── */
+    function updateUI() {
+      var total = STEPS.length;
+      var num   = String(current + 1).padStart(2, '0');
+      var tot   = String(total).padStart(2, '0');
+      document.getElementById('step-counter').textContent = num + ' / ' + tot;
+      document.getElementById('progress-bar').style.width = ((current / total) * 100) + '%';
+      document.getElementById('back-btn').disabled = (current === 0);
+      document.getElementById('next-btn').textContent = (current === total - 1) ? 'SUBMIT →' : 'OK ↵';
+    }
+
+    /* ── Transition ── */
+    function showStep(next, dir) {
+      if (animating) return;
+      animating = true;
+
+      var els    = stepEls();
+      var curEl  = els[current];
+      var nextEl = els[next];
+
+      var exitClass  = dir === 'forward' ? 'exit-up'          : 'exit-down';
+      var enterClass = dir === 'forward' ? 'enter-from-below' : 'enter-from-above';
+
+      curEl.classList.add(exitClass);
+
+      nextEl.classList.remove('hidden');
+      nextEl.classList.add(enterClass);
+
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          nextEl.classList.remove(enterClass);
+        });
+      });
+
+      setTimeout(function () {
+        curEl.classList.remove(exitClass);
+        curEl.classList.add('hidden');
+        current = next;
+        updateUI();
+        animating = false;
+        var first = nextEl.querySelector('input');
+        if (first) first.focus();
+      }, 380);
+    }
+
+    /* ── Validation ── */
+    function validate() {
+      var step = STEPS[current];
+
+      if (step.type === 'contact') {
+        var name  = document.getElementById('f-name').value.trim();
+        var email = document.getElementById('f-email').value.trim();
+        if (!name)  { shake('f-name');  return false; }
+        if (!email || !email.includes('@')) { shake('f-email'); return false; }
+        answers.name  = name;
+        answers.email = email;
+        answers.phone = document.getElementById('f-phone').value.trim();
+        return true;
+      }
+
+      if (step.type === 'text') {
+        var val = document.getElementById('f-' + step.id).value.trim();
+        if (!val) { shake('f-' + step.id); return false; }
+        answers[step.id] = val;
+        return true;
+      }
+
+      if (step.type === 'choice') {
+        return !!answers[step.id];
+      }
+
+      return true;
+    }
+
+    function shake(id) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      el.classList.add('error');
+      el.focus();
+      setTimeout(function () { el.classList.remove('error'); }, 700);
+    }
+
+    /* ── Advance / Back ── */
+    function advance() {
+      if (animating) return;
+      if (!validate()) return;
+      if (current === STEPS.length - 1) { submit(); return; }
+      showStep(current + 1, 'forward');
+    }
+
+    function back() {
+      if (animating || current === 0) return;
+      showStep(current - 1, 'back');
+    }
+
+    /* ── Choice selection ── */
+    function selectChoice(btn, stepId, key) {
+      var btns = btn.closest('.choices').querySelectorAll('.choice-btn');
+      btns.forEach(function (b) { b.classList.remove('selected'); });
+      btn.classList.add('selected');
+      answers[stepId] = key;
+      setTimeout(function () {
+        if (current === STEPS.length - 1) { submit(); } else { showStep(current + 1, 'forward'); }
+      }, 280);
+    }
+
+    /* ── Submit ── */
+    function submit() {
+      document.getElementById('progress-bar').style.width = '100%';
+      fetch('https://formspree.io/f/xykloqov', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(answers)
+      }).finally(function () {
+        document.getElementById('success').classList.add('show');
+      });
+    }
+
+    /* ── Keyboard ── */
+    document.addEventListener('keydown', function (e) {
+      var step = STEPS[current];
+
+      if (e.key === 'Enter') {
+        var tag = document.activeElement && document.activeElement.tagName;
+        if (tag === 'TEXTAREA') return;
+        e.preventDefault();
+        advance();
+        return;
+      }
+
+      if (step.type === 'choice') {
+        var k   = e.key.toUpperCase();
+        var btn = container.querySelector('.step:not(.hidden) .choice-btn[data-key="' + k + '"]');
+        if (btn) selectChoice(btn, step.id, k);
+      }
+    });
+
+    /* ── Init ── */
+    var els = stepEls();
+    els[0].classList.remove('hidden');
+    updateUI();
+    setTimeout(function () {
+      var first = els[0].querySelector('input');
+      if (first) first.focus();
+    }, 100);
+
+    /* expose for onclick attrs */
+    window.advance = advance;
+    window.back    = back;
+
+  }());
+  </script>
+
+</body>
+</html>
