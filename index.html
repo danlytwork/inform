@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>INFORM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@700;800&family=Doto:wght@700&family=VT323&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:    #0C0C0E;
+      --white:  #FFFFFF;
+      --orange: #E85028;
+      --muted:  #5E5E5A;
+      --dim:    rgba(255,255,255,0.2);
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--ink);
+      color: var(--white);
+      overflow-x: hidden;
+      font-family: 'VT323', monospace;
+    }
+
+    /* ================================================
+       INTRO OVERLAY
+    ================================================ */
+    #intro {
+      position: fixed;
+      inset: 0;
+      background: var(--ink);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.7s ease;
+    }
+
+    #intro.exit {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .intro-logo {
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+      width: 165px;
+    }
+
+    #intro.logo-visible .intro-logo {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ================================================
+       CORNER MARKERS
+    ================================================ */
+    .corner {
+      position: fixed;
+      z-index: 50;
+      pointer-events: none;
+    }
+
+    .corner {
+      width: 18px;
+      height: 18px;
+      opacity: 0.5;
+    }
+
+    .corner--tl {
+      top: 28px; left: 28px;
+      background:
+        var(--white) 0 0 / 5px 5px no-repeat,
+        var(--white) 13px 13px / 5px 5px no-repeat;
+    }
+
+    .corner--tr {
+      top: 28px; right: 28px;
+      background:
+        var(--white) 13px 0 / 5px 5px no-repeat,
+        var(--white) 0 13px / 5px 5px no-repeat;
+    }
+
+    /* ================================================
+       PAGE WRAPPER
+    ================================================ */
+    #page {
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      padding: 24px clamp(24px, 5vw, 60px) 28px;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+    }
+
+    #page.visible {
+      opacity: 1;
+    }
+
+    /* Stagger animation */
+    .stagger { opacity: 0; }
+
+    #page.visible .stagger {
+      animation: fadeUp 0.55s ease var(--delay, 0s) forwards;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ================================================
+       HEADER
+    ================================================ */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 8px 0 16px;
+    }
+
+    .header-logo {
+      width: 165px;
+      display: block;
+    }
+
+    .header-logo svg,
+    .intro-logo svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .social-nav {
+      position: absolute;
+      right: 0;
+      display: flex;
+      gap: 18px;
+      align-items: center;
+    }
+
+    .social-nav a {
+      font-family: 'VT323', monospace;
+      font-size: 16px;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .social-nav a:hover { color: var(--white); }
+
+    /* ================================================
+       HERO
+    ================================================ */
+    main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 10px;
+      padding: 40px 0;
+    }
+
+    .badge {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Doto', monospace;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: var(--orange);
+      margin-bottom: 4px;
+    }
+
+    .badge-dot {
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      background: var(--orange);
+      flex-shrink: 0;
+      animation: blink 1.2s step-start infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0; }
+    }
+
+    h1 {
+      font-family: 'Geist', sans-serif;
+      font-weight: 800;
+      font-size: 20px;
+      letter-spacing: -0.04em;
+      line-height: 1.1;
+      text-transform: uppercase;
+    }
+
+    .headline-sub {
+      font-family: 'Geist', sans-serif;
+      font-weight: 700;
+      font-size: 20px;
+      letter-spacing: -0.04em;
+      line-height: 1.2;
+      text-transform: uppercase;
+      max-width: 640px;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      border: 1px solid var(--white);
+      color: var(--white);
+      font-family: 'Doto', monospace;
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-decoration: none;
+      padding: 14px 36px;
+      margin-top: 20px;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .cta-btn:hover {
+      background: var(--white);
+      color: var(--ink);
+    }
+
+    .caption {
+      font-family: 'VT323', monospace;
+      font-size: 13px;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    /* ================================================
+       BOTTOM DATA STRIP
+    ================================================ */
+    .data-strip {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding: 20px 0 28px;
+      opacity: 0;
+    }
+
+    #page.visible .data-strip {
+      animation: fadeUp 0.55s ease 0.65s forwards;
+    }
+
+    .data-block {
+      font-family: 'VT323', monospace;
+      font-size: 13px;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      line-height: 1.6;
+      text-transform: uppercase;
+    }
+
+    .data-block .divider {
+      display: block;
+      height: 1px;
+      background: var(--dim);
+      margin: 8px 0;
+      width: 60px;
+    }
+
+    .criteria {
+      text-align: right;
+      max-width: 340px;
+    }
+
+    .criteria-heading {
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 4px;
+    }
+
+    /* ================================================
+       RESPONSIVE
+    ================================================ */
+    @media (max-width: 767px) {
+      .data-strip { display: none; }
+
+      header {
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      .social-nav {
+        position: static;
+        gap: 20px;
+      }
+
+      .cta-btn {
+        width: 100%;
+        text-align: center;
+        padding: 18px 24px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .corner { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Intro overlay -->
+  <div id="intro">
+    <div class="intro-logo">
+      <svg width="513" height="100" viewBox="0 0 513 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="INFORM">
+        <path d="M243.471 0C271.479 8.44234e-05 292.791 20.3366 292.791 50C292.791 79.6632 271.479 99.9999 243.471 100C215.614 99.9999 194.303 79.6632 194.303 50C194.303 20.3367 215.614 0.000146969 243.471 0ZM23.1377 98.165H0V1.83496H23.1377V98.165ZM94.126 59.6328V1.83496H115.284V98.165H96.8662L52.417 36.6973V98.165H31.1064V1.83496H53.3301L94.126 59.6328ZM194.243 20.9482H146.294V42.3545H182.676V61.3154H146.294V98.165H123.309V1.83496H194.243V20.9482ZM342.842 1.83496C367.653 1.83525 379.831 13.4568 379.831 31.958C379.831 46.1777 370.849 55.0452 359.128 56.5742C369.327 58.562 375.111 64.5269 376.177 75.8418C377.547 90.0608 378.004 94.6484 381.2 98.165H357.759C355.78 95.5657 354.561 89.2963 353.8 79.0518C353.039 68.1957 348.168 64.6777 338.578 64.6777H319.247V98.165H296.565V1.83496H342.842ZM459.723 59.3262L491.688 1.5293H513V97.8584H491.688V40.0596L459.723 97.8584H438.411V40.0596L406.444 97.8584H385.134L438.411 1.5293H459.723V59.3262ZM243.471 20.3359C227.944 20.3361 218.049 32.1103 218.049 50C218.049 67.8895 227.944 79.662 243.471 79.6621C259.149 79.662 269.044 67.8896 269.044 50C269.044 32.1103 259.149 20.336 243.471 20.3359ZM319.247 46.79H339.188C351.213 46.79 357.149 43.2724 357.149 33.793C357.149 25.2303 351.213 20.4902 339.188 20.4902H319.247V46.79Z" fill="#E9EFEE"/>
+        <path d="M243.471 0C271.479 8.44234e-05 292.791 20.3366 292.791 50C292.791 79.6632 271.479 99.9999 243.471 100C215.614 99.9999 194.303 79.6632 194.303 50C194.303 20.3367 215.614 0.000146969 243.471 0ZM23.1377 98.165H0V1.83496H23.1377V98.165ZM94.126 59.6328V1.83496H115.284V98.165H96.8662L52.417 36.6973V98.165H31.1064V1.83496H53.3301L94.126 59.6328ZM194.243 20.9482H146.294V42.3545H182.676V61.3154H146.294V98.165H123.309V1.83496H194.243V20.9482ZM342.842 1.83496C367.653 1.83525 379.831 13.4568 379.831 31.958C379.831 46.1777 370.849 55.0452 359.128 56.5742C369.327 58.562 375.111 64.5269 376.177 75.8418C377.547 90.0608 378.004 94.6484 381.2 98.165H357.759C355.78 95.5657 354.561 89.2963 353.8 79.0518C353.039 68.1957 348.168 64.6777 338.578 64.6777H319.247V98.165H296.565V1.83496H342.842ZM459.723 59.3262L491.688 1.5293H513V97.8584H491.688V40.0596L459.723 97.8584H438.411V40.0596L406.444 97.8584H385.134L438.411 1.5293H459.723V59.3262ZM243.471 20.3359C227.944 20.3361 218.049 32.1103 218.049 50C218.049 67.8895 227.944 79.662 243.471 79.6621C259.149 79.662 269.044 67.8896 269.044 50C269.044 32.1103 259.149 20.336 243.471 20.3359ZM319.247 46.79H339.188C351.213 46.79 357.149 43.2724 357.149 33.793C357.149 25.2303 351.213 20.4902 339.188 20.4902H319.247V46.79Z" stroke="#121213"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Corner markers -->
+  <div class="corner corner--tl" aria-hidden="true"></div>
+  <div class="corner corner--tr" aria-hidden="true"></div>
+
+  <!-- Page -->
+  <div id="page">
+
+    <header>
+      <div class="header-logo stagger" style="--delay:0s" aria-label="INFORM">
+        <svg width="513" height="100" viewBox="0 0 513 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M243.471 0C271.479 8.44234e-05 292.791 20.3366 292.791 50C292.791 79.6632 271.479 99.9999 243.471 100C215.614 99.9999 194.303 79.6632 194.303 50C194.303 20.3367 215.614 0.000146969 243.471 0ZM23.1377 98.165H0V1.83496H23.1377V98.165ZM94.126 59.6328V1.83496H115.284V98.165H96.8662L52.417 36.6973V98.165H31.1064V1.83496H53.3301L94.126 59.6328ZM194.243 20.9482H146.294V42.3545H182.676V61.3154H146.294V98.165H123.309V1.83496H194.243V20.9482ZM342.842 1.83496C367.653 1.83525 379.831 13.4568 379.831 31.958C379.831 46.1777 370.849 55.0452 359.128 56.5742C369.327 58.562 375.111 64.5269 376.177 75.8418C377.547 90.0608 378.004 94.6484 381.2 98.165H357.759C355.78 95.5657 354.561 89.2963 353.8 79.0518C353.039 68.1957 348.168 64.6777 338.578 64.6777H319.247V98.165H296.565V1.83496H342.842ZM459.723 59.3262L491.688 1.5293H513V97.8584H491.688V40.0596L459.723 97.8584H438.411V40.0596L406.444 97.8584H385.134L438.411 1.5293H459.723V59.3262ZM243.471 20.3359C227.944 20.3361 218.049 32.1103 218.049 50C218.049 67.8895 227.944 79.662 243.471 79.6621C259.149 79.662 269.044 67.8896 269.044 50C269.044 32.1103 259.149 20.336 243.471 20.3359ZM319.247 46.79H339.188C351.213 46.79 357.149 43.2724 357.149 33.793C357.149 25.2303 351.213 20.4902 339.188 20.4902H319.247V46.79Z" fill="#E9EFEE"/>
+          <path d="M243.471 0C271.479 8.44234e-05 292.791 20.3366 292.791 50C292.791 79.6632 271.479 99.9999 243.471 100C215.614 99.9999 194.303 79.6632 194.303 50C194.303 20.3367 215.614 0.000146969 243.471 0ZM23.1377 98.165H0V1.83496H23.1377V98.165ZM94.126 59.6328V1.83496H115.284V98.165H96.8662L52.417 36.6973V98.165H31.1064V1.83496H53.3301L94.126 59.6328ZM194.243 20.9482H146.294V42.3545H182.676V61.3154H146.294V98.165H123.309V1.83496H194.243V20.9482ZM342.842 1.83496C367.653 1.83525 379.831 13.4568 379.831 31.958C379.831 46.1777 370.849 55.0452 359.128 56.5742C369.327 58.562 375.111 64.5269 376.177 75.8418C377.547 90.0608 378.004 94.6484 381.2 98.165H357.759C355.78 95.5657 354.561 89.2963 353.8 79.0518C353.039 68.1957 348.168 64.6777 338.578 64.6777H319.247V98.165H296.565V1.83496H342.842ZM459.723 59.3262L491.688 1.5293H513V97.8584H491.688V40.0596L459.723 97.8584H438.411V40.0596L406.444 97.8584H385.134L438.411 1.5293H459.723V59.3262ZM243.471 20.3359C227.944 20.3361 218.049 32.1103 218.049 50C218.049 67.8895 227.944 79.662 243.471 79.6621C259.149 79.662 269.044 67.8896 269.044 50C269.044 32.1103 259.149 20.336 243.471 20.3359ZM319.247 46.79H339.188C351.213 46.79 357.149 43.2724 357.149 33.793C357.149 25.2303 351.213 20.4902 339.188 20.4902H319.247V46.79Z" stroke="#121213"/>
+        </svg>
+      </div>
+
+      <nav class="social-nav stagger" style="--delay:0.1s" aria-label="Social media">
+        <a href="#" aria-label="Instagram">IG</a>
+        <a href="#" aria-label="TikTok">TT</a>
+        <a href="#" aria-label="LinkedIn">LI</a>
+        <a href="#" aria-label="X">X</a>
+      </nav>
+    </header>
+
+    <main>
+      <div class="badge stagger" style="--delay:0.15s">
+        <span class="badge-dot" aria-hidden="true"></span>
+        EARLY ACCESS — LIMITED COHORT
+      </div>
+
+      <h1 class="stagger" style="--delay:0.25s">REHAB REDEFINED.</h1>
+
+      <p class="headline-sub stagger" style="--delay:0.35s">
+        BUILT FOR INJURED ATHLETES AND RUNNERS WHO WANT A PHYSIO<br class="br-desktop">
+        IN THEIR POCKET EVERY DAY, NOT ONCE A FORTNIGHT.
+      </p>
+
+      <p class="headline-sub stagger" style="--delay:0.42s">
+        WE'RE TESTING THE SYSTEM NOW UNDER REAL CONDITIONS.
+      </p>
+
+      <a href="#" class="cta-btn stagger" style="--delay:0.52s">
+        APPLY TO TEST INFORM &rarr;
+      </a>
+
+      <p class="caption stagger" style="--delay:0.6s">
+        TAKES 3 MINUTES. WE REVIEW EVERY APPLICATION.
+      </p>
+    </main>
+
+    <div class="data-strip" aria-hidden="true">
+      <div class="data-block">
+        <span>6163</span><br>
+        <span>01-JUN-2026</span><br>
+        <span>15:07</span>
+        <span class="divider"></span>
+        <span>PHASE 01:</span><br>
+        <span>UPPER BODY</span><br>
+        <span>23-APR-2026</span>
+      </div>
+
+      <div class="data-block criteria">
+        <span class="criteria-heading">YOU'RE RIGHT FOR THIS IF:</span><br>
+        — YOU HAVE AN ACTIVE INJURY OR REHAB JOURNEY RIGHT NOW<br>
+        — YOU'RE STILL TRAINING AROUND IT<br>
+        — YOU WANT A SYSTEM THAT HOLDS THE STANDARD YOU DO
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    (function () {
+      var intro = document.getElementById('intro');
+      var page  = document.getElementById('page');
+
+      // Phase 1: reveal logo in overlay
+      setTimeout(function () {
+        intro.classList.add('logo-visible');
+      }, 100);
+
+      // Phase 2: fade out overlay
+      setTimeout(function () {
+        intro.classList.add('exit');
+      }, 1400);
+
+      // Phase 3: reveal page content (stagger animations kick in)
+      setTimeout(function () {
+        page.classList.add('visible');
+      }, 1800);
+
+      // Phase 4: remove overlay from DOM
+      setTimeout(function () {
+        if (intro.parentNode) intro.parentNode.removeChild(intro);
+      }, 2200);
+    }());
+  </script>
+
+</body>
+</html>
