@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>INFORM — You're in.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;700;800&family=Doto:wght@700&family=VT323&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:    #000000;
+      --white:  #FFFFFF;
+      --orange: #E85028;
+      --muted:  #5E5E5A;
+    }
+
+    html, body {
+      background: var(--ink);
+      color: var(--white);
+      min-height: 100dvh;
+      font-family: 'Geist', sans-serif;
+    }
+
+    #page {
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px clamp(24px, 5vw, 60px) 48px;
+    }
+
+    #page .content-wrap {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+
+    /* ── Header ── */
+    header {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      padding: 8px 0 0;
+    }
+
+    .header-logo { width: 165px; display: block; }
+    .header-logo svg { width: 100%; height: auto; display: block; }
+
+    /* ── Content ── */
+    .content {
+      width: 100%;
+      max-width: 560px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.45s forwards;
+    }
+
+    .label {
+      font-family: 'VT323', monospace;
+      font-size: 14px;
+      color: var(--orange);
+      letter-spacing: 0.15em;
+    }
+
+    h1 {
+      font-family: 'Geist', sans-serif;
+      font-weight: 700;
+      font-size: clamp(32px, 5vw, 52px);
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+    }
+
+    p {
+      font-family: 'Geist', sans-serif;
+      font-size: 17px;
+      font-weight: 400;
+      line-height: 1.6;
+      color: var(--muted);
+      max-width: 420px;
+    }
+
+    .ig-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 8px;
+      padding: 14px 32px;
+      border: 1px solid var(--white);
+      color: var(--white);
+      font-family: 'Doto', monospace;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.1em;
+      text-decoration: none;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+    .ig-btn:hover {
+      background: var(--white);
+      color: var(--ink);
+    }
+    .ig-btn svg {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+      flex-shrink: 0;
+    }
+
+    .home-link {
+      font-family: 'VT323', monospace;
+      font-size: 14px;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .home-link:hover { color: var(--white); }
+
+    /* ── Animation ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Mobile ── */
+    @media (max-width: 767px) {
+      .content { gap: 16px; }
+      h1 { font-size: 28px; }
+      p { font-size: 15px; }
+      .header-logo { width: 120px; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="page">
+
+  <header>
+    <a href="index.html" class="header-logo" aria-label="Back to INFORM">
+      <svg width="513" height="100" viewBox="0 0 513 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M243.471 0C271.479 8.44234e-05 292.791 20.3366 292.791 50C292.791 79.6632 271.479 99.9999 243.471 100C215.614 99.9999 194.303 79.6632 194.303 50C194.303 20.3367 215.614 0.000146969 243.471 0ZM23.1377 98.165H0V1.83496H23.1377V98.165ZM94.126 59.6328V1.83496H115.284V98.165H96.8662L52.417 36.6973V98.165H31.1064V1.83496H53.3301L94.126 59.6328ZM194.243 20.9482H146.294V42.3545H182.676V61.3154H146.294V98.165H123.309V1.83496H194.243V20.9482ZM342.842 1.83496C367.653 1.83525 379.831 13.4568 379.831 31.958C379.831 46.1777 370.849 55.0452 359.128 56.5742C369.327 58.562 375.111 64.5269 376.177 75.8418C377.547 90.0608 378.004 94.6484 381.2 98.165H357.759C355.78 95.5657 354.561 89.2963 353.8 79.0518C353.039 68.1957 348.168 64.6777 338.578 64.6777H319.247V98.165H296.565V1.83496H342.842ZM459.723 59.3262L491.688 1.5293H513V97.8584H491.688V40.0596L459.723 97.8584H438.411V40.0596L406.444 97.8584H385.134L438.411 1.5293H459.723V59.3262ZM243.471 20.3359C227.944 20.3361 218.049 32.1103 218.049 50C218.049 67.8895 227.944 79.662 243.471 79.6621C259.149 79.662 269.044 67.8896 269.044 50C269.044 32.1103 259.149 20.336 243.471 20.3359ZM319.247 46.79H339.188C351.213 46.79 357.149 43.2724 357.149 33.793C357.149 25.2303 351.213 20.4902 339.188 20.4902H319.247V46.79Z" fill="#E9EFEE"/>
+        <path d="M243.471 0C271.479 8.44234e-05 292.791 20.3366 292.791 50C292.791 79.6632 271.479 99.9999 243.471 100C215.614 99.9999 194.303 79.6632 194.303 50C194.303 20.3367 215.614 0.000146969 243.471 0ZM23.1377 98.165H0V1.83496H23.1377V98.165ZM94.126 59.6328V1.83496H115.284V98.165H96.8662L52.417 36.6973V98.165H31.1064V1.83496H53.3301L94.126 59.6328ZM194.243 20.9482H146.294V42.3545H182.676V61.3154H146.294V98.165H123.309V1.83496H194.243V20.9482ZM342.842 1.83496C367.653 1.83525 379.831 13.4568 379.831 31.958C379.831 46.1777 370.849 55.0452 359.128 56.5742C369.327 58.562 375.111 64.5269 376.177 75.8418C377.547 90.0608 378.004 94.6484 381.2 98.165H357.759C355.78 95.5657 354.561 89.2963 353.8 79.0518C353.039 68.1957 348.168 64.6777 338.578 64.6777H319.247V98.165H296.565V1.83496H342.842ZM459.723 59.3262L491.688 1.5293H513V97.8584H491.688V40.0596L459.723 97.8584H438.411V40.0596L406.444 97.8584H385.134L438.411 1.5293H459.723V59.3262ZM243.471 20.3359C227.944 20.3361 218.049 32.1103 218.049 50C218.049 67.8895 227.944 79.662 243.471 79.6621C259.149 79.662 269.044 67.8896 269.044 50C269.044 32.1103 259.149 20.336 243.471 20.3359ZM319.247 46.79H339.188C351.213 46.79 357.149 43.2724 357.149 33.793C357.149 25.2303 351.213 20.4902 339.188 20.4902H319.247V46.79Z" stroke="#121213"/>
+      </svg>
+    </a>
+  </header>
+
+  <div class="content-wrap">
+  <div class="content">
+    <div class="label">APPLICATION RECEIVED</div>
+    <h1>Let's get testing.</h1>
+    <p>Every serious athlete deserves a system that actually keeps up with them. We'll be in touch — in the meantime, follow along as we build it.</p>
+    <a href="https://www.instagram.com/inform.app/" target="_blank" rel="noopener" class="ig-btn">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+      </svg>
+      FOLLOW @INFORM.APP
+    </a>
+    <a href="index.html" class="home-link">← BACK TO INFORM</a>
+  </div>
+  </div>
+
+</div>
+
+</body>
+</html>

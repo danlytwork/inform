@@ -3,19 +3,35 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>INFORM</title>
+  <title>Inform — Rehab redefined for serious athletes</title>
+  <meta name="description" content="A personalised physio system built for injured athletes and runners. Early access — limited cohort. Apply to test Inform.">
+
+  <!-- Open Graph -->
+  <meta property="og:type"        content="website">
+  <meta property="og:url"         content="https://www.informapp.com.au/">
+  <meta property="og:title"       content="Inform — Rehab redefined for serious athletes">
+  <meta property="og:description" content="A personalised physio system built for injured athletes and runners. Early access — limited cohort. Apply to test Inform.">
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:title"       content="Inform — Rehab redefined for serious athletes">
+  <meta name="twitter:description" content="A personalised physio system built for injured athletes and runners. Early access — limited cohort.">
+
+  <link rel="canonical" href="https://www.informapp.com.au/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@700;800&family=Doto:wght@700&family=VT323&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&family=Doto:wght@400&family=VT323&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --ink:    #0C0C0E;
-      --white:  #FFFFFF;
-      --orange: #E85028;
-      --muted:  #5E5E5A;
-      --dim:    rgba(255,255,255,0.2);
+      --ink:    #000000;
+      --white:  #F8F9F5;
+      --red:    #E72320;
+      --muted:  #9C9C9C;
+      --label:  #444444;
+      --rule:   #181818;
+      --dim:    rgba(248,249,245,0.15);
     }
 
     html, body {
@@ -23,7 +39,7 @@
       background: var(--ink);
       color: var(--white);
       overflow-x: hidden;
-      font-family: 'VT323', monospace;
+      font-family: 'Geist', sans-serif;
     }
 
     /* ================================================
@@ -34,6 +50,7 @@
       inset: 0;
       background: var(--ink);
       z-index: 100;
+      isolation: isolate;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -96,6 +113,8 @@
       padding: 24px clamp(24px, 5vw, 60px) 28px;
       opacity: 0;
       transition: opacity 0.6s ease;
+      position: relative;
+      z-index: 5;
     }
 
     #page.visible {
@@ -146,11 +165,13 @@
     }
 
     .social-nav a {
-      font-family: 'VT323', monospace;
-      font-size: 16px;
-      letter-spacing: 0.08em;
-      color: var(--muted);
+      font-family: 'Geist Mono', monospace;
+      font-size: 9px;
+      font-weight: 400;
+      letter-spacing: 0.16em;
+      color: var(--label);
       text-decoration: none;
+      text-transform: uppercase;
       transition: color 0.2s ease;
     }
 
@@ -173,71 +194,72 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      font-family: 'Doto', monospace;
-      font-weight: 700;
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      color: var(--orange);
-      margin-bottom: 4px;
+      font-family: 'Geist Mono', monospace;
+      font-weight: 400;
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      color: var(--red);
+      text-transform: uppercase;
+      margin-bottom: 28px;
     }
 
     .badge-dot {
       display: inline-block;
-      width: 7px;
-      height: 7px;
-      background: var(--orange);
+      width: 6px;
+      height: 6px;
+      background: var(--red);
       flex-shrink: 0;
-      animation: blink 1.2s step-start infinite;
+      animation: pulse 2s infinite;
     }
 
-    @keyframes blink {
+    @keyframes pulse {
       0%, 100% { opacity: 1; }
-      50%       { opacity: 0; }
+      50%       { opacity: 0.3; }
     }
 
     h1 {
       font-family: 'Geist', sans-serif;
-      font-weight: 800;
-      font-size: 20px;
-      letter-spacing: -0.04em;
-      line-height: 1.1;
-      text-transform: uppercase;
+      font-weight: 700;
+      font-size: clamp(22px, 2.8vw, 36px);
+      letter-spacing: -0.038em;
+      line-height: 1;
     }
 
     .headline-sub {
       font-family: 'Geist', sans-serif;
-      font-weight: 700;
-      font-size: 20px;
-      letter-spacing: -0.04em;
-      line-height: 1.2;
-      text-transform: uppercase;
-      max-width: 640px;
+      font-weight: 300;
+      font-size: clamp(15px, 1.6vw, 18px);
+      letter-spacing: -0.02em;
+      line-height: 1.5;
+      color: var(--muted);
+      max-width: 560px;
     }
 
     .cta-btn {
       display: inline-block;
-      border: 1px solid var(--white);
-      color: var(--white);
-      font-family: 'Doto', monospace;
-      font-weight: 700;
-      font-size: 12px;
-      letter-spacing: 0.1em;
-      text-decoration: none;
-      padding: 14px 36px;
-      margin-top: 20px;
-      transition: background 0.2s ease, color 0.2s ease;
-    }
-
-    .cta-btn:hover {
       background: var(--white);
       color: var(--ink);
+      font-family: 'Geist Mono', monospace;
+      font-weight: 500;
+      font-size: 9px;
+      letter-spacing: 0.16em;
+      text-decoration: none;
+      text-transform: uppercase;
+      padding: 14px 36px;
+      margin-top: 40px;
+      border: none;
+      border-radius: 0;
+      transition: opacity 0.2s ease;
     }
 
+    .cta-btn:hover { opacity: 0.85; }
+
     .caption {
-      font-family: 'VT323', monospace;
-      font-size: 13px;
-      color: var(--muted);
-      letter-spacing: 0.08em;
+      font-family: 'Geist Mono', monospace;
+      font-size: 9px;
+      font-weight: 400;
+      color: var(--label);
+      letter-spacing: 0.16em;
       text-transform: uppercase;
       margin-top: 2px;
     }
@@ -258,11 +280,12 @@
     }
 
     .data-block {
-      font-family: 'VT323', monospace;
-      font-size: 13px;
-      color: var(--muted);
-      letter-spacing: 0.06em;
-      line-height: 1.6;
+      font-family: 'Geist Mono', monospace;
+      font-size: 9px;
+      font-weight: 400;
+      color: var(--label);
+      letter-spacing: 0.14em;
+      line-height: 1.7;
       text-transform: uppercase;
     }
 
@@ -282,6 +305,38 @@
     .criteria-heading {
       color: rgba(255,255,255,0.35);
       margin-bottom: 4px;
+    }
+
+    /* ================================================
+       SCANLINE TEXTURE
+    ================================================ */
+    .hero-texture {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 50%;
+      z-index: 0;
+      pointer-events: none;
+      background-image: repeating-linear-gradient(
+        to bottom,
+        rgba(255,255,255,0.04) 0px,
+        rgba(255,255,255,0.04) 1px,
+        transparent 1px,
+        transparent 4px
+      );
+      mask-image: linear-gradient(to bottom, transparent 0%, black 100%);
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 100%);
+    }
+    .hero-grid {
+      position: fixed;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 64px 64px;
     }
 
     /* ================================================
@@ -314,6 +369,10 @@
 </head>
 <body>
 
+  <!-- Scanline texture -->
+  <div class="hero-texture" aria-hidden="true"></div>
+  <div class="hero-grid" aria-hidden="true"></div>
+
   <!-- Intro overlay -->
   <div id="intro">
     <div class="intro-logo">
@@ -340,7 +399,7 @@
       </div>
 
       <nav class="social-nav stagger" style="--delay:0.1s" aria-label="Social media">
-        <a href="#" aria-label="Instagram">IG</a>
+        <a href="https://www.instagram.com/inform.app/" target="_blank" rel="noopener" aria-label="Instagram">IG</a>
         <a href="#" aria-label="TikTok">TT</a>
         <a href="#" aria-label="LinkedIn">LI</a>
         <a href="#" aria-label="X">X</a>
@@ -356,12 +415,12 @@
       <h1 class="stagger" style="--delay:0.25s">REHAB REDEFINED.</h1>
 
       <p class="headline-sub stagger" style="--delay:0.35s">
-        BUILT FOR INJURED ATHLETES AND RUNNERS WHO WANT A PHYSIO<br class="br-desktop">
-        IN THEIR POCKET EVERY DAY, NOT ONCE A FORTNIGHT.
+        Built for injured athletes and runners who want a physio<br class="br-desktop">
+        in their pocket every day, not once a fortnight.
       </p>
 
       <p class="headline-sub stagger" style="--delay:0.42s">
-        WE'RE TESTING THE SYSTEM NOW UNDER REAL CONDITIONS.
+        We're testing the system now under real conditions.
       </p>
 
       <a href="form.html" class="cta-btn stagger" style="--delay:0.52s">

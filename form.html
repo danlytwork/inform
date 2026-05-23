@@ -11,7 +11,7 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --ink:    #0C0C0E;
+      --ink:    #000000;
       --white:  #FFFFFF;
       --orange: #E85028;
       --muted:  #5E5E5A;
@@ -390,9 +390,13 @@
       },
       {
         id: 'pay',
-        type: 'text',
-        question: "What would you expect to pay per month for access to a personalised physio system for your rehab?",
-        placeholder: "e.g. $20/month, same as a gym membership..."
+        type: 'choice',
+        question: "What would you expect to pay per week for access to a personalised physio system for your rehab?",
+        options: [
+          { key: 'A', text: '$20 per week' },
+          { key: 'B', text: '$30 per week' },
+          { key: 'C', text: '$40 per week' }
+        ]
       },
       {
         id: 'keen',
@@ -576,7 +580,7 @@
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body: JSON.stringify(answers)
       }).finally(function () {
-        document.getElementById('success').classList.add('show');
+        window.location.href = 'thankyou.html';
       });
     }
 
