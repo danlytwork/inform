@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inform — Daily rehab infrastructure for serious athletes</title>
+  <meta name="description" content="Inform gives you clinical-grade rehab guidance every day — built by a sports physiotherapist, built around your injury. Early access, limited cohort.">
+
+  <!-- Open Graph -->
+  <meta property="og:type"        content="website">
+  <meta property="og:url"         content="https://www.informapp.com.au/landing">
+  <meta property="og:title"       content="Inform — Daily rehab infrastructure for serious athletes">
+  <meta property="og:description" content="Your physio sees you once a fortnight. Inform is there every day.">
+
+  <link rel="canonical" href="https://www.informapp.com.au/landing">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&family=Doto:wght@400&family=VT323&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:       #000000;
+      --ink-card:  #080808;
+      --white:     #F8F9F5;
+      --light-bg:  #F8F9F5;
+      --red:       #E72320;
+      --muted:     #9C9C9C;
+      --label:     #444444;
+      --rule:      #181818;
+      --rule-mid:  #252525;
+      --rule-light:#DDDDD8;
+      --dim:       rgba(248,249,245,0.12);
+      --teal:      #1CD1CE;
+      --orange:    #E85028;
+      --green:     #47D386;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--ink);
+      color: var(--white);
+      overflow-x: hidden;
+      font-family: 'Geist', sans-serif;
+    }
+
+    /* ================================================
+       REUSABLE: CORNER MARKERS
+    ================================================ */
+    .corner {
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      pointer-events: none;
+      opacity: 0.4;
+      z-index: 5;
+    }
+
+    .corner--tl {
+      top: 28px; left: 28px;
+      background:
+        var(--white) 0 0 / 5px 5px no-repeat,
+        var(--white) 13px 13px / 5px 5px no-repeat;
+    }
+
+    .corner--tr {
+      top: 28px; right: 28px;
+      background:
+        var(--white) 13px 0 / 5px 5px no-repeat,
+        var(--white) 0 13px / 5px 5px no-repeat;
+    }
+
+    .corner--bl {
+      bottom: 28px; left: 28px;
+      background:
+        var(--white) 0 13px / 5px 5px no-repeat,
+        var(--white) 13px 0 / 5px 5px no-repeat;
+    }
+
+    .corner--br {
+      bottom: 28px; right: 28px;
+      background:
+        var(--white) 13px 13px / 5px 5px no-repeat,
+        var(--white) 0 0 / 5px 5px no-repeat;
+    }
+
+    /* ================================================
+       REUSABLE: BADGE
+    ================================================ */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Geist Mono', monospace;
+      font-size: 9px;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      color: var(--red);
+      text-transform: uppercase;
+    }
+
+    .badge-dot {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      flex-shrink: 0;
+      background: var(--red);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.3; }
+    }
+
+    /* ================================================
+       REUSABLE: CTA BUTTON
+    ================================================ */
+    .cta-btn {
+      display: inline-block;
+      background: var(--white);
+      color: var(--ink);
+      font-family: 'Geist Mono', monospace;
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-decoration: none;
+      text-transform: uppercase;
+      padding: 16px 40px;
+      border: none;
+      border-radius: 0;
+      transition: opacity 0.2s ease;
+      cursor: pointer;
+    }
+
+    .cta-btn:hover { opacity: 0.82; }
+
+    .cta-btn--ghost {
+      background: transparent;
+      color: var(--white);
+      border: 1px solid var(--rule-mid);
+    }
+
+    .cta-btn--ghost:hover {
+      border-color: var(--muted);
+      opacity: 1;
+    }
+
+    .caption {
+      font-family: 'Geist Mono', monospace;
+      font-size: 9px;
+      color: var(--label);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    /* ================================================
+       SCROLL REVEAL
+    ================================================ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal[data-delay="1"] { transition-delay: 0.08s; }
+    .reveal[data-delay="2"] { transition-delay: 0.16s; }
+    .reveal[data-delay="3"] { transition-delay: 0.24s; }
+    .reveal[data-delay="4"] { transition-delay: 0.32s; }
+    .reveal[data-delay="5"] { transition-delay: 0.40s; }
+    .reveal[data-delay="6"] { transition-delay: 0.48s; }
+
+    /* ================================================
+       INTRO OVERLAY
+    ================================================ */
+    #intro {
+      position: fixed;
+      inset: 0;
+      background: var(--ink);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.7s ease;
+    }
+
+    #intro.exit {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .intro-logo {
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+      width: 165px;
+    }
+
+    #intro.logo-visible .intro-logo {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ================================================
+       SECTION 1: HERO
+    ================================================ */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      padding: 24px clamp(24px, 5vw, 60px) 28px;
+      overflow: hidden;
+    }
+
+    /* Scanlines */
+    .hero::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 55%;
+      pointer-events: none;
+      z-index: 0;
+      background-image: repeating-linear-gradient(
+        to bottom,
+        rgba(255,255,255,0.04) 0px,
+        rgba(255,255,255,0.04) 1px,
+        transparent 1px,
+        transparent 4px
+      );
+      mask-image: linear-gradient(to bottom, transparent 0%, black 100%);
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 100%);
+    }
+
+    /* Grid overlay */
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+      background-size: 64px 64px;
+    }
+
+    /* HERO HEADER */
+    .hero-header {
+      position: relative;
+      z-index: 5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 0 16px;
+      opacity: 0;
+      animation: fadeUp 0.55s ease 1.85s forwards;
+    }
+
+    .hero-logo { width: 165px; }
+    .hero-logo svg { width: 100%; height: auto; display: block; }
+
+    .hero-nav {
+      position: absolute;
+      right: 0;
+      display: flex;
+      gap: 18px;
+      align-items: center;
+    }
+
+    .hero-nav a {
+      font-family: 'Geist Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.16em;
+      color: var(--label);
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 0.2s ease;
+    }
+
+    .hero-nav a:hover { color: var(--white); }
+
+    /* HERO MAIN */
+    .hero-main {
+      position: relative;
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 12px;
+      padding: 40px 0;
+    }
+
+    .hero-badge {
+      opacity: 0;
+      animation: fadeUp 0.55s ease 1.95s forwards;
+      margin-bottom: 20px;
+    }
+
+    .hero-headline {
+      opacity: 0;
+      animation: fadeUp 0.55s ease 2.05s forwards;
+    }
+
+    .hero-headline h1 {
+      font-size: clamp(28px, 4vw, 58px);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1;
+    }
+
+    .hero-headline .ghost {
+      font-weight: 300;
+      color: var(--muted);
+      display: block;
+      margin-top: 4px;
+    }
+
+    .hero-sub {
+      font-weight: 300;
+      font-size: clamp(14px, 1.5vw, 17px);
+      color: var(--muted);
+      max-width: 520px;
+      line-height: 1.6;
+      letter-spacing: -0.01em;
+      opacity: 0;
+      animation: fadeUp 0.55s ease 2.15s forwards;
+      margin-top: 8px;
+    }
+
+    .hero-cta-group {
+      opacity: 0;
+      animation: fadeUp 0.55s ease 2.28s forwards;
+      margin-top: 36px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+
+    /* Phone frame silhouette */
+    .hero-phone {
+      position: absolute;
+      right: clamp(20px, 6vw, 100px);
+      bottom: 0;
+      z-index: 3;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 2.4s forwards;
+      pointer-events: none;
+    }
+
+    /* HERO DATA STRIP */
+    .hero-data {
+      position: relative;
+      z-index: 5;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding: 20px 0 28px;
+      opacity: 0;
+      animation: fadeUp 0.55s ease 2.5s forwards;
+    }
+
+    .data-block {
+      font-family: 'Geist Mono', monospace;
+      font-size: 9px;
+      color: var(--label);
+      letter-spacing: 0.14em;
+      line-height: 1.7;
+      text-transform: uppercase;
+    }
+
+    .data-divider {
+      display: block;
+      height: 1px;
+      background: var(--dim);
+      margin: 8px 0;
+      width: 60px;
+    }
+
+    .data-criteria {
+      text-align: right;
+      max-width: 340px;
+    }
+
+    .data-criteria-heading {
+      color: rgba(255,255,255,0.3);
+      margin-bottom: 4px;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ================================================
+       SECTION 2: THE GAP
+    ================================================ */
+    .gap-section {
+      background: var(--light-bg);
+      color: var(--ink);
+      padding: clamp(60px, 10vw, 120px) clamp(24px, 7vw, 100px);
+      position: relative;
+    }
+
+    .gap-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+
+    /* LEFT — stats */
+    .gap-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+      padding-top: 12px;
+    }
+
+    .stat-item {}
+
+    .stat-number {
+      font-family: 'Doto', monospace;
+      font-size: clamp(72px, 9vw, 120px);
+      font-weight: 400;
+      line-height: 0.9;
+      color: var(--ink);
+      display: block;
+    }
+
+    .stat-label {
+      font-family: 'Geist Mono', monospace;
+      font-size: 9px;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      color: var(--muted);
+      text-transform: uppercase;
+      display: block;
+      margin-top: 10px;
+      line-height: 1.6;
+    }
+
+    /* RIGHT — copy + mock */
+    .gap-right {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    .gap-eyebrow {
+      font-family: 'VT323', monospace;
+      font-size: 16px;
+      letter-spacing: 0.1em;
+      color: var(--label);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .gap-headline {
+      font-family: 'Geist', sans-serif;
+      font-weight: 700;
+      font-size: clamp(22px, 2.8vw, 38px);
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      color: var(--ink);
+      margin-bottom: 20px;
+    }
+
+    .gap-body {
+      font-weight: 300;
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    .gap-body p + p {
+      margin-top: 16px;
+    }
+
+    .gap-body strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    /* PRODUCT MOCK */
+    .product-mock {
+      background: var(--ink-card);
+      border: 1px solid var(--rule-mid);
+      padding: 24px;
+      position: relative;
+    }
+
+    .mock-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .mock-phase {
+      font-family: 'Doto', monospace;
+      font-size: 32px;
+      color: var(--orange);
+      line-height: 1;
+    }
+
+    .mock-phase-label {
+      font-family: 'Geist Mono', monospace;
+      font-size: 8px;
+      letter-spacing: 0.18em;
+      color: var(--label);
+      text-transform: uppercase;
+      display: block;
+      margin-top: 4px;
+    }
+
+    .mock-status-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--green);
+      animation: pulse 2.5s infinite;
+    }
+
+    .mock-exercises {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .mock-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 12px;
+      border: 1px solid var(--rule);
+    }
+
+    .mock-row-name {
+      font-family: 'Geist', sans-serif;
+      font-size: 11px;
+      color: var(--muted);
+      flex: 1;
+      padding-right: 12px;
+    }
+
+    .mock-row-meta {
+      display: flex;
+      gap: 12px;
+    }
+
+    .mock-tag {
+      font-family: 'Geist Mono', monospace;
+      font-size: 8px;
+      letter-spacing: 0.14em;
+      color: var(--label);
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .mock-progress-wrap {
+      margin-bottom: 16px;
+    }
+
+    .mock-progress-label {
+      font-family: 'Geist Mono', monospace;
+      font-size: 8px;
+      letter-spacing: 0.14em;
+      color: var(--label);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .mock-progress-bar {
+      height: 3px;
+      background: var(--rule-mid);
+      position: relative;
+    }
+
+    .mock-progress-fill {
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 65%;
+      background: var(--teal);
+    }
+
+    .mock-footer {
+      font-family: 'Geist Mono', monospace;
+      font-size: 8px;
+      letter-spacing: 0.14em;
+      color: var(--rule-mid);
+      text-transform: uppercase;
+      padding-top: 14px;
+      border-top: 1px solid var(--rule);
+    }
+
+    /* ================================================
+       SECTION 3: APPLY / CTA
+    ================================================ */
+    .apply-section {
+      background: var(--ink);
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 28px clamp(24px, 5vw, 60px);
+      overflow: hidden;
+    }
+
+    /* Scanlines */
+    .apply-section::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 55%;
+      pointer-events: none;
+      z-index: 0;
+      background-image: repeating-linear-gradient(
+        to bottom,
+        rgba(255,255,255,0.04) 0px,
+        rgba(255,255,255,0.04) 1px,
+        transparent 1px,
+        transparent 4px
+      );
+      mask-image: linear-gradient(to bottom, transparent 0%, black 100%);
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 100%);
+    }
+
+    .apply-section::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+      background-size: 64px 64px;
+    }
+
+    .apply-top {
+      position: relative;
+      z-index: 5;
+      height: 28px;
+    }
+
+    .apply-main {
+      position: relative;
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 16px;
+      flex: 1;
+      padding: 60px 0;
+    }
+
+    .apply-headline {
+      margin-top: 20px;
+    }
+
+    .apply-headline h2 {
+      font-family: 'Geist', sans-serif;
+      font-size: clamp(26px, 4vw, 56px);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1;
+    }
+
+    .apply-headline .ghost {
+      font-weight: 300;
+      color: var(--muted);
+      display: block;
+      margin-top: 4px;
+    }
+
+    .apply-sub {
+      font-weight: 300;
+      font-size: clamp(14px, 1.4vw, 16px);
+      color: var(--muted);
+      max-width: 460px;
+      line-height: 1.65;
+      letter-spacing: -0.01em;
+      margin-top: 4px;
+    }
+
+    /* Proof numbers */
+    .proof-row {
+      display: flex;
+      gap: 0;
+      margin: 36px 0 40px;
+      border: 1px solid var(--rule-mid);
+    }
+
+    .proof-item {
+      flex: 1;
+      padding: 20px 28px;
+      text-align: center;
+      border-right: 1px solid var(--rule-mid);
+    }
+
+    .proof-item:last-child { border-right: none; }
+
+    .proof-number {
+      font-family: 'Doto', monospace;
+      font-size: clamp(36px, 4vw, 56px);
+      line-height: 1;
+      color: var(--white);
+      display: block;
+    }
+
+    .proof-label {
+      font-family: 'Geist Mono', monospace;
+      font-size: 8px;
+      letter-spacing: 0.18em;
+      color: var(--label);
+      text-transform: uppercase;
+      display: block;
+      margin-top: 8px;
+    }
+
+    .apply-cta-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+
+    /* FOOTER */
+    .apply-footer {
+      position: relative;
+      z-index: 5;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 0 0;
+      border-top: 1px solid var(--rule);
+    }
+
+    .footer-logo { width: 80px; }
+    .footer-logo svg { width: 100%; height: auto; display: block; }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+    }
+
+    .footer-links a {
+      font-family: 'Geist Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.16em;
+      color: var(--label);
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 0.2s ease;
+    }
+
+    .footer-links a:hover { color: var(--white); }
+
+    .footer-copy {
+      font-family: 'Geist Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      color: var(--rule-mid);
+      text-transform: uppercase;
+    }
+
+    /* ================================================
+       RESPONSIVE
+    ================================================ */
+    @media (max-width: 900px) {
+      .gap-inner {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+
+      .gap-stats {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 32px;
+        padding-top: 0;
+      }
+
+      .stat-number { font-size: 64px; }
+
+      .hero-phone { display: none; }
+    }
+
+    @media (max-width: 767px) {
+      .hero-data { display: none; }
+
+      .hero-header {
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      .hero-nav {
+        position: static;
+        gap: 20px;
+      }
+
+      .cta-btn {
+        width: 100%;
+        max-width: 320px;
+        text-align: center;
+      }
+
+      .proof-row {
+        flex-direction: column;
+      }
+
+      .proof-item {
+        border-right: none;
+        border-bottom: 1px solid var(--rule-mid);
+        padding: 16px 20px;
+      }
+
+      .proof-item:last-child { border-bottom: none; }
+
+      .apply-footer {
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+      }
+
+      .footer-links { gap: 20px; }
+    }
+
+    @media (max-width: 480px) {
+      .corner { display: none; }
+      .gap-stats { gap: 24px; }
+      .stat-number { font-size: 56px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- INTRO OVERLAY -->
+  <div id="intro">
+    <div class="intro-logo">
+      <svg width="513" height="100" viewBox="0 0 513 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="INFORM">
+        <path d="M243.471 0C271.479 8.44234e-05 292.791 20.3366 292.791 50C292.791 79.6632 271.479 99.9999 243.471 100C215.614 99.9999 194.303 79.6632 194.303 50C194.303 20.3367 215.614 0.000146969 243.471 0ZM23.1377 98.165H0V1.83496H23.1377V98.165ZM94.126 59.6328V1.83496H115.284V98.165H96.8662L52.417 36.6973V98.165H31.1064V1.83496H53.3301L94.126 59.6328ZM194.243 20.9482H146.294V42.3545H182.676V61.3154H146.294V98.165H123.309V1.83496H194.243V20.9482ZM342.842 1.83496C367.653 1.83525 379.831 13.4568 379.831 31.958C379.831 46.1777 370.849 55.0452 359.128 56.5742C369.327 58.562 375.111 64.5269 376.177 75.8418C377.547 90.0608 378.004 94.6484 381.2 98.165H357.759C355.78 95.5657 354.561 89.2963 353.8 79.0518C353.039 68.1957 348.168 64.6777 338.578 64.6777H319.247V98.165H296.565V1.83496H342.842ZM459.723 59.3262L491.688 1.5293H513V97.8584H491.688V40.0596L459.723 97.8584H438.411V40.0596L406.444 97.8584H385.134L438.411 1.5293H459.723V59.3262ZM243.471 20.3359C227.944 20.3361 218.049 32.1103 218.049 50C218.049 67.8895 227.944 79.662 243.471 79.6621C259.149 79.662 269.044 67.8896 269.044 50C269.044 32.1103 259.149 20.336 243.471 20.3359ZM319.247 46.79H339.188C351.213 46.79 357.149 43.2724 357.149 33.793C357.149 25.2303 351.213 20.4902 339.188 20.4902H319.247V46.79Z" fill="#E9EFEE"/>
+        <path d="M243.471 0C271.479 8.44234e-05 292.791 20.3366 292.791 50C292.791 79.6632 271.479 99.9999 243.471 100C215.614 99.9999 194.303 79.6632 194.303 50C194.303 20.3367 215.614 0.000146969 243.471 0ZM23.1377 98.165H0V1.83496H23.1377V98.165ZM94.126 59.6328V1.83496H115.284V98.165H96.8662L52.417 36.6973V98.165H31.1064V1.83496H53.3301L94.126 59.6328ZM194.243 20.9482H146.294V42.3545H182.676V61.3154H146.294V98.165H123.309V1.83496H194.243V20.9482ZM342.842 1.83496C367.653 1.83525 379.831 13.4568 379.831 31.958C379.831 46.1777 370.849 55.0452 359.128 56.5742C369.327 58.562 375.111 64.5269 376.177 75.8418C377.547 90.0608 378.004 94.6484 381.2 98.165H357.759C355.78 95.5657 354.561 89.2963 353.8 79.0518C353.039 68.1957 348.168 64.6777 338.578 64.6777H319.247V98.165H296.565V1.83496H342.842ZM459.723 59.3262L491.688 1.5293H513V97.8584H491.688V40.0596L459.723 97.8584H438.411V40.0596L406.444 97.8584H385.134L438.411 1.5293H459.723V59.3262ZM243.471 20.3359C227.944 20.3361 218.049 32.1103 218.049 50C218.049 67.8895 227.944 79.662 243.471 79.6621C259.149 79.662 269.044 67.8896 269.044 50C269.044 32.1103 259.149 20.336 243.471 20.3359ZM319.247 46.79H339.188C351.213 46.79 357.149 43.2724 357.149 33.793C357.149 25.2303 351.213 20.4902 339.188 20.4902H319.247V46.79Z" stroke="#121213"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- ================================================
+       SECTION 1: HERO
+  ================================================ -->
+  <section class="hero" aria-label="Hero">
+
+    <div class="corner corner--tl" aria-hidden="true"></div>
+    <div class="corner corner--tr" aria-hidden="true"></div>
+
+    <!-- Header -->
+    <header class="hero-header">
+      <div class="hero-logo" aria-label="INFORM">
+        <svg width="513" height="100" viewBox="0 0 513 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M243.471 0C271.479 8.44234e-05 292.791 20.3366 292.791 50C292.791 79.6632 271.479 99.9999 243.471 100C215.614 99.9999 194.303 79.6632 194.303 50C194.303 20.3367 215.614 0.000146969 243.471 0ZM23.1377 98.165H0V1.83496H23.1377V98.165ZM94.126 59.6328V1.83496H115.284V98.165H96.8662L52.417 36.6973V98.165H31.1064V1.83496H53.3301L94.126 59.6328ZM194.243 20.9482H146.294V42.3545H182.676V61.3154H146.294V98.165H123.309V1.83496H194.243V20.9482ZM342.842 1.83496C367.653 1.83525 379.831 13.4568 379.831 31.958C379.831 46.1777 370.849 55.0452 359.128 56.5742C369.327 58.562 375.111 64.5269 376.177 75.8418C377.547 90.0608 378.004 94.6484 381.2 98.165H357.759C355.78 95.5657 354.561 89.2963 353.8 79.0518C353.039 68.1957 348.168 64.6777 338.578 64.6777H319.247V98.165H296.565V1.83496H342.842ZM459.723 59.3262L491.688 1.5293H513V97.8584H491.688V40.0596L459.723 97.8584H438.411V40.0596L406.444 97.8584H385.134L438.411 1.5293H459.723V59.3262ZM243.471 20.3359C227.944 20.3361 218.049 32.1103 218.049 50C218.049 67.8895 227.944 79.662 243.471 79.6621C259.149 79.662 269.044 67.8896 269.044 50C269.044 32.1103 259.149 20.336 243.471 20.3359ZM319.247 46.79H339.188C351.213 46.79 357.149 43.2724 357.149 33.793C357.149 25.2303 351.213 20.4902 339.188 20.4902H319.247V46.79Z" fill="#E9EFEE"/>
+          <path d="M243.471 0C271.479 8.44234e-05 292.791 20.3366 292.791 50C292.791 79.6632 271.479 99.9999 243.471 100C215.614 99.9999 194.303 79.6632 194.303 50C194.303 20.3367 215.614 0.000146969 243.471 0ZM23.1377 98.165H0V1.83496H23.1377V98.165ZM94.126 59.6328V1.83496H115.284V98.165H96.8662L52.417 36.6973V98.165H31.1064V1.83496H53.3301L94.126 59.6328ZM194.243 20.9482H146.294V42.3545H182.676V61.3154H146.294V98.165H123.309V1.83496H194.243V20.9482ZM342.842 1.83496C367.653 1.83525 379.831 13.4568 379.831 31.958C379.831 46.1777 370.849 55.0452 359.128 56.5742C369.327 58.562 375.111 64.5269 376.177 75.8418C377.547 90.0608 378.004 94.6484 381.2 98.165H357.759C355.78 95.5657 354.561 89.2963 353.8 79.0518C353.039 68.1957 348.168 64.6777 338.578 64.6777H319.247V98.165H296.565V1.83496H342.842ZM459.723 59.3262L491.688 1.5293H513V97.8584H491.688V40.0596L459.723 97.8584H438.411V40.0596L406.444 97.8584H385.134L438.411 1.5293H459.723V59.3262ZM243.471 20.3359C227.944 20.3361 218.049 32.1103 218.049 50C218.049 67.8895 227.944 79.662 243.471 79.6621C259.149 79.662 269.044 67.8896 269.044 50C269.044 32.1103 259.149 20.336 243.471 20.3359ZM319.247 46.79H339.188C351.213 46.79 357.149 43.2724 357.149 33.793C357.149 25.2303 351.213 20.4902 339.188 20.4902H319.247V46.79Z" stroke="#121213"/>
+        </svg>
+      </div>
+      <nav class="hero-nav" aria-label="Social">
+        <a href="https://www.instagram.com/inform.app/" target="_blank" rel="noopener">IG</a>
+        <a href="#" aria-label="TikTok">TT</a>
+        <a href="#" aria-label="LinkedIn">LI</a>
+        <a href="#" aria-label="X">X</a>
+      </nav>
+    </header>
+
+    <!-- Main content -->
+    <main class="hero-main">
+      <div class="hero-badge">
+        <div class="badge">
+          <span class="badge-dot" aria-hidden="true"></span>
+          Early Access — Limited Cohort
+        </div>
+      </div>
+
+      <div class="hero-headline">
+        <h1>
+          You're still training.
+          <span class="ghost">Your recovery isn't keeping up.</span>
+        </h1>
+      </div>
+
+      <p class="hero-sub">
+        Inform gives you clinical-grade rehab guidance every day — built by a sports physiotherapist, built around your injury, built to run as hard as you do.
+      </p>
+
+      <div class="hero-cta-group">
+        <a href="form.html" class="cta-btn">Apply to test Inform &rarr;</a>
+        <p class="caption">Takes 3 minutes. We review every application.</p>
+      </div>
+    </main>
+
+    <!-- Phone silhouette mockup -->
+    <div class="hero-phone" aria-hidden="true">
+      <svg width="180" height="340" viewBox="0 0 180 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Phone frame -->
+        <rect x="1" y="1" width="178" height="338" rx="22" stroke="#252525" stroke-width="1.5"/>
+        <rect x="8" y="8" width="164" height="324" rx="16" fill="#080808"/>
+        <!-- Status bar -->
+        <rect x="20" y="20" width="60" height="5" rx="1" fill="#181818"/>
+        <rect x="148" y="20" width="12" height="5" rx="1" fill="#181818"/>
+        <!-- Phase label -->
+        <text x="20" y="62" font-family="monospace" font-size="8" fill="#444444" letter-spacing="2">PHASE 02 — DAY 14</text>
+        <!-- Phase number -->
+        <text x="18" y="100" font-family="monospace" font-size="42" fill="#E85028" font-weight="400">02</text>
+        <!-- Divider -->
+        <line x1="20" y1="114" x2="160" y2="114" stroke="#181818" stroke-width="1"/>
+        <!-- Exercise rows -->
+        <rect x="20" y="124" width="140" height="28" fill="#0e0e0e"/>
+        <rect x="28" y="132" width="70" height="4" rx="1" fill="#252525"/>
+        <rect x="120" y="132" width="32" height="4" rx="1" fill="#1CD1CE" opacity="0.4"/>
+        <rect x="20" y="158" width="140" height="28" fill="#0e0e0e"/>
+        <rect x="28" y="166" width="55" height="4" rx="1" fill="#252525"/>
+        <rect x="120" y="166" width="32" height="4" rx="1" fill="#252525"/>
+        <rect x="20" y="192" width="140" height="28" fill="#0e0e0e"/>
+        <rect x="28" y="200" width="80" height="4" rx="1" fill="#252525"/>
+        <rect x="120" y="200" width="32" height="4" rx="1" fill="#47D386" opacity="0.5"/>
+        <!-- Progress -->
+        <rect x="20" y="236" width="140" height="3" fill="#181818"/>
+        <rect x="20" y="236" width="88" height="3" fill="#1CD1CE"/>
+        <!-- Timestamp -->
+        <text x="20" y="268" font-family="monospace" font-size="7" fill="#2a2a2a" letter-spacing="1">LOGGED 07:42 // SESSION COMPLETE</text>
+        <!-- Home indicator -->
+        <rect x="65" y="316" width="50" height="3" rx="1.5" fill="#252525"/>
+      </svg>
+    </div>
+
+    <!-- Data strip -->
+    <div class="hero-data" aria-hidden="true">
+      <div class="data-block">
+        <span>6163</span><br>
+        <span>27-JUN-2026</span><br>
+        <span>08:14</span>
+        <span class="data-divider"></span>
+        <span>PHASE 01:</span><br>
+        <span>COHORT ACTIVE</span>
+      </div>
+      <div class="data-block data-criteria">
+        <span class="data-criteria-heading">You're right for this if:</span><br>
+        — You have an active injury or rehab journey right now<br>
+        — You're still training around it<br>
+        — You want a system that holds the standard you do
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ================================================
+       SECTION 2: THE GAP
+  ================================================ -->
+  <section class="gap-section" aria-label="The problem">
+    <div class="gap-inner">
+
+      <!-- LEFT: stats -->
+      <div class="gap-stats">
+
+        <div class="stat-item reveal" data-delay="1">
+          <span class="stat-number" data-target="14">0</span>
+          <span class="stat-label">Days between<br>physio appointments</span>
+        </div>
+
+        <div class="stat-item reveal" data-delay="2">
+          <span class="stat-number" data-target="1">0</span>
+          <span class="stat-label">Session to remember<br>everything</span>
+        </div>
+
+        <div class="stat-item reveal" data-delay="3">
+          <span class="stat-number" data-target="0">0</span>
+          <span class="stat-label">Accountability<br>in between</span>
+        </div>
+
+      </div>
+
+      <!-- RIGHT: copy + mock -->
+      <div class="gap-right">
+
+        <div class="reveal" data-delay="1">
+          <span class="gap-eyebrow">The problem</span>
+          <h2 class="gap-headline">You left the clinic with a program.<br>Two weeks later, you're guessing.</h2>
+          <div class="gap-body">
+            <p>You've been doing the exercises. Roughly. From memory. Progressing when it feels okay, backing off when it doesn't. Hoping you're not making it worse.</p>
+            <p>That's not a rehab system — that's <strong>managed uncertainty.</strong></p>
+            <p>Inform closes the gap. Daily protocols, adapted to your phase and load. The clinical standard, every day — not once a fortnight.</p>
+          </div>
+        </div>
+
+        <!-- Product mock -->
+        <div class="product-mock reveal" data-delay="2" aria-hidden="true">
+          <div class="mock-header">
+            <div>
+              <div class="mock-phase">02</div>
+              <span class="mock-phase-label">Phase 02 — Load block</span>
+            </div>
+            <div class="mock-status-dot"></div>
+          </div>
+
+          <div class="mock-exercises">
+            <div class="mock-row">
+              <span class="mock-row-name">Single-leg calf raise</span>
+              <div class="mock-row-meta">
+                <span class="mock-tag">Load — 60%</span>
+                <span class="mock-tag">Sets — 3</span>
+              </div>
+            </div>
+            <div class="mock-row">
+              <span class="mock-row-name">Copenhagen adductor</span>
+              <div class="mock-row-meta">
+                <span class="mock-tag">Rest — 90s</span>
+                <span class="mock-tag">Sets — 4</span>
+              </div>
+            </div>
+            <div class="mock-row">
+              <span class="mock-row-name">Nordic hamstring curl</span>
+              <div class="mock-row-meta">
+                <span class="mock-tag">Load — 70%</span>
+                <span class="mock-tag">Sets — 3</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mock-progress-wrap">
+            <div class="mock-progress-label">
+              <span>Session progress</span>
+              <span>65%</span>
+            </div>
+            <div class="mock-progress-bar">
+              <div class="mock-progress-fill"></div>
+            </div>
+          </div>
+
+          <div class="mock-footer">
+            Logged 07:42 &nbsp;//&nbsp; Day 14 &nbsp;//&nbsp; Next check-in in 2 days
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================
+       SECTION 3: APPLY / CTA
+  ================================================ -->
+  <section class="apply-section" aria-label="Apply">
+
+    <div class="corner corner--tl" aria-hidden="true"></div>
+    <div class="corner corner--tr" aria-hidden="true"></div>
+    <div class="corner corner--bl" aria-hidden="true"></div>
+    <div class="corner corner--br" aria-hidden="true"></div>
+
+    <div class="apply-top"></div>
+
+    <div class="apply-main">
+
+      <div class="badge reveal" data-delay="1">
+        <span class="badge-dot" aria-hidden="true"></span>
+        Limited cohort — spots remaining
+      </div>
+
+      <div class="apply-headline reveal" data-delay="2">
+        <h2>
+          Stop managing your injury
+          <span class="ghost">from memory.</span>
+        </h2>
+      </div>
+
+      <p class="apply-sub reveal" data-delay="3">
+        A small group of athletes is testing Inform right now, under real training conditions. Every application is reviewed. We're not scaling until the system earns it.
+      </p>
+
+      <!-- Proof numbers -->
+      <div class="proof-row reveal" data-delay="4" aria-label="Application stats">
+        <div class="proof-item">
+          <span class="proof-number" data-target="47">0</span>
+          <span class="proof-label">Applications</span>
+        </div>
+        <div class="proof-item">
+          <span class="proof-number" data-target="12">0</span>
+          <span class="proof-label">Cohort spots</span>
+        </div>
+        <div class="proof-item">
+          <span class="proof-number" data-target="3">0</span>
+          <span class="proof-label">Min to apply</span>
+        </div>
+      </div>
+
+      <div class="apply-cta-group reveal" data-delay="5">
+        <a href="form.html" class="cta-btn">Apply to test Inform &rarr;</a>
+        <p class="caption">We review every application. No spam. Ever.</p>
+      </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="apply-footer" aria-label="Footer">
+      <div class="footer-logo" aria-label="INFORM">
+        <svg width="513" height="100" viewBox="0 0 513 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M243.471 0C271.479 8.44234e-05 292.791 20.3366 292.791 50C292.791 79.6632 271.479 99.9999 243.471 100C215.614 99.9999 194.303 79.6632 194.303 50C194.303 20.3367 215.614 0.000146969 243.471 0ZM23.1377 98.165H0V1.83496H23.1377V98.165ZM94.126 59.6328V1.83496H115.284V98.165H96.8662L52.417 36.6973V98.165H31.1064V1.83496H53.3301L94.126 59.6328ZM194.243 20.9482H146.294V42.3545H182.676V61.3154H146.294V98.165H123.309V1.83496H194.243V20.9482ZM342.842 1.83496C367.653 1.83525 379.831 13.4568 379.831 31.958C379.831 46.1777 370.849 55.0452 359.128 56.5742C369.327 58.562 375.111 64.5269 376.177 75.8418C377.547 90.0608 378.004 94.6484 381.2 98.165H357.759C355.78 95.5657 354.561 89.2963 353.8 79.0518C353.039 68.1957 348.168 64.6777 338.578 64.6777H319.247V98.165H296.565V1.83496H342.842ZM459.723 59.3262L491.688 1.5293H513V97.8584H491.688V40.0596L459.723 97.8584H438.411V40.0596L406.444 97.8584H385.134L438.411 1.5293H459.723V59.3262ZM243.471 20.3359C227.944 20.3361 218.049 32.1103 218.049 50C218.049 67.8895 227.944 79.662 243.471 79.6621C259.149 79.662 269.044 67.8896 269.044 50C269.044 32.1103 259.149 20.336 243.471 20.3359ZM319.247 46.79H339.188C351.213 46.79 357.149 43.2724 357.149 33.793C357.149 25.2303 351.213 20.4902 339.188 20.4902H319.247V46.79Z" fill="#444444"/>
+        </svg>
+      </div>
+      <nav class="footer-links" aria-label="Footer links">
+        <a href="index.html">Back to home</a>
+        <a href="https://www.instagram.com/inform.app/" target="_blank" rel="noopener">Instagram</a>
+      </nav>
+      <span class="footer-copy">&copy; 2026 Inform</span>
+    </footer>
+
+  </section>
+
+  <script>
+    // ================================================
+    // INTRO OVERLAY
+    // ================================================
+    (function () {
+      var intro = document.getElementById('intro');
+
+      setTimeout(function () { intro.classList.add('logo-visible'); }, 100);
+      setTimeout(function () { intro.classList.add('exit'); }, 1400);
+      setTimeout(function () {
+        if (intro.parentNode) intro.parentNode.removeChild(intro);
+      }, 2200);
+    }());
+
+    // ================================================
+    // SCROLL REVEAL
+    // ================================================
+    (function () {
+      var reveals = document.querySelectorAll('.reveal');
+      if (!('IntersectionObserver' in window)) {
+        reveals.forEach(function (el) { el.classList.add('visible'); });
+        return;
+      }
+      var obs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+
+      reveals.forEach(function (el) { obs.observe(el); });
+    }());
+
+    // ================================================
+    // DOTO COUNTER ANIMATION
+    // ================================================
+    (function () {
+      var counters = document.querySelectorAll('[data-target]');
+      var fired = new Set();
+
+      function animateCount(el, target, duration) {
+        var start = performance.now();
+        var startVal = 0;
+        function step(now) {
+          var elapsed = now - start;
+          var progress = Math.min(elapsed / duration, 1);
+          // Ease out cubic
+          var eased = 1 - Math.pow(1 - progress, 3);
+          el.textContent = Math.round(startVal + (target - startVal) * eased);
+          if (progress < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      }
+
+      if (!('IntersectionObserver' in window)) {
+        counters.forEach(function (el) {
+          el.textContent = el.getAttribute('data-target');
+        });
+        return;
+      }
+
+      var obs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting && !fired.has(entry.target)) {
+            fired.add(entry.target);
+            var target = parseInt(entry.target.getAttribute('data-target'), 10);
+            animateCount(entry.target, target, 1200);
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.4 });
+
+      counters.forEach(function (el) { obs.observe(el); });
+    }());
+  </script>
+
+  <script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>

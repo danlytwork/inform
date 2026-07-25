@@ -3,484 +3,909 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Inform — Rehab redefined for serious athletes</title>
-  <meta name="description" content="A personalised physio system built for injured athletes and runners. Early access — limited cohort. Apply to test Inform.">
+  <title>Inform. Rehab doesn't end at the door.</title>
+  <meta name="description" content="Inform gives you clinical-grade rehab guidance every day, built by a sports physiotherapist, built around your injury. Early access, limited cohort.">
 
   <!-- Open Graph -->
   <meta property="og:type"        content="website">
   <meta property="og:url"         content="https://www.informapp.com.au/">
-  <meta property="og:title"       content="Inform — Rehab redefined for serious athletes">
-  <meta property="og:description" content="A personalised physio system built for injured athletes and runners. Early access — limited cohort. Apply to test Inform.">
+  <meta property="og:title"       content="Inform. Rehab doesn't end at the door.">
+  <meta property="og:description" content="Inform gives you clinical-grade rehab guidance every day, built by a sports physiotherapist, built around your injury. Early access, limited cohort.">
 
   <!-- Twitter / X -->
   <meta name="twitter:card"        content="summary_large_image">
-  <meta name="twitter:title"       content="Inform — Rehab redefined for serious athletes">
-  <meta name="twitter:description" content="A personalised physio system built for injured athletes and runners. Early access — limited cohort.">
+  <meta name="twitter:title"       content="Inform. Rehab doesn't end at the door.">
+  <meta name="twitter:description" content="Inform gives you clinical-grade rehab guidance every day, built by a sports physiotherapist, built around your injury. Early access, limited cohort.">
 
   <link rel="canonical" href="https://www.informapp.com.au/">
   <link rel="icon" type="image/png" href="favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&family=Doto:wght@400&family=VT323&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=Geist+Mono:wght@400;500&family=Doto:wght@400;700&display=swap" rel="stylesheet">
+
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --ink:    #000000;
-      --white:  #F8F9F5;
-      --red:    #E72320;
-      --muted:  #9C9C9C;
-      --label:  #444444;
-      --rule:   #181818;
-      --dim:    rgba(248,249,245,0.15);
+      --ink:      #000000;
+      --card:     #0A0A0A;
+      --card-2:   #101010;
+      --white:    #F8F9F5;
+      --muted:    #9C9C9C;
+      --label:    #5A5A5A;
+      --rule:     #1D1D1D;
+      --rule-mid: #2A2A2A;
+      --green:    #47D386;
+      --red:      #E85028;
+      --blue:     #1B35FC;
     }
 
-    html, body {
-      height: 100%;
+
+    section[id] { scroll-margin-top: 90px; }
+
+    body {
       background: var(--ink);
       color: var(--white);
       overflow-x: hidden;
-      font-family: 'Geist', sans-serif;
+      font-family: 'Geist', -apple-system, sans-serif;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* ================================================
-       INTRO OVERLAY
-    ================================================ */
+    a { color: inherit; }
+    img { max-width: 100%; display: block; }
+
+    .wrap {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 0 clamp(24px, 5vw, 64px);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Geist Mono', monospace;
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: var(--card);
+      border: 1px solid var(--rule-mid);
+      border-radius: 999px;
+      padding: 7px 16px;
+    }
+
+    .headline-bold  { font-weight: 700; color: var(--white); }
+    .headline-ghost  { font-weight: 300; color: var(--muted); }
+
+    /* ================= BUTTONS ================= */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--white);
+      color: var(--ink);
+      font-family: 'Geist', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      padding: 15px 30px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    }
+    .btn:hover { background: #205BFF; color: #ffffff; transform: translateY(-2px); }
+    .btn:active { transform: translateY(0); }
+
+    .btn--ghost {
+      background: var(--white);
+      color: var(--ink);
+      border: 1px solid var(--white);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 9px 20px;
+    }
+    .btn--ghost:hover { background: #205BFF; color: #ffffff; border-color: #205BFF; }
+
+    /* ================= REVEAL ================= */
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .phase-card.reveal { transform: translateY(44px); }
+    .reveal[data-delay="1"] { transition-delay: 0.08s; }
+    .reveal[data-delay="2"] { transition-delay: 0.16s; }
+    .reveal[data-delay="3"] { transition-delay: 0.24s; }
+    .reveal[data-delay="4"] { transition-delay: 0.32s; }
+    .reveal[data-delay="5"] { transition-delay: 0.40s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+      .word { color: var(--white) !important; }
+    }
+
+    /* ================= INTRO OVERLAY ================= */
     #intro {
       position: fixed;
       inset: 0;
       background: var(--ink);
-      z-index: 100;
-      isolation: isolate;
+      z-index: 200;
       display: flex;
       align-items: center;
       justify-content: center;
       transition: opacity 0.7s ease;
     }
-
-    #intro.exit {
-      opacity: 0;
-      pointer-events: none;
-    }
-
+    #intro.exit { opacity: 0; pointer-events: none; }
     .intro-logo {
       opacity: 0;
       transform: translateY(10px);
       transition: opacity 0.8s ease, transform 0.8s ease;
       width: 165px;
     }
+    .intro-logo svg { width: 100%; height: auto; display: block; }
+    #intro.logo-visible .intro-logo { opacity: 1; transform: translateY(0); }
 
-    #intro.logo-visible .intro-logo {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* ================================================
-       CORNER MARKERS
-    ================================================ */
-    .corner {
+    /* ================= NAV ================= */
+    .nav {
       position: fixed;
-      z-index: 50;
-      pointer-events: none;
-    }
-
-    .corner {
-      width: 18px;
-      height: 18px;
-      opacity: 0.5;
-    }
-
-    .corner--tl {
-      top: 28px; left: 28px;
-      background:
-        var(--white) 0 0 / 5px 5px no-repeat,
-        var(--white) 13px 13px / 5px 5px no-repeat;
-    }
-
-    .corner--tr {
-      top: 28px; right: 28px;
-      background:
-        var(--white) 13px 0 / 5px 5px no-repeat,
-        var(--white) 0 13px / 5px 5px no-repeat;
-    }
-
-    /* ================================================
-       PAGE WRAPPER
-    ================================================ */
-    #page {
-      min-height: 100vh;
-      display: grid;
-      grid-template-rows: auto 1fr auto;
-      padding: 24px clamp(24px, 5vw, 60px) 28px;
-      opacity: 0;
-      transition: opacity 0.6s ease;
-      position: relative;
-      z-index: 5;
-    }
-
-    #page.visible {
-      opacity: 1;
-    }
-
-    /* Stagger animation */
-    .stagger { opacity: 0; }
-
-    #page.visible .stagger {
-      animation: fadeUp 0.55s ease var(--delay, 0s) forwards;
-    }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(14px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ================================================
-       HEADER
-    ================================================ */
-    header {
+      top: 0; left: 0; right: 0;
+      z-index: 100;
       display: flex;
       align-items: center;
-      justify-content: center;
-      position: relative;
-      padding: 8px 0 16px;
+      justify-content: space-between;
+      padding: 18px clamp(24px, 5vw, 48px);
+      background: rgba(0,0,0,0.55);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
     }
-
-    .header-logo {
-      width: 165px;
-      display: block;
-    }
-
-    .header-logo svg,
-    .intro-logo svg {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    .social-nav {
-      position: absolute;
-      right: 0;
+    .nav-logo { width: 108px; flex-shrink: 0; }
+    .nav-logo svg { width: 100%; height: auto; display: block; }
+    .nav-links {
       display: flex;
-      gap: 18px;
       align-items: center;
+      gap: 32px;
     }
-
-    .social-nav a {
-      font-family: 'Geist Mono', monospace;
-      font-size: 9px;
+    .nav-links a {
+      font-size: 13px;
       font-weight: 400;
-      letter-spacing: 0.16em;
-      color: var(--label);
+      color: var(--muted);
       text-decoration: none;
-      text-transform: uppercase;
       transition: color 0.2s ease;
     }
+    .nav-links a:hover { color: var(--white); }
+    .nav-cta { flex-shrink: 0; }
 
-    .social-nav a:hover { color: var(--white); }
+    /* ================= HERO ================= */
+    .hero {
+      position: relative;
+      padding: clamp(140px, 22vw, 200px) 0 80px;
+      text-align: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      z-index: 0;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 900px 500px at 50% 0%, rgba(255,255,255,0.06), transparent 70%),
+        linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.4) 60%, #000 100%);
+      z-index: 1;
+    }
+    .hero .wrap {
+      position: relative;
+      z-index: 2;
+    }
+    .hero h1 {
+      font-size: clamp(34px, 5.5vw, 64px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      max-width: 780px;
+      margin: 0 auto;
+    }
+    .hero-sub {
+      font-weight: 300;
+      font-size: clamp(14px, 1.6vw, 17px);
+      color: var(--muted);
+      max-width: 520px;
+      line-height: 1.6;
+      margin: 22px auto 0;
+    }
+    .hero-cta { margin-top: 32px; }
 
-    /* ================================================
-       HERO
-    ================================================ */
-    main {
+    /* ================= VIDEO BLOCK ================= */
+    .video-section { padding: 24px 0 clamp(60px, 8vw, 100px); }
+    .video-eyebrow {
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      text-align: center;
-      gap: 10px;
-      padding: 40px 0;
-    }
-
-    .badge {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-family: 'Geist Mono', monospace;
+      gap: 8px;
+      margin-bottom: 20px;
+      font-size: 14px;
       font-weight: 400;
-      font-size: 9px;
-      letter-spacing: 0.18em;
-      color: var(--red);
-      text-transform: uppercase;
-      margin-bottom: 28px;
-    }
-
-    .badge-dot {
-      display: inline-block;
-      width: 6px;
-      height: 6px;
-      background: var(--red);
-      flex-shrink: 0;
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50%       { opacity: 0.3; }
-    }
-
-    h1 {
-      font-family: 'Geist', sans-serif;
-      font-weight: 700;
-      font-size: clamp(22px, 2.8vw, 36px);
-      letter-spacing: -0.038em;
-      line-height: 1;
-    }
-
-    .headline-sub {
-      font-family: 'Geist', sans-serif;
-      font-weight: 300;
-      font-size: clamp(15px, 1.6vw, 18px);
-      letter-spacing: -0.02em;
-      line-height: 1.5;
       color: var(--muted);
-      max-width: 560px;
+      cursor: pointer;
+      transition: color 0.2s ease;
+    }
+    .video-eyebrow:hover { color: var(--white); }
+    .video-eyebrow svg { flex-shrink: 0; }
+    .video-frame {
+      position: relative;
+      max-width: 1000px;
+      margin: 0 auto;
+      border-radius: 24px;
+      overflow: hidden;
+      aspect-ratio: 16/9;
+      background: #111;
+      opacity: 1;
+      transform: scale(0.7);
+    }
+    .video-frame.visible { transform: scale(1); }
+    .video-frame img,
+    .video-frame video {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center 20%;
+    }
+    .video-frame::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.05) 40%, rgba(0,0,0,0.65) 100%);
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+    .video-frame.playing::after { opacity: 0; }
+    .video-caption {
+      position: absolute;
+      left: clamp(20px, 4vw, 44px);
+      bottom: clamp(20px, 4vw, 40px);
+      z-index: 2;
+      font-size: clamp(22px, 3.4vw, 38px);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      transition: opacity 0.3s ease;
+    }
+    .play-btn {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.55);
+      border: 1px solid rgba(255,255,255,0.3);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: transform 0.25s cubic-bezier(0.16,1,0.3,1), background 0.25s ease, opacity 0.25s ease;
+    }
+    .play-btn:hover { transform: translate(-50%, -50%) scale(1.1); background: rgba(0,0,0,0.75); }
+    .play-btn svg { margin-left: 4px; }
+    .video-frame.playing .video-caption,
+    .video-frame.playing .play-btn {
+      opacity: 0;
+      pointer-events: none;
     }
 
-    .cta-btn {
-      display: inline-block;
+    /* ================= PROBLEM STAT (scroll-scrub) ================= */
+    .stat-section {
+      padding: clamp(40px, 8vw, 90px) 0;
+      text-align: center;
+    }
+    .stat-headline {
+      font-size: clamp(24px, 3.6vw, 42px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.35;
+      max-width: 920px;
+      margin: 0 auto;
+    }
+    .word {
+      color: #333333;
+      transition: color 0.2s ease;
+    }
+    .word.lit { color: var(--white); }
+
+    /* ================= FEATURE ROWS ================= */
+    .feature-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(32px, 6vw, 90px);
+      align-items: center;
+      padding: clamp(50px, 8vw, 90px) 0;
+    }
+    .feature-row.flip .feature-copy { order: 2; }
+    .feature-row.flip .feature-media { order: 1; }
+    .feature-copy h3 {
+      font-size: clamp(22px, 2.8vw, 32px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin: 16px 0 14px;
+    }
+    .feature-copy .ghost-line {
+      color: var(--muted);
+      font-size: 15px;
+      font-weight: 600;
+      display: block;
+      margin-top: 8px;
+    }
+    .feature-copy p {
+      font-weight: 300;
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 420px;
+    }
+    .feature-media {
+      display: flex;
+      justify-content: center;
+    }
+    .feature-media img {
+      width: 100%;
+      max-width: 300px;
+      aspect-ratio: 760 / 939;
+      object-fit: contain;
+      border-radius: 28px;
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
+    }
+    .feature-media:hover img { transform: translateY(-6px); }
+
+    /* ================= PHASE GRID ================= */
+    .phase-section {
+      padding: clamp(60px, 9vw, 110px) 0;
+      text-align: center;
+    }
+    .phase-section .headline-bold,
+    .phase-section .headline-ghost {
+      display: block;
+      font-size: clamp(24px, 3.4vw, 40px);
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+    .phase-sub {
+      font-weight: 300;
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 620px;
+      margin: 18px auto 0;
+    }
+    .phase-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 14px;
+      margin-top: 48px;
+      text-align: left;
+    }
+    .phase-card {
+      background: var(--card);
+      border: 1px solid var(--rule-mid);
+      border-radius: 18px;
+      padding: 22px 18px 24px;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .phase-card:hover {
+      transform: translateY(-4px);
+      border-color: #3a3a3a;
+    }
+    .phase-num {
+      font-family: 'Doto', monospace;
+      font-weight: 700;
+      font-size: 30px;
+      color: var(--rule-mid);
+      line-height: 1;
+      margin-bottom: 18px;
+    }
+    .phase-card:hover .phase-num { color: var(--green); }
+    .phase-label {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .phase-desc {
+      font-size: 12.5px;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    /* ================= PHILOSOPHY ================= */
+    .philosophy-section {
+      padding: clamp(60px, 9vw, 110px) 0;
+      text-align: center;
+    }
+    .philosophy-section h2 {
+      font-size: clamp(24px, 3.4vw, 40px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      max-width: 680px;
+      margin: 18px auto 0;
+    }
+    .philosophy-section .ghost-line { color: var(--muted); font-weight: 300; display: block; }
+    .philosophy-body {
+      max-width: 560px;
+      margin: 24px auto 0;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .philosophy-body p {
+      font-weight: 300;
+      font-size: 14.5px;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+    .philosophy-body p:last-child { color: var(--white); font-weight: 400; }
+
+    /* ================= PRICING ================= */
+    .pricing-section {
+      padding: clamp(60px, 9vw, 110px) 0;
+      text-align: center;
+    }
+    .pricing-section h2 {
+      font-size: clamp(24px, 3.4vw, 40px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      max-width: 640px;
+      margin: 18px auto 0;
+    }
+    .pricing-sub {
+      font-weight: 300;
+      font-size: 15px;
+      color: var(--muted);
+      margin: 16px auto 0;
+    }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-top: 48px;
+      text-align: left;
+    }
+    .pricing-card {
+      position: relative;
       background: var(--white);
       color: var(--ink);
-      font-family: 'Geist Mono', monospace;
-      font-weight: 500;
-      font-size: 9px;
-      letter-spacing: 0.16em;
-      text-decoration: none;
-      text-transform: uppercase;
-      padding: 14px 36px;
-      margin-top: 40px;
-      border: none;
-      border-radius: 0;
-      transition: opacity 0.2s ease;
+      border-radius: 20px;
+      border: 2px solid transparent;
+      padding: 24px 20px 26px;
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
     }
-
-    .cta-btn:hover { opacity: 0.85; }
-
-    .caption {
-      font-family: 'Geist Mono', monospace;
-      font-size: 9px;
+    .pricing-card:hover { transform: translateY(-4px); border-color: rgba(32,91,255,0.3); }
+    .pricing-card.selected { border-color: #205BFF; }
+    .pricing-badge {
+      display: inline-block;
+      background: #205BFF;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      padding: 5px 12px;
+      border-radius: 999px;
+      margin-bottom: 14px;
+    }
+    .pricing-plan {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+    .pricing-card.selected .pricing-plan,
+    .pricing-card.selected .pricing-price { color: #205BFF; }
+    .pricing-price {
+      font-size: 15px;
+      font-weight: 700;
+    }
+    .pricing-price span {
       font-weight: 400;
-      color: var(--label);
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      margin-top: 2px;
+      color: #6B6B6B;
+    }
+    .pricing-note {
+      font-weight: 300;
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 28px;
+      line-height: 1.6;
     }
 
-    /* ================================================
-       BOTTOM DATA STRIP
-    ================================================ */
-    .data-strip {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      padding: 20px 0 28px;
-      opacity: 0;
+    /* ================= FINAL CTA ================= */
+    .final-cta {
+      padding: clamp(70px, 10vw, 130px) 0;
+      text-align: center;
+    }
+    .final-cta h2 {
+      font-size: clamp(26px, 4vw, 48px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    .final-cta .ghost-line { color: var(--muted); font-weight: 300; display: block; }
+    .final-cta .btn { margin-top: 34px; }
+
+    /* ================= FOOTER ================= */
+    .footer-mark {
+      width: 100%;
+      overflow: hidden;
+      line-height: 0;
+    }
+    .footer-mark svg { width: 100%; height: auto; display: block; }
+
+    /* ================= RESPONSIVE ================= */
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .feature-row { grid-template-columns: 1fr; text-align: center; }
+      .feature-row.flip .feature-copy,
+      .feature-row.flip .feature-media { order: initial; }
+      .feature-copy p { margin: 0 auto; }
+      .phase-grid { grid-template-columns: repeat(2, 1fr); }
+      .pricing-grid { grid-template-columns: repeat(2, 1fr); }
     }
 
-    #page.visible .data-strip {
-      animation: fadeUp 0.55s ease 0.65s forwards;
-    }
-
-    .data-block {
-      font-family: 'Geist Mono', monospace;
-      font-size: 9px;
-      font-weight: 400;
-      color: var(--label);
-      letter-spacing: 0.14em;
-      line-height: 1.7;
-      text-transform: uppercase;
-    }
-
-    .data-block .divider {
-      display: block;
-      height: 1px;
-      background: var(--dim);
-      margin: 8px 0;
-      width: 60px;
-    }
-
-    .criteria {
-      text-align: right;
-      max-width: 340px;
-    }
-
-    .criteria-heading {
-      color: rgba(255,255,255,0.35);
-      margin-bottom: 4px;
-    }
-
-    /* ================================================
-       SCANLINE TEXTURE
-    ================================================ */
-    .hero-texture {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 50%;
-      z-index: 0;
-      pointer-events: none;
-      background-image: repeating-linear-gradient(
-        to bottom,
-        rgba(255,255,255,0.04) 0px,
-        rgba(255,255,255,0.04) 1px,
-        transparent 1px,
-        transparent 4px
-      );
-      mask-image: linear-gradient(to bottom, transparent 0%, black 100%);
-      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 100%);
-    }
-    .hero-grid {
-      position: fixed;
-      inset: 0;
-      z-index: 2;
-      pointer-events: none;
-      background-image:
-        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
-      background-size: 64px 64px;
-    }
-
-    /* ================================================
-       RESPONSIVE
-    ================================================ */
-    @media (max-width: 767px) {
-      .data-strip { display: none; }
-
-      header {
-        flex-direction: column;
-        gap: 14px;
-      }
-
-      .social-nav {
-        position: static;
-        gap: 20px;
-      }
-
-      .cta-btn {
-        width: 100%;
-        text-align: center;
-        padding: 18px 24px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .corner { display: none; }
+    @media (max-width: 520px) {
+      .phase-grid { grid-template-columns: 1fr; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .video-frame { border-radius: 16px; aspect-ratio: 4/5; }
+      .play-btn { width: 58px; height: 58px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Scanline texture -->
-  <div class="hero-texture" aria-hidden="true"></div>
-  <div class="hero-grid" aria-hidden="true"></div>
-
-  <!-- Intro overlay -->
+  <!-- ================= INTRO OVERLAY ================= -->
   <div id="intro">
     <div class="intro-logo">
-      <svg width="513" height="100" viewBox="0 0 513 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="INFORM">
-        <path d="M243.471 0C271.479 8.44234e-05 292.791 20.3366 292.791 50C292.791 79.6632 271.479 99.9999 243.471 100C215.614 99.9999 194.303 79.6632 194.303 50C194.303 20.3367 215.614 0.000146969 243.471 0ZM23.1377 98.165H0V1.83496H23.1377V98.165ZM94.126 59.6328V1.83496H115.284V98.165H96.8662L52.417 36.6973V98.165H31.1064V1.83496H53.3301L94.126 59.6328ZM194.243 20.9482H146.294V42.3545H182.676V61.3154H146.294V98.165H123.309V1.83496H194.243V20.9482ZM342.842 1.83496C367.653 1.83525 379.831 13.4568 379.831 31.958C379.831 46.1777 370.849 55.0452 359.128 56.5742C369.327 58.562 375.111 64.5269 376.177 75.8418C377.547 90.0608 378.004 94.6484 381.2 98.165H357.759C355.78 95.5657 354.561 89.2963 353.8 79.0518C353.039 68.1957 348.168 64.6777 338.578 64.6777H319.247V98.165H296.565V1.83496H342.842ZM459.723 59.3262L491.688 1.5293H513V97.8584H491.688V40.0596L459.723 97.8584H438.411V40.0596L406.444 97.8584H385.134L438.411 1.5293H459.723V59.3262ZM243.471 20.3359C227.944 20.3361 218.049 32.1103 218.049 50C218.049 67.8895 227.944 79.662 243.471 79.6621C259.149 79.662 269.044 67.8896 269.044 50C269.044 32.1103 259.149 20.336 243.471 20.3359ZM319.247 46.79H339.188C351.213 46.79 357.149 43.2724 357.149 33.793C357.149 25.2303 351.213 20.4902 339.188 20.4902H319.247V46.79Z" fill="#E9EFEE"/>
-        <path d="M243.471 0C271.479 8.44234e-05 292.791 20.3366 292.791 50C292.791 79.6632 271.479 99.9999 243.471 100C215.614 99.9999 194.303 79.6632 194.303 50C194.303 20.3367 215.614 0.000146969 243.471 0ZM23.1377 98.165H0V1.83496H23.1377V98.165ZM94.126 59.6328V1.83496H115.284V98.165H96.8662L52.417 36.6973V98.165H31.1064V1.83496H53.3301L94.126 59.6328ZM194.243 20.9482H146.294V42.3545H182.676V61.3154H146.294V98.165H123.309V1.83496H194.243V20.9482ZM342.842 1.83496C367.653 1.83525 379.831 13.4568 379.831 31.958C379.831 46.1777 370.849 55.0452 359.128 56.5742C369.327 58.562 375.111 64.5269 376.177 75.8418C377.547 90.0608 378.004 94.6484 381.2 98.165H357.759C355.78 95.5657 354.561 89.2963 353.8 79.0518C353.039 68.1957 348.168 64.6777 338.578 64.6777H319.247V98.165H296.565V1.83496H342.842ZM459.723 59.3262L491.688 1.5293H513V97.8584H491.688V40.0596L459.723 97.8584H438.411V40.0596L406.444 97.8584H385.134L438.411 1.5293H459.723V59.3262ZM243.471 20.3359C227.944 20.3361 218.049 32.1103 218.049 50C218.049 67.8895 227.944 79.662 243.471 79.6621C259.149 79.662 269.044 67.8896 269.044 50C269.044 32.1103 259.149 20.336 243.471 20.3359ZM319.247 46.79H339.188C351.213 46.79 357.149 43.2724 357.149 33.793C357.149 25.2303 351.213 20.4902 339.188 20.4902H319.247V46.79Z" stroke="#121213"/>
+      <svg viewBox="0 0 513 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="INFORM">
+        <path d="M243.471 0C271.479 8.44234e-05 292.791 20.3366 292.791 50C292.791 79.6632 271.479 99.9999 243.471 100C215.614 99.9999 194.303 79.6632 194.303 50C194.303 20.3367 215.614 0.000146969 243.471 0ZM23.1377 98.165H0V1.83496H23.1377V98.165ZM94.126 59.6328V1.83496H115.284V98.165H96.8662L52.417 36.6973V98.165H31.1064V1.83496H53.3301L94.126 59.6328ZM194.243 20.9482H146.294V42.3545H182.676V61.3154H146.294V98.165H123.309V1.83496H194.243V20.9482ZM342.842 1.83496C367.653 1.83525 379.831 13.4568 379.831 31.958C379.831 46.1777 370.849 55.0452 359.128 56.5742C369.327 58.562 375.111 64.5269 376.177 75.8418C377.547 90.0608 378.004 94.6484 381.2 98.165H357.759C355.78 95.5657 354.561 89.2963 353.8 79.0518C353.039 68.1957 348.168 64.6777 338.578 64.6777H319.247V98.165H296.565V1.83496H342.842ZM459.723 59.3262L491.688 1.5293H513V97.8584H491.688V40.0596L459.723 97.8584H438.411V40.0596L406.444 97.8584H385.134L438.411 1.5293H459.723V59.3262ZM243.471 20.3359C227.944 20.3361 218.049 32.1103 218.049 50C218.049 67.8895 227.944 79.662 243.471 79.6621C259.149 79.662 269.044 67.8896 269.044 50C269.044 32.1103 259.149 20.336 243.471 20.3359ZM319.247 46.79H339.188C351.213 46.79 357.149 43.2724 357.149 33.793C357.149 25.2303 351.213 20.4902 339.188 20.4902H319.247V46.79Z" fill="#F8F9F5"/>
       </svg>
     </div>
   </div>
 
-  <!-- Corner markers -->
-  <div class="corner corner--tl" aria-hidden="true"></div>
-  <div class="corner corner--tr" aria-hidden="true"></div>
+  <!-- ================= NAV ================= -->
+  <header class="nav">
+    <div class="nav-logo" aria-label="INFORM">
+      <svg viewBox="0 0 513 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M243.471 0C271.479 8.44234e-05 292.791 20.3366 292.791 50C292.791 79.6632 271.479 99.9999 243.471 100C215.614 99.9999 194.303 79.6632 194.303 50C194.303 20.3367 215.614 0.000146969 243.471 0ZM23.1377 98.165H0V1.83496H23.1377V98.165ZM94.126 59.6328V1.83496H115.284V98.165H96.8662L52.417 36.6973V98.165H31.1064V1.83496H53.3301L94.126 59.6328ZM194.243 20.9482H146.294V42.3545H182.676V61.3154H146.294V98.165H123.309V1.83496H194.243V20.9482ZM342.842 1.83496C367.653 1.83525 379.831 13.4568 379.831 31.958C379.831 46.1777 370.849 55.0452 359.128 56.5742C369.327 58.562 375.111 64.5269 376.177 75.8418C377.547 90.0608 378.004 94.6484 381.2 98.165H357.759C355.78 95.5657 354.561 89.2963 353.8 79.0518C353.039 68.1957 348.168 64.6777 338.578 64.6777H319.247V98.165H296.565V1.83496H342.842ZM459.723 59.3262L491.688 1.5293H513V97.8584H491.688V40.0596L459.723 97.8584H438.411V40.0596L406.444 97.8584H385.134L438.411 1.5293H459.723V59.3262ZM243.471 20.3359C227.944 20.3361 218.049 32.1103 218.049 50C218.049 67.8895 227.944 79.662 243.471 79.6621C259.149 79.662 269.044 67.8896 269.044 50C269.044 32.1103 259.149 20.336 243.471 20.3359ZM319.247 46.79H339.188C351.213 46.79 357.149 43.2724 357.149 33.793C357.149 25.2303 351.213 20.4902 339.188 20.4902H319.247V46.79Z" fill="#F8F9F5"/>
+      </svg>
+    </div>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#story">Our Story</a>
+      <a href="#how-it-works">How it Works</a>
+      <a href="#standard">The Standard</a>
+      <a href="#pricing">Pricing</a>
+    </nav>
+    <a href="form.html" class="btn btn--ghost nav-cta">Early access</a>
+  </header>
 
-  <!-- Page -->
-  <div id="page">
-
-    <header>
-      <div class="header-logo stagger" style="--delay:0s" aria-label="INFORM">
-        <svg width="513" height="100" viewBox="0 0 513 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M243.471 0C271.479 8.44234e-05 292.791 20.3366 292.791 50C292.791 79.6632 271.479 99.9999 243.471 100C215.614 99.9999 194.303 79.6632 194.303 50C194.303 20.3367 215.614 0.000146969 243.471 0ZM23.1377 98.165H0V1.83496H23.1377V98.165ZM94.126 59.6328V1.83496H115.284V98.165H96.8662L52.417 36.6973V98.165H31.1064V1.83496H53.3301L94.126 59.6328ZM194.243 20.9482H146.294V42.3545H182.676V61.3154H146.294V98.165H123.309V1.83496H194.243V20.9482ZM342.842 1.83496C367.653 1.83525 379.831 13.4568 379.831 31.958C379.831 46.1777 370.849 55.0452 359.128 56.5742C369.327 58.562 375.111 64.5269 376.177 75.8418C377.547 90.0608 378.004 94.6484 381.2 98.165H357.759C355.78 95.5657 354.561 89.2963 353.8 79.0518C353.039 68.1957 348.168 64.6777 338.578 64.6777H319.247V98.165H296.565V1.83496H342.842ZM459.723 59.3262L491.688 1.5293H513V97.8584H491.688V40.0596L459.723 97.8584H438.411V40.0596L406.444 97.8584H385.134L438.411 1.5293H459.723V59.3262ZM243.471 20.3359C227.944 20.3361 218.049 32.1103 218.049 50C218.049 67.8895 227.944 79.662 243.471 79.6621C259.149 79.662 269.044 67.8896 269.044 50C269.044 32.1103 259.149 20.336 243.471 20.3359ZM319.247 46.79H339.188C351.213 46.79 357.149 43.2724 357.149 33.793C357.149 25.2303 351.213 20.4902 339.188 20.4902H319.247V46.79Z" fill="#E9EFEE"/>
-          <path d="M243.471 0C271.479 8.44234e-05 292.791 20.3366 292.791 50C292.791 79.6632 271.479 99.9999 243.471 100C215.614 99.9999 194.303 79.6632 194.303 50C194.303 20.3367 215.614 0.000146969 243.471 0ZM23.1377 98.165H0V1.83496H23.1377V98.165ZM94.126 59.6328V1.83496H115.284V98.165H96.8662L52.417 36.6973V98.165H31.1064V1.83496H53.3301L94.126 59.6328ZM194.243 20.9482H146.294V42.3545H182.676V61.3154H146.294V98.165H123.309V1.83496H194.243V20.9482ZM342.842 1.83496C367.653 1.83525 379.831 13.4568 379.831 31.958C379.831 46.1777 370.849 55.0452 359.128 56.5742C369.327 58.562 375.111 64.5269 376.177 75.8418C377.547 90.0608 378.004 94.6484 381.2 98.165H357.759C355.78 95.5657 354.561 89.2963 353.8 79.0518C353.039 68.1957 348.168 64.6777 338.578 64.6777H319.247V98.165H296.565V1.83496H342.842ZM459.723 59.3262L491.688 1.5293H513V97.8584H491.688V40.0596L459.723 97.8584H438.411V40.0596L406.444 97.8584H385.134L438.411 1.5293H459.723V59.3262ZM243.471 20.3359C227.944 20.3361 218.049 32.1103 218.049 50C218.049 67.8895 227.944 79.662 243.471 79.6621C259.149 79.662 269.044 67.8896 269.044 50C269.044 32.1103 259.149 20.336 243.471 20.3359ZM319.247 46.79H339.188C351.213 46.79 357.149 43.2724 357.149 33.793C357.149 25.2303 351.213 20.4902 339.188 20.4902H319.247V46.79Z" stroke="#121213"/>
-        </svg>
-      </div>
-
-      <nav class="social-nav stagger" style="--delay:0.1s" aria-label="Social media">
-        <a href="https://www.instagram.com/inform.app/" target="_blank" rel="noopener" aria-label="Instagram">IG</a>
-        <a href="#" aria-label="TikTok">TT</a>
-        <a href="#" aria-label="LinkedIn">LI</a>
-        <a href="#" aria-label="X">X</a>
-      </nav>
-    </header>
-
-    <main>
-      <div class="badge stagger" style="--delay:0.15s">
-        <span class="badge-dot" aria-hidden="true"></span>
-        EARLY ACCESS — LIMITED COHORT
-      </div>
-
-      <h1 class="stagger" style="--delay:0.25s">REHAB REDEFINED.</h1>
-
-      <p class="headline-sub stagger" style="--delay:0.35s">
-        Built for injured athletes and runners who want a physio<br class="br-desktop">
-        in their pocket every day, not once a fortnight.
-      </p>
-
-      <p class="headline-sub stagger" style="--delay:0.42s">
-        We're testing the system now under real conditions.
-      </p>
-
-      <a href="form.html" class="cta-btn stagger" style="--delay:0.52s">
-        APPLY TO TEST INFORM &rarr;
-      </a>
-
-      <p class="caption stagger" style="--delay:0.6s">
-        TAKES 3 MINUTES. WE REVIEW EVERY APPLICATION.
-      </p>
-    </main>
-
-    <div class="data-strip" aria-hidden="true">
-      <div class="data-block">
-        <span>6163</span><br>
-        <span>01-JUN-2026</span><br>
-        <span>15:07</span>
-        <span class="divider"></span>
-        <span>PHASE 01:</span><br>
-        <span>UPPER BODY</span><br>
-        <span>23-APR-2026</span>
-      </div>
-
-      <div class="data-block criteria">
-        <span class="criteria-heading">YOU'RE RIGHT FOR THIS IF:</span><br>
-        — YOU HAVE AN ACTIVE INJURY OR REHAB JOURNEY RIGHT NOW<br>
-        — YOU'RE STILL TRAINING AROUND IT<br>
-        — YOU WANT A SYSTEM THAT HOLDS THE STANDARD YOU DO
+  <!-- ================= HERO ================= -->
+  <section class="hero">
+    <img class="hero-bg" src="assets/landing-v2/hero-background.jpg" alt="" loading="eager">
+    <div class="wrap">
+      <h1 class="reveal visible">Rehab doesn&rsquo;t end at the door.</h1>
+      <p class="hero-sub reveal visible" data-delay="1">Built by a physiotherapist with a decade treating professional athletes across the WAFL, A-League and W-League.</p>
+      <div class="hero-cta reveal visible" data-delay="2">
+        <a href="form.html" class="btn">Apply for early access</a>
       </div>
     </div>
+  </section>
 
+  <!-- ================= VIDEO ================= -->
+  <section class="video-section">
+    <div class="wrap">
+      <div class="video-eyebrow reveal">
+        <svg width="10" height="11" viewBox="0 0 10 11" fill="none"><path d="M9 4.634c.667.385.667 1.347 0 1.732L1.5 10.696C.833 11.081 0 10.6 0 9.83V1.17C0 .401.833-.081 1.5.304L9 4.634Z" fill="currentColor"/></svg>
+        Launch video coming soon
+      </div>
+      <div class="video-frame reveal" id="heroVideoFrame">
+        <video
+          id="heroVideo"
+          poster="assets/landing-v2/gym-video-poster.jpg"
+          playsinline
+          preload="none">
+          <source src="assets/landing-v2/hero-video.mp4" type="video/mp4">
+        </video>
+        <div class="video-caption">YOUR REHAB.<br>RUN PROPERLY.</div>
+        <button class="play-btn" aria-label="Play video" id="heroPlayBtn">
+          <svg width="20" height="22" viewBox="0 0 20 22" fill="none"><path d="M19 9.26795C20.3333 10.0378 20.3333 11.9622 19 12.7321L3.25 21.8253C1.91667 22.5951 0.25 21.633 0.25 20.0933L0.25 1.90673C0.25 0.367027 1.91667 -0.595088 3.25 0.174761L19 9.26795Z" fill="white"/></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PROBLEM STAT (scroll-scrub) ================= -->
+  <section class="stat-section">
+    <div class="wrap">
+      <p class="stat-headline" id="statHeadline"></p>
+    </div>
+  </section>
+
+  <!-- ================= FEATURE ROWS ================= -->
+  <section id="how-it-works">
+    <div class="wrap">
+
+      <div class="feature-row">
+        <div class="feature-copy reveal">
+          <span class="eyebrow">Human in the loop</span>
+          <h3>167 hours a week you&rsquo;re on your own.<span class="ghost-line">One session doesn&rsquo;t cover the other 166.</span></h3>
+          <p>Today&rsquo;s session. Your rehab progress. A direct line to your physio when something feels off, not a forum, not a search bar. Inform is what fills the gap between appointments, where recovery actually happens or quietly falls apart. One physio session funds a month of it.</p>
+        </div>
+        <div class="feature-media reveal" data-delay="1">
+          <img src="assets/landing-v2/phone-dashboard.jpg" alt="Inform app dashboard showing today's session and rehab progress" loading="lazy">
+        </div>
+      </div>
+
+      <div class="feature-row flip">
+        <div class="feature-copy reveal">
+          <span class="eyebrow">Progressive execution</span>
+          <h3>Not a feeling. A threshold.<span class="ghost-line">You move to the next phase because your body qualified, not because two weeks passed.</span></h3>
+          <p>Limb symmetry above 80%. Single leg press past bodyweight. No pain on landing. Every phase has a number attached, and you don&rsquo;t advance until you hit it. That&rsquo;s what separates a program that compounds week over week from a plateau you can&rsquo;t explain, or a comeback you rushed and are now paying for.</p>
+        </div>
+        <div class="feature-media reveal" data-delay="1">
+          <img src="assets/landing-v2/phone-graph.jpg" alt="Inform app screen comparing recovery with and without a physio" loading="lazy">
+        </div>
+      </div>
+
+      <div class="feature-row">
+        <div class="feature-copy reveal">
+          <span class="eyebrow">Clinical precision</span>
+          <h3>You don&rsquo;t get a diagnosis from a chatbot.<span class="ghost-line">You get one from a sports physiotherapist who&rsquo;s seen it before.</span></h3>
+          <p>Answer specific questions, like where it hurts, when it started, and what sets it off. The same physiotherapist who wrote every protocol in this app reviews your case and confirms what&rsquo;s actually happening before a single exercise gets assigned. Not managed. Understood.</p>
+        </div>
+        <div class="feature-media reveal" data-delay="1">
+          <img src="assets/landing-v2/phone-submitted.png" alt="Inform app confirming a case has been submitted for physio review" loading="lazy" style="aspect-ratio: 1 / 1;">
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= PHASE GRID ================= -->
+  <section class="phase-section" id="standard">
+    <div class="wrap">
+      <span class="eyebrow reveal">The Standard</span>
+      <p class="reveal" data-delay="1">
+        <span class="headline-bold">Progression isn&rsquo;t a calendar.</span>
+        <span class="headline-ghost">It&rsquo;s a checkpoint.</span>
+      </p>
+      <p class="phase-sub reveal" data-delay="2">You don&rsquo;t move forward because time passed. You move forward because you qualified. Every phase has a threshold. Here&rsquo;s what clearing one actually looks like.</p>
+
+      <div class="phase-grid">
+        <div class="phase-card reveal" data-delay="1">
+          <div class="phase-num">01</div>
+          <div class="phase-label">Protect</div>
+          <div class="phase-desc">Pain and swelling controlled. Range of motion restored.</div>
+        </div>
+        <div class="phase-card reveal" data-delay="2">
+          <div class="phase-num">02</div>
+          <div class="phase-label">Rebuild</div>
+          <div class="phase-desc">Quad strength above 70% of unaffected side.</div>
+        </div>
+        <div class="phase-card reveal" data-delay="3">
+          <div class="phase-num">03</div>
+          <div class="phase-label">Reload</div>
+          <div class="phase-desc">Single leg press above 1.2x bodyweight.</div>
+        </div>
+        <div class="phase-card reveal" data-delay="4">
+          <div class="phase-num">04</div>
+          <div class="phase-label">Return</div>
+          <div class="phase-desc">Back to doing what you love. Limb symmetry index above 90%. No pain on landing.</div>
+        </div>
+        <div class="phase-card reveal" data-delay="5">
+          <div class="phase-num">05</div>
+          <div class="phase-label">Qualified</div>
+          <div class="phase-desc">Cleared for sport. Not by date, by data.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PHILOSOPHY ================= -->
+  <section class="philosophy-section" id="story">
+    <div class="wrap">
+      <span class="eyebrow reveal">Human in the loop</span>
+      <h2 class="reveal" data-delay="1">The judgment stays human.<span class="ghost-line">The infrastructure scales.</span></h2>
+      <div class="philosophy-body reveal" data-delay="2">
+        <p>This isn&rsquo;t AI replacing a physio. It&rsquo;s AI doing the parts a physio shouldn&rsquo;t have to.</p>
+        <p>Every protocol is written by a physiotherapist with over ten years treating professional athletes in the WAFL, A-League and W-League. The system handles tracking, progression logic and reminders.</p>
+        <p>The clinical judgment behind every plan is entirely human.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PRICING ================= -->
+  <section class="pricing-section" id="pricing">
+    <div class="wrap">
+      <span class="eyebrow reveal">Pricing</span>
+      <h2 class="reveal" data-delay="1">This is what it costs to stop guessing.</h2>
+      <p class="pricing-sub reveal" data-delay="2">Choose a schedule that suits your injury.</p>
+
+      <div class="pricing-grid">
+        <div class="pricing-card reveal" data-delay="1">
+          <span class="pricing-badge" style="visibility: hidden;">placeholder</span>
+          <div class="pricing-plan">Weekly</div>
+          <div class="pricing-price">$49<span>/week</span></div>
+        </div>
+        <div class="pricing-card reveal" data-delay="2">
+          <span class="pricing-badge">1 week FREE</span>
+          <div class="pricing-plan">Monthly</div>
+          <div class="pricing-price">$149<span>/mo</span></div>
+        </div>
+        <div class="pricing-card selected reveal" data-delay="3">
+          <span class="pricing-badge">2 weeks FREE</span>
+          <div class="pricing-plan">3-months</div>
+          <div class="pricing-price">$490<span>/qtr</span></div>
+        </div>
+        <div class="pricing-card reveal" data-delay="4">
+          <span class="pricing-badge">1 month FREE</span>
+          <div class="pricing-plan">6-months</div>
+          <div class="pricing-price">$976<span>/half year</span></div>
+        </div>
+      </div>
+
+      <p class="pricing-note reveal" data-delay="5">Billed per chosen cycle. Commit only to your chosen term. Purchase in app.</p>
+    </div>
+  </section>
+
+  <!-- ================= FINAL CTA ================= -->
+  <section class="final-cta">
+    <div class="wrap">
+      <h2 class="reveal">Stop guessing what comes next.<span class="ghost-line">Recover like the professionals.</span></h2>
+      <div class="reveal" data-delay="1">
+        <a href="form.html" class="btn">Apply for early access</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <div class="footer-mark" aria-label="INFORM">
+    <svg viewBox="0 0 513 100" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+      <path d="M243.471 0C271.479 8.44234e-05 292.791 20.3366 292.791 50C292.791 79.6632 271.479 99.9999 243.471 100C215.614 99.9999 194.303 79.6632 194.303 50C194.303 20.3367 215.614 0.000146969 243.471 0ZM23.1377 98.165H0V1.83496H23.1377V98.165ZM94.126 59.6328V1.83496H115.284V98.165H96.8662L52.417 36.6973V98.165H31.1064V1.83496H53.3301L94.126 59.6328ZM194.243 20.9482H146.294V42.3545H182.676V61.3154H146.294V98.165H123.309V1.83496H194.243V20.9482ZM342.842 1.83496C367.653 1.83525 379.831 13.4568 379.831 31.958C379.831 46.1777 370.849 55.0452 359.128 56.5742C369.327 58.562 375.111 64.5269 376.177 75.8418C377.547 90.0608 378.004 94.6484 381.2 98.165H357.759C355.78 95.5657 354.561 89.2963 353.8 79.0518C353.039 68.1957 348.168 64.6777 338.578 64.6777H319.247V98.165H296.565V1.83496H342.842ZM459.723 59.3262L491.688 1.5293H513V97.8584H491.688V40.0596L459.723 97.8584H438.411V40.0596L406.444 97.8584H385.134L438.411 1.5293H459.723V59.3262ZM243.471 20.3359C227.944 20.3361 218.049 32.1103 218.049 50C218.049 67.8895 227.944 79.662 243.471 79.6621C259.149 79.662 269.044 67.8896 269.044 50C269.044 32.1103 259.149 20.336 243.471 20.3359ZM319.247 46.79H339.188C351.213 46.79 357.149 43.2724 357.149 33.793C357.149 25.2303 351.213 20.4902 339.188 20.4902H319.247V46.79Z" fill="#F8F9F5"/>
+    </svg>
   </div>
 
   <script>
+    // ============ INTRO OVERLAY ============
     (function () {
       var intro = document.getElementById('intro');
-      var page  = document.getElementById('page');
-
-      // Phase 1: reveal logo in overlay
-      setTimeout(function () {
-        intro.classList.add('logo-visible');
-      }, 100);
-
-      // Phase 2: fade out overlay
-      setTimeout(function () {
-        intro.classList.add('exit');
-      }, 1400);
-
-      // Phase 3: reveal page content (stagger animations kick in)
-      setTimeout(function () {
-        page.classList.add('visible');
-      }, 1800);
-
-      // Phase 4: remove overlay from DOM
+      if (!intro) return;
+      setTimeout(function () { intro.classList.add('logo-visible'); }, 100);
+      setTimeout(function () { intro.classList.add('exit'); }, 1400);
       setTimeout(function () {
         if (intro.parentNode) intro.parentNode.removeChild(intro);
       }, 2200);
     }());
+
+    // ============ NAV ANCHOR SCROLL ============
+    // Handles in-page nav clicks manually (rather than relying on the
+    // browser's native hash-jump + CSS smooth-scroll) so it doesn't race
+    // against images below the fold still loading and shifting layout.
+    (function () {
+      document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+        link.addEventListener('click', function (e) {
+          var target = document.getElementById(link.getAttribute('href').slice(1));
+          if (!target) return;
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          history.pushState(null, '', link.getAttribute('href'));
+        });
+      });
+    }());
+
+    // ============ SCROLL REVEAL ============
+    (function () {
+      var reveals = document.querySelectorAll('.reveal:not(.video-frame)');
+      if (!('IntersectionObserver' in window)) {
+        reveals.forEach(function (el) { el.classList.add('visible'); });
+        return;
+      }
+      var obs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      reveals.forEach(function (el) { obs.observe(el); });
+    }());
+
+    // ============ VIDEO SCALE-IN (stricter, two-way trigger) ============
+    // The video sits close enough to the hero that on many viewport
+    // heights it's already past the shared 0.15 threshold on page load,
+    // firing before the user scrolls at all. Give it its own observer
+    // with a much higher threshold so the scale-up is only ever seen
+    // as a result of an actual scroll. Toggles both ways (like Opal) —
+    // scrolling back past it resets it to the small state.
+    (function () {
+      var vf = document.querySelector('.video-frame');
+      if (!vf || !('IntersectionObserver' in window)) return;
+      var obs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          vf.classList.toggle('visible', entry.isIntersecting);
+        });
+      }, { threshold: 0.5 });
+      obs.observe(vf);
+    }());
+
+    // ============ HERO VIDEO PLAYBACK ============
+    (function () {
+      var frame = document.getElementById('heroVideoFrame');
+      var video = document.getElementById('heroVideo');
+      var playBtn = document.getElementById('heroPlayBtn');
+      if (!frame || !video || !playBtn) return;
+
+      playBtn.addEventListener('click', function () {
+        video.controls = true;
+        video.play();
+        frame.classList.add('playing');
+      });
+
+      video.addEventListener('ended', function () {
+        frame.classList.remove('playing');
+        video.controls = false;
+        video.currentTime = 0;
+      });
+    }());
+
+    // ============ SCROLL-SCRUBBED TEXT REVEAL ============
+    // Splits the stat headline into words and lights each one up
+    // progressively as the section scrolls through the viewport —
+    // matches the word-by-word brightness reveal on opalapp.com.
+    (function () {
+      var el = document.getElementById('statHeadline');
+      if (!el) return;
+
+      var text = "167 hours. That’s the average time you’ll spend without your physio each week. No one telling you when to progress. No way to know if the load’s right. Just doing the work, hoping it’s working. Time to change that.";
+      el.innerHTML = text.split(' ').map(function (w) {
+        return '<span class="word">' + w + '</span>';
+      }).join(' ');
+      var words = el.querySelectorAll('.word');
+
+      function update() {
+        var rect = el.getBoundingClientRect();
+        var vh = window.innerHeight;
+        var start = vh * 0.9;
+        var end = vh * 0.15 - rect.height;
+        var progress = (start - rect.top) / (start - end);
+        progress = Math.max(0, Math.min(1, progress));
+        var active = Math.round(progress * words.length);
+        words.forEach(function (w, i) {
+          w.classList.toggle('lit', i < active);
+        });
+      }
+
+      var ticking = false;
+      function onScroll() {
+        if (!ticking) {
+          requestAnimationFrame(function () { update(); ticking = false; });
+          ticking = true;
+        }
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll);
+      update();
+    }());
   </script>
 
-  <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
