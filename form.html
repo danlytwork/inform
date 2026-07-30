@@ -390,21 +390,31 @@
         placeholder: "Be honest..."
       },
       {
+        id: 'preference',
+        type: 'choice',
+        question: "When it comes to fixing this properly, what matters most to you?",
+        options: [
+          { key: 'A', text: 'Getting it right the first time, even if it takes a bit longer' },
+          { key: 'B', text: 'Getting moving again as fast as possible' }
+        ]
+      },
+      {
         id: 'pay',
         type: 'choice',
-        question: "What would you expect to pay per week for access to a personalised physio system for your rehab?",
+        question: "If you joined Inform today, what would you invest in your recovery?",
         options: [
-          { key: 'A', text: '$20 per week' },
-          { key: 'B', text: '$30 per week' },
-          { key: 'C', text: '$40 per week' }
+          { key: 'A', text: '$49 per week' },
+          { key: 'B', text: '$149 per month (1 week free)' },
+          { key: 'C', text: '$490 per 3 months (2 weeks free)' },
+          { key: 'D', text: "I'd want to see it working first" }
         ]
       },
       {
         id: 'keen',
         type: 'choice',
-        question: "How keen are you to test Inform?",
+        question: "How keen are you for early access to Inform?",
         options: [
-          { key: 'A', text: 'Ready now, where do I sign' },
+          { key: 'A', text: 'Ready now, where do I sign up' },
           { key: 'B', text: 'Interested, want to know more' },
           { key: 'C', text: 'Curious but skeptical' },
           { key: 'D', text: 'Just looking for now' }
