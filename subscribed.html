@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>INFORM — Subscription confirmed.</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;700;800&family=Doto:wght@700&family=VT323&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:    #000000;
+      --white:  #FFFFFF;
+      --orange: #205BFF;
+      --muted:  #5E5E5A;
+    }
+
+    html, body {
+      background: var(--ink);
+      color: var(--white);
+      min-height: 100dvh;
+      font-family: 'Geist', sans-serif;
+    }
+
+    #page {
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px clamp(24px, 5vw, 60px) 48px;
+    }
+
+    #page .content-wrap {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+
+    /* ── Header ── */
+    header {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      padding: 8px 0 0;
+    }
+
+    .header-logo { width: 165px; display: block; }
+    .header-logo svg { width: 100%; height: auto; display: block; }
+
+    /* ── Content ── */
+    .content {
+      width: 100%;
+      max-width: 560px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.45s forwards;
+    }
+
+    .label {
+      font-family: 'VT323', monospace;
+      font-size: 14px;
+      color: var(--orange);
+      letter-spacing: 0.15em;
+    }
+
+    h1 {
+      font-family: 'Geist', sans-serif;
+      font-weight: 700;
+      font-size: clamp(32px, 5vw, 52px);
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+    }
+
+    p {
+      font-family: 'Geist', sans-serif;
+      font-size: 17px;
+      font-weight: 400;
+      line-height: 1.6;
+      color: var(--muted);
+      max-width: 420px;
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .ig-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 32px;
+      border: 1px solid var(--white);
+      color: var(--white);
+      font-family: 'Doto', monospace;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.1em;
+      text-decoration: none;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+    .ig-btn:hover {
+      background: var(--white);
+      color: var(--ink);
+    }
+    .ig-btn svg {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+      flex-shrink: 0;
+    }
+
+    .home-link {
+      font-family: 'VT323', monospace;
+      font-size: 14px;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .home-link:hover { color: var(--white); }
+
+    /* ── Animation ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Mobile ── */
+    @media (max-width: 767px) {
+      .content { gap: 16px; }
+      h1 { font-size: 28px; }
+      p { font-size: 15px; }
+      .header-logo { width: 120px; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="page">
+
+  <header>
+    <a href="index.html" class="header-logo" aria-label="Back to INFORM">
+      <svg width="513" height="100" viewBox="0 0 513 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M243.471 0C271.479 8.44234e-05 292.791 20.3366 292.791 50C292.791 79.6632 271.479 99.9999 243.471 100C215.614 99.9999 194.303 79.6632 194.303 50C194.303 20.3367 215.614 0.000146969 243.471 0ZM23.1377 98.165H0V1.83496H23.1377V98.165ZM94.126 59.6328V1.83496H115.284V98.165H96.8662L52.417 36.6973V98.165H31.1064V1.83496H53.3301L94.126 59.6328ZM194.243 20.9482H146.294V42.3545H182.676V61.3154H146.294V98.165H123.309V1.83496H194.243V20.9482ZM342.842 1.83496C367.653 1.83525 379.831 13.4568 379.831 31.958C379.831 46.1777 370.849 55.0452 359.128 56.5742C369.327 58.562 375.111 64.5269 376.177 75.8418C377.547 90.0608 378.004 94.6484 381.2 98.165H357.759C355.78 95.5657 354.561 89.2963 353.8 79.0518C353.039 68.1957 348.168 64.6777 338.578 64.6777H319.247V98.165H296.565V1.83496H342.842ZM459.723 59.3262L491.688 1.5293H513V97.8584H491.688V40.0596L459.723 97.8584H438.411V40.0596L406.444 97.8584H385.134L438.411 1.5293H459.723V59.3262ZM243.471 20.3359C227.944 20.3361 218.049 32.1103 218.049 50C218.049 67.8895 227.944 79.662 243.471 79.6621C259.149 79.662 269.044 67.8896 269.044 50C269.044 32.1103 259.149 20.336 243.471 20.3359ZM319.247 46.79H339.188C351.213 46.79 357.149 43.2724 357.149 33.793C357.149 25.2303 351.213 20.4902 339.188 20.4902H319.247V46.79Z" fill="#E9EFEE"/>
+        <path d="M243.471 0C271.479 8.44234e-05 292.791 20.3366 292.791 50C292.791 79.6632 271.479 99.9999 243.471 100C215.614 99.9999 194.303 79.6632 194.303 50C194.303 20.3367 215.614 0.000146969 243.471 0ZM23.1377 98.165H0V1.83496H23.1377V98.165ZM94.126 59.6328V1.83496H115.284V98.165H96.8662L52.417 36.6973V98.165H31.1064V1.83496H53.3301L94.126 59.6328ZM194.243 20.9482H146.294V42.3545H182.676V61.3154H146.294V98.165H123.309V1.83496H194.243V20.9482ZM342.842 1.83496C367.653 1.83525 379.831 13.4568 379.831 31.958C379.831 46.1777 370.849 55.0452 359.128 56.5742C369.327 58.562 375.111 64.5269 376.177 75.8418C377.547 90.0608 378.004 94.6484 381.2 98.165H357.759C355.78 95.5657 354.561 89.2963 353.8 79.0518C353.039 68.1957 348.168 64.6777 338.578 64.6777H319.247V98.165H296.565V1.83496H342.842ZM459.723 59.3262L491.688 1.5293H513V97.8584H491.688V40.0596L459.723 97.8584H438.411V40.0596L406.444 97.8584H385.134L438.411 1.5293H459.723V59.3262ZM243.471 20.3359C227.944 20.3361 218.049 32.1103 218.049 50C218.049 67.8895 227.944 79.662 243.471 79.6621C259.149 79.662 269.044 67.8896 269.044 50C269.044 32.1103 259.149 20.336 243.471 20.3359ZM319.247 46.79H339.188C351.213 46.79 357.149 43.2724 357.149 33.793C357.149 25.2303 351.213 20.4902 339.188 20.4902H319.247V46.79Z" stroke="#121213"/>
+      </svg>
+    </a>
+  </header>
+
+  <div class="content-wrap">
+  <div class="content">
+    <div class="label" id="statusLabel">PAYMENT RECEIVED</div>
+    <h1 id="statusTitle">You're subscribed.</h1>
+    <p id="statusBody">Confirming your subscription&hellip;</p>
+    <div class="btn-row">
+      <a href="index.html#pricing" class="ig-btn">BACK TO PRICING</a>
+    </div>
+    <a href="index.html" class="home-link">← BACK TO INFORM</a>
+  </div>
+  </div>
+
+</div>
+
+  <script>
+    // Confirm the checkout from the buyer's own browser.
+    //   POST {API_BASE}/public/billing/confirm { "sessionId": "cs_..." }
+    //     -> { data: { email, accountCreated, subscriptionActive } }
+    // Stripe's webhook does the same work, but it can be delayed, retried out,
+    // or pointed at a disabled endpoint. Doing it here as well means the account
+    // exists by the time this page renders. Both paths are idempotent, so
+    // whichever lands first wins and the other is a no-op.
+    (function () {
+      var bodyEl = document.getElementById('statusBody');
+      var titleEl = document.getElementById('statusTitle');
+      var params = new URLSearchParams(window.location.search);
+      var sessionId = params.get('session_id');
+
+      var CLAIM_COPY = 'Check your email to set your password, then open the Inform app and sign in. Your plan is already active.';
+      var SIGN_IN_COPY = 'Your plan is active. Open the Inform app and sign in with this email &mdash; if you are already signed in, go back and refresh to unlock it.';
+      var PENDING_COPY = 'Your payment went through. We are still setting up your account &mdash; check your email shortly, or contact support if nothing arrives.';
+
+      function show(html) { bodyEl.innerHTML = html; }
+
+      if (!sessionId) {
+        show(CLAIM_COPY);
+        return;
+      }
+
+      var DEFAULT_API_BASE = 'http://127.0.0.1:8000';
+      var API_BASE = (params.get('api') || window.INFORM_API_BASE || DEFAULT_API_BASE).replace(/\/$/, '');
+
+      fetch(API_BASE + '/public/billing/confirm', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sessionId: sessionId })
+      })
+        .then(function (res) { return res.json().then(function (b) { return { ok: res.ok, body: b }; }); })
+        .then(function (r) {
+          var data = r.body && r.body.data;
+          if (!r.ok || !data || !data.subscriptionActive) {
+            show(PENDING_COPY);
+            return;
+          }
+          show(data.accountCreated ? CLAIM_COPY : SIGN_IN_COPY);
+        })
+        .catch(function () {
+          show(PENDING_COPY);
+        });
+    })();
+  </script>
+
+  <script defer src="/_vercel/insights/script.js"></script>
+  <script defer src="/_vercel/speed-insights/script.js"></script>
+</body>
+</html>

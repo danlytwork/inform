@@ -484,15 +484,27 @@
     }
     .pricing-card {
       position: relative;
+      display: block;
+      width: 100%;
       background: var(--white);
       color: var(--ink);
       border-radius: 20px;
       border: 2px solid transparent;
       padding: 24px 20px 26px;
+      font-family: 'Geist', sans-serif;
+      text-align: left;
+      cursor: pointer;
       transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
     }
     .pricing-card:hover { transform: translateY(-4px); border-color: rgba(32,91,255,0.3); }
+    .pricing-card:focus-visible { outline: 2px solid #205BFF; outline-offset: 2px; }
     .pricing-card.selected { border-color: #205BFF; }
+    .pricing-select {
+      margin-top: 14px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #205BFF;
+    }
     .pricing-badge {
       display: inline-block;
       background: #205BFF;
@@ -525,6 +537,145 @@
       color: var(--muted);
       margin-top: 28px;
       line-height: 1.6;
+    }
+
+    /* ================= SUBSCRIBE MODAL ================= */
+    .plan-modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 300;
+      background: rgba(0,0,0,0.72);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .plan-modal-overlay.is-open {
+      display: flex;
+    }
+    .plan-modal {
+      position: relative;
+      width: 100%;
+      max-width: 420px;
+      background: var(--card);
+      border: 1px solid var(--rule-mid);
+      border-radius: 20px;
+      padding: 32px clamp(22px, 5vw, 32px) 28px;
+      text-align: left;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.55);
+    }
+    .plan-modal-close {
+      position: absolute;
+      top: 16px; right: 16px;
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      border: 1px solid var(--rule-mid);
+      background: transparent;
+      color: var(--white);
+      font-size: 18px;
+      line-height: 1;
+      cursor: pointer;
+    }
+    .plan-modal-close:hover { border-color: var(--white); }
+    .plan-modal h3 {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin: 14px 0 4px;
+    }
+    .plan-modal-price {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+    .plan-modal-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    .plan-modal-input {
+      width: 100%;
+      background: var(--card-2);
+      border: 1px solid var(--rule-mid);
+      border-radius: 12px;
+      padding: 13px 16px;
+      font-family: 'Geist', sans-serif;
+      font-size: 14px;
+      color: var(--white);
+      transition: border-color 0.2s ease;
+    }
+    .plan-modal-input:focus { outline: none; border-color: #205BFF; }
+    .plan-modal-input::placeholder { color: #6B6B6B; }
+    .plan-modal-error {
+      color: var(--red);
+      font-size: 13px;
+      margin-top: 10px;
+    }
+    .plan-modal-error[hidden] { display: none; }
+    .plan-modal-submit {
+      width: 100%;
+      margin-top: 18px;
+    }
+    .plan-modal-submit:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .plan-modal-confirm {
+      margin-top: 4px;
+    }
+    .plan-modal-confirm-card {
+      background: var(--card-2);
+      border: 1px solid var(--rule-mid);
+      border-radius: 14px;
+      padding: 16px 16px 14px;
+      margin-bottom: 14px;
+    }
+    .plan-modal-confirm-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .plan-modal-confirm-name {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--white);
+    }
+    .plan-modal-confirm-copy {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.55;
+      margin-top: 8px;
+    }
+    .plan-modal-back {
+      display: block;
+      width: 100%;
+      margin-top: 10px;
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      font-family: 'Geist', sans-serif;
+      font-size: 13px;
+      cursor: pointer;
+    }
+    .plan-modal-back:hover { color: var(--white); }
+    .plan-modal-fineprint {
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-top: 18px;
     }
 
     /* ================= FINAL CTA ================= */
@@ -735,36 +886,69 @@
   <!-- ================= PRICING ================= -->
   <section class="pricing-section" id="pricing">
     <div class="wrap">
-      <span class="eyebrow reveal">Pricing</span>
-      <h2 class="reveal" data-delay="1">This is what it costs to stop guessing.</h2>
-      <p class="pricing-sub reveal" data-delay="2">Choose a schedule that suits your injury.</p>
+      <span class="eyebrow reveal visible">Pricing</span>
+      <h2 class="reveal visible" data-delay="1">This is what it costs to stop guessing.</h2>
+      <p class="pricing-sub reveal visible" data-delay="2">Choose a schedule that suits your injury.</p>
 
       <div class="pricing-grid">
-        <div class="pricing-card reveal" data-delay="1">
+        <button type="button" class="pricing-card reveal visible" data-delay="1" data-plan="weekly" data-plan-label="Weekly" data-plan-price="$49/week">
           <span class="pricing-badge" style="visibility: hidden;">placeholder</span>
           <div class="pricing-plan">Weekly</div>
           <div class="pricing-price">$49<span>/week</span></div>
-        </div>
-        <div class="pricing-card reveal" data-delay="2">
+          <div class="pricing-select">Choose plan →</div>
+        </button>
+        <button type="button" class="pricing-card reveal visible" data-delay="2" data-plan="monthly" data-plan-label="Monthly" data-plan-price="$149/mo">
           <span class="pricing-badge">1 week FREE</span>
           <div class="pricing-plan">Monthly</div>
           <div class="pricing-price">$149<span>/mo</span></div>
-        </div>
-        <div class="pricing-card selected reveal" data-delay="3">
+          <div class="pricing-select">Choose plan →</div>
+        </button>
+        <button type="button" class="pricing-card selected reveal visible" data-delay="3" data-plan="three_month" data-plan-label="3-months" data-plan-price="$499/qtr">
           <span class="pricing-badge">2 weeks FREE</span>
           <div class="pricing-plan">3-months</div>
-          <div class="pricing-price">$490<span>/qtr</span></div>
-        </div>
-        <div class="pricing-card reveal" data-delay="4">
+          <div class="pricing-price">$499<span>/qtr</span></div>
+          <div class="pricing-select">Choose plan →</div>
+        </button>
+        <button type="button" class="pricing-card reveal visible" data-delay="4" data-plan="bi_year" data-plan-label="6-months" data-plan-price="$976/half year">
           <span class="pricing-badge">1 month FREE</span>
           <div class="pricing-plan">6-months</div>
           <div class="pricing-price">$976<span>/half year</span></div>
-        </div>
+          <div class="pricing-select">Choose plan →</div>
+        </button>
       </div>
 
-      <p class="pricing-note reveal" data-delay="5">Billed per chosen cycle. Commit only to your chosen term. Purchase in app.</p>
+      <p class="pricing-note reveal visible" data-delay="5">Billed per chosen cycle. Commit only to your chosen term. Cancel anytime.</p>
     </div>
   </section>
+
+  <!-- ================= SUBSCRIBE MODAL ================= -->
+  <div class="plan-modal-overlay" id="planModalOverlay" role="dialog" aria-modal="true" aria-labelledby="planModalTitle" aria-hidden="true">
+    <div class="plan-modal" id="planModal">
+      <button type="button" class="plan-modal-close" id="planModalClose" aria-label="Close">&times;</button>
+      <span class="eyebrow">Subscribe</span>
+      <h3 id="planModalTitle">Get the <span id="planModalPlanLabel">3-months</span> plan</h3>
+      <p class="plan-modal-price" id="planModalPlanPrice">$499/qtr</p>
+      <form id="planModalForm" novalidate>
+        <div id="planModalEmailStep">
+          <label class="plan-modal-label" for="planModalEmail">Email address</label>
+          <input class="plan-modal-input" id="planModalEmail" name="email" type="email" placeholder="you@example.com" autocomplete="email" required>
+          <p class="plan-modal-error" id="planModalError" hidden></p>
+          <button type="submit" class="btn plan-modal-submit" id="planModalSubmit">Check account</button>
+        </div>
+        <div class="plan-modal-confirm" id="planModalConfirmStep" hidden>
+          <div class="plan-modal-confirm-card">
+            <div class="plan-modal-confirm-label">Inform account</div>
+            <div class="plan-modal-confirm-name" id="planModalConfirmName"></div>
+            <p class="plan-modal-confirm-copy" id="planModalConfirmCopy"></p>
+          </div>
+          <p class="plan-modal-error" id="planModalConfirmError" hidden></p>
+          <button type="button" class="btn plan-modal-submit" id="planModalConfirmPay">Continue to payment</button>
+          <button type="button" class="plan-modal-back" id="planModalBack">Use a different email</button>
+        </div>
+      </form>
+      <p class="plan-modal-fineprint">You&rsquo;ll pay securely via Stripe. Confirm this is your Inform account before paying.</p>
+    </div>
+  </div>
 
   <!-- ================= FINAL CTA ================= -->
   <section class="final-cta">
@@ -904,6 +1088,205 @@
       window.addEventListener('scroll', onScroll, { passive: true });
       window.addEventListener('resize', onScroll);
       update();
+    }());
+
+    // ============ SUBSCRIBE MODAL (Stripe checkout by email) ============
+    //   POST {API_BASE}/public/billing/lookup  { "email": "..." }
+    //     → { data: { exists, fullName, canSubscribe, alreadySubscribed } }
+    //   POST {API_BASE}/public/billing/checkout { "email": "...", "plan": "..." }
+    //     → { data: { checkoutUrl } }
+    (function () {
+      var DEFAULT_API_BASE = 'http://127.0.0.1:8000';
+      var params = new URLSearchParams(window.location.search);
+      var API_BASE = (params.get('api') || window.INFORM_API_BASE || DEFAULT_API_BASE).replace(/\/$/, '');
+      var LOOKUP_ENDPOINT = API_BASE + '/public/billing/lookup';
+      var CHECKOUT_ENDPOINT = API_BASE + '/public/billing/checkout';
+
+      var overlay = document.getElementById('planModalOverlay');
+      var closeBtn = document.getElementById('planModalClose');
+      var planLabelEl = document.getElementById('planModalPlanLabel');
+      var planPriceEl = document.getElementById('planModalPlanPrice');
+      var form = document.getElementById('planModalForm');
+      var emailStep = document.getElementById('planModalEmailStep');
+      var confirmStep = document.getElementById('planModalConfirmStep');
+      var emailInput = document.getElementById('planModalEmail');
+      var errorEl = document.getElementById('planModalError');
+      var confirmErrorEl = document.getElementById('planModalConfirmError');
+      var submitBtn = document.getElementById('planModalSubmit');
+      var confirmNameEl = document.getElementById('planModalConfirmName');
+      var confirmCopyEl = document.getElementById('planModalConfirmCopy');
+      var confirmPayBtn = document.getElementById('planModalConfirmPay');
+      var backBtn = document.getElementById('planModalBack');
+      var cards = document.querySelectorAll('.pricing-card[data-plan]');
+      if (!overlay || !form || !cards.length) return;
+
+      var selectedPlan = null;
+      var checkedEmail = '';
+      var lastFocusedEl = null;
+
+      function parseJson(res) {
+        return res.json().catch(function () { return {}; }).then(function (body) {
+          return { ok: res.ok, body: body };
+        });
+      }
+
+      function showError(el, message) {
+        el.textContent = message;
+        el.hidden = false;
+      }
+
+      function clearError(el) {
+        el.hidden = true;
+        el.textContent = '';
+      }
+
+      function showEmailStep() {
+        confirmStep.hidden = true;
+        emailStep.hidden = false;
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Check account';
+        clearError(errorEl);
+        clearError(confirmErrorEl);
+      }
+
+      function showConfirmStep() {
+        emailStep.hidden = true;
+        confirmStep.hidden = false;
+        clearError(confirmErrorEl);
+      }
+
+      function openModal(card) {
+        selectedPlan = card.getAttribute('data-plan');
+        checkedEmail = '';
+        planLabelEl.textContent = card.getAttribute('data-plan-label') || '';
+        planPriceEl.textContent = card.getAttribute('data-plan-price') || '';
+        form.reset();
+        showEmailStep();
+        lastFocusedEl = document.activeElement;
+        overlay.classList.add('is-open');
+        overlay.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        setTimeout(function () { emailInput.focus(); }, 30);
+      }
+
+      function closeModal() {
+        overlay.classList.remove('is-open');
+        overlay.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        if (lastFocusedEl && typeof lastFocusedEl.focus === 'function') lastFocusedEl.focus();
+      }
+
+      cards.forEach(function (card) {
+        card.addEventListener('click', function () { openModal(card); });
+      });
+      closeBtn.addEventListener('click', closeModal);
+      overlay.addEventListener('click', function (e) {
+        if (e.target === overlay) closeModal();
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && overlay.classList.contains('is-open')) closeModal();
+      });
+      backBtn.addEventListener('click', function () {
+        showEmailStep();
+        emailInput.focus();
+      });
+
+      function isValidEmail(value) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+      }
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        clearError(errorEl);
+
+        var email = emailInput.value.trim();
+        if (!isValidEmail(email)) {
+          showError(errorEl, 'Enter a valid email address.');
+          emailInput.focus();
+          return;
+        }
+        if (!selectedPlan) {
+          showError(errorEl, 'Select a plan and try again.');
+          return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Checking…';
+        fetch(LOOKUP_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: email }),
+        })
+          .then(parseJson)
+          .then(function (result) {
+            var data = (result.body && result.body.data) || {};
+            if (!result.ok) {
+              showError(errorEl, (result.body && result.body.systemMessage) || 'Could not check this email.');
+              submitBtn.disabled = false;
+              submitBtn.textContent = 'Check account';
+              return;
+            }
+
+            checkedEmail = email;
+            if (data.exists) {
+              confirmNameEl.textContent = data.fullName || 'Inform member';
+              confirmCopyEl.textContent = data.alreadySubscribed
+                ? 'This Inform account already has an active subscription.'
+                : 'Confirm this is you before paying. The subscription will be attached to this account.';
+              confirmPayBtn.disabled = data.canSubscribe === false;
+              confirmPayBtn.textContent = data.canSubscribe === false
+                ? 'Already subscribed'
+                : 'Continue to payment';
+            } else {
+              confirmNameEl.textContent = email;
+              confirmCopyEl.textContent = 'No Inform account yet. After payment we will create one for this email.';
+              confirmPayBtn.disabled = false;
+              confirmPayBtn.textContent = 'Continue to payment';
+            }
+            showConfirmStep();
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Check account';
+          })
+          .catch(function () {
+            showError(errorEl, 'Network error. Please check your connection and try again.');
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Check account';
+          });
+      });
+
+      confirmPayBtn.addEventListener('click', function () {
+        if (!checkedEmail || !selectedPlan || confirmPayBtn.disabled) return;
+        clearError(confirmErrorEl);
+        confirmPayBtn.disabled = true;
+        confirmPayBtn.textContent = 'Redirecting to payment…';
+        fetch(CHECKOUT_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: checkedEmail, plan: selectedPlan }),
+        })
+          .then(parseJson)
+          .then(function (result) {
+            var checkoutUrl = result.body && result.body.data && result.body.data.checkoutUrl;
+            if (!result.ok || !checkoutUrl) {
+              var apiMessage =
+                (result.body && (result.body.systemMessage || result.body.detail || result.body.message)) ||
+                'Could not start checkout. Please try again.';
+              showError(confirmErrorEl, apiMessage);
+              confirmPayBtn.disabled = false;
+              confirmPayBtn.textContent = 'Continue to payment';
+              return;
+            }
+            window.location.href = checkoutUrl;
+          })
+          .catch(function (err) {
+            showError(
+              confirmErrorEl,
+              (err && err.message) ? ('Network error: ' + err.message) : 'Network error. Please check your connection and try again.'
+            );
+            confirmPayBtn.disabled = false;
+            confirmPayBtn.textContent = 'Continue to payment';
+          });
+      });
     }());
   </script>
 
