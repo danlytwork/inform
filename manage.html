@@ -212,6 +212,69 @@
       line-height: 1.5;
       text-align: center;
     }
+
+    .notice {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      width: 100%;
+      max-width: 520px;
+      margin: 0 0 18px;
+      padding: 14px 16px;
+      border-radius: 14px;
+      border: 1px solid rgba(71,211,134,0.35);
+      background: rgba(71,211,134,0.08);
+      color: var(--white);
+      opacity: 0;
+      transform: translateY(8px);
+      animation: noticeIn 0.45s ease forwards;
+    }
+    .notice[hidden] { display: none !important; }
+    .notice-dot {
+      flex: 0 0 auto;
+      width: 8px;
+      height: 8px;
+      margin-top: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 0 4px rgba(71,211,134,0.15);
+    }
+    .notice-copy {
+      flex: 1;
+      min-width: 0;
+    }
+    .notice-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 4px;
+    }
+    .notice-text {
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--muted);
+    }
+    .notice-close {
+      flex: 0 0 auto;
+      width: 28px;
+      height: 28px;
+      border: 1px solid var(--rule-mid);
+      border-radius: 50%;
+      background: transparent;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1;
+      cursor: pointer;
+    }
+    .notice-close:hover {
+      color: var(--white);
+      border-color: rgba(248,249,245,0.35);
+    }
+    @keyframes noticeIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
   </style>
 </head>
 <body>
@@ -224,6 +287,15 @@
       </a>
       <a class="home-link" href="index.html#pricing">← Back to pricing</a>
     </header>
+
+    <div class="notice" id="updatedNotice" hidden role="status" aria-live="polite">
+      <span class="notice-dot" aria-hidden="true"></span>
+      <div class="notice-copy">
+        <div class="notice-label">Subscription updated</div>
+        <div class="notice-text">Your billing changes are saved. We’ve refreshed your plan status below.</div>
+      </div>
+      <button type="button" class="notice-close" id="updatedNoticeClose" aria-label="Dismiss">&times;</button>
+    </div>
 
     <div class="panel">
       <span class="eyebrow">Manage</span>
@@ -264,7 +336,8 @@
 
   <script>
     (function () {
-      var DEFAULT_API_BASE = 'http://127.0.0.1:8000';
+      // Prod default. For local API: ?api=http://127.0.0.1:8000
+      var DEFAULT_API_BASE = 'https://backend.informapp.com.au';
       var params = new URLSearchParams(window.location.search);
       var API_BASE = (params.get('api') || window.INFORM_API_BASE || DEFAULT_API_BASE).replace(/\/$/, '');
       var TOKEN_KEY = 'inform_billing_manage_token';
@@ -524,6 +597,33 @@
         emailInput.focus();
       }
 
+      var updatedNotice = document.getElementById('updatedNotice');
+      var updatedNoticeClose = document.getElementById('updatedNoticeClose');
+      var fromPortal = params.get('updated') === '1' || params.get('portal') === '1';
+
+      function showUpdatedNotice() {
+        if (!updatedNotice) return;
+        updatedNotice.hidden = false;
+      }
+
+      function hideUpdatedNotice() {
+        if (!updatedNotice) return;
+        updatedNotice.hidden = true;
+      }
+
+      function cleanUpdatedQuery() {
+        if (!fromPortal || !window.history || !window.history.replaceState) return;
+        params.delete('updated');
+        params.delete('portal');
+        var next = params.toString();
+        var url = window.location.pathname + (next ? ('?' + next) : '') + window.location.hash;
+        window.history.replaceState({}, '', url);
+      }
+
+      if (updatedNoticeClose) {
+        updatedNoticeClose.addEventListener('click', hideUpdatedNotice);
+      }
+
       sendOtpBtn.addEventListener('click', requestOtp);
       resendOtpBtn.addEventListener('click', requestOtp);
       verifyOtpBtn.addEventListener('click', verifyOtp);
@@ -547,6 +647,13 @@
         if (e.key === 'Enter') verifyOtp();
       });
 
+      function finishPortalReturn() {
+        if (fromPortal) {
+          showUpdatedNotice();
+          cleanUpdatedQuery();
+        }
+      }
+
       // Resume an existing manage session if token still valid
       if (manageToken) {
         fetch(API_BASE + '/public/billing/manage/status', {
@@ -559,18 +666,22 @@
             if (!result.ok || !result.body || !result.body.data) {
               setManageToken('');
               setStep('email');
+              finishPortalReturn();
               return;
             }
             checkedEmail = result.body.data.email || '';
             renderSubscription(result.body.data);
             setStep('manage');
+            finishPortalReturn();
           })
           .catch(function () {
             setManageToken('');
             setStep('email');
+            finishPortalReturn();
           });
       } else {
         setStep('email');
+        finishPortalReturn();
       }
 
       var prefill = params.get('email');
