@@ -941,12 +941,18 @@
             <div class="plan-modal-confirm-name" id="planModalConfirmName"></div>
             <p class="plan-modal-confirm-copy" id="planModalConfirmCopy"></p>
           </div>
+          <div id="planModalOtpBlock">
+            <label class="plan-modal-label" for="planModalOtp">Verification code</label>
+            <input class="plan-modal-input" id="planModalOtp" name="otp" type="text" inputmode="numeric" autocomplete="one-time-code" placeholder="6-digit code" maxlength="12">
+            <p class="plan-modal-fineprint" id="planModalOtpHint" style="margin:0 0 12px;text-align:left;">We sent a code to this email. Enter it to continue.</p>
+          </div>
           <p class="plan-modal-error" id="planModalConfirmError" hidden></p>
           <button type="button" class="btn plan-modal-submit" id="planModalConfirmPay">Continue to payment</button>
+          <button type="button" class="plan-modal-back" id="planModalResendOtp">Resend code</button>
           <button type="button" class="plan-modal-back" id="planModalBack">Use a different email</button>
         </div>
       </form>
-      <p class="plan-modal-fineprint">You&rsquo;ll pay securely via Stripe. Confirm this is your Inform account before paying.</p>
+      <p class="plan-modal-fineprint">You&rsquo;ll verify your email, then pay securely via Stripe.</p>
     </div>
   </div>
 
@@ -1090,17 +1096,17 @@
       update();
     }());
 
-    // ============ SUBSCRIBE MODAL (Stripe checkout by email) ============
+    // ============ SUBSCRIBE MODAL (Stripe checkout by email + OTP) ============
     //   POST {API_BASE}/public/billing/lookup  { "email": "..." }
-    //     → { data: { exists, fullName, canSubscribe, alreadySubscribed } }
-    //   POST {API_BASE}/public/billing/checkout { "email": "...", "plan": "..." }
-    //     → { data: { checkoutUrl } }
+    //   POST {API_BASE}/public/billing/subscribe/request-otp { "email": "..." }
+    //   POST {API_BASE}/public/billing/checkout { "email": "...", "plan": "...", "otp": "..." }
     (function () {
       // Prod default. For local API: ?api=http://127.0.0.1:8000
       var DEFAULT_API_BASE = 'https://backend.informapp.com.au';
       var params = new URLSearchParams(window.location.search);
       var API_BASE = (params.get('api') || window.INFORM_API_BASE || DEFAULT_API_BASE).replace(/\/$/, '');
       var LOOKUP_ENDPOINT = API_BASE + '/public/billing/lookup';
+      var SUBSCRIBE_OTP_ENDPOINT = API_BASE + '/public/billing/subscribe/request-otp';
       var CHECKOUT_ENDPOINT = API_BASE + '/public/billing/checkout';
 
       var overlay = document.getElementById('planModalOverlay');
@@ -1111,12 +1117,15 @@
       var emailStep = document.getElementById('planModalEmailStep');
       var confirmStep = document.getElementById('planModalConfirmStep');
       var emailInput = document.getElementById('planModalEmail');
+      var otpInput = document.getElementById('planModalOtp');
+      var otpBlock = document.getElementById('planModalOtpBlock');
       var errorEl = document.getElementById('planModalError');
       var confirmErrorEl = document.getElementById('planModalConfirmError');
       var submitBtn = document.getElementById('planModalSubmit');
       var confirmNameEl = document.getElementById('planModalConfirmName');
       var confirmCopyEl = document.getElementById('planModalConfirmCopy');
       var confirmPayBtn = document.getElementById('planModalConfirmPay');
+      var resendOtpBtn = document.getElementById('planModalResendOtp');
       var backBtn = document.getElementById('planModalBack');
       var cards = document.querySelectorAll('.pricing-card[data-plan]');
       if (!overlay || !form || !cards.length) return;
@@ -1141,11 +1150,16 @@
         el.textContent = '';
       }
 
+      function apiMessage(body, fallback) {
+        return (body && (body.systemMessage || body.detail || body.message)) || fallback;
+      }
+
       function showEmailStep() {
         confirmStep.hidden = true;
         emailStep.hidden = false;
         submitBtn.disabled = false;
         submitBtn.textContent = 'Check account';
+        if (otpInput) otpInput.value = '';
         clearError(errorEl);
         clearError(confirmErrorEl);
       }
@@ -1154,6 +1168,27 @@
         emailStep.hidden = true;
         confirmStep.hidden = false;
         clearError(confirmErrorEl);
+      }
+
+      function requestSubscribeOtp() {
+        if (!checkedEmail) return Promise.resolve(false);
+        return fetch(SUBSCRIBE_OTP_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: checkedEmail }),
+        })
+          .then(parseJson)
+          .then(function (result) {
+            if (!result.ok) {
+              showError(confirmErrorEl, apiMessage(result.body, 'Could not send verification code.'));
+              return false;
+            }
+            return true;
+          })
+          .catch(function () {
+            showError(confirmErrorEl, 'Network error. Could not send verification code.');
+            return false;
+          });
       }
 
       function openModal(card) {
@@ -1191,6 +1226,16 @@
         showEmailStep();
         emailInput.focus();
       });
+      if (resendOtpBtn) {
+        resendOtpBtn.addEventListener('click', function () {
+          clearError(confirmErrorEl);
+          resendOtpBtn.textContent = 'Sending…';
+          requestSubscribeOtp().then(function (ok) {
+            resendOtpBtn.textContent = 'Resend code';
+            if (ok && otpInput) otpInput.focus();
+          });
+        });
+      }
 
       function isValidEmail(value) {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
@@ -1222,33 +1267,44 @@
           .then(function (result) {
             var data = (result.body && result.body.data) || {};
             if (!result.ok) {
-              showError(errorEl, (result.body && result.body.systemMessage) || 'Could not check this email.');
+              showError(errorEl, apiMessage(result.body, 'Could not check this email.'));
               submitBtn.disabled = false;
               submitBtn.textContent = 'Check account';
               return;
             }
 
             checkedEmail = email;
+            if (otpBlock) otpBlock.hidden = false;
+            if (resendOtpBtn) resendOtpBtn.hidden = false;
+
             if (data.exists) {
               confirmNameEl.textContent = data.fullName || 'Inform member';
               if (data.alreadySubscribed) {
                 confirmCopyEl.innerHTML = 'This Inform account already has an active subscription. <a href="manage.html?email=' + encodeURIComponent(email) + '" style="color:#205BFF;">Manage it here</a>.';
                 confirmPayBtn.disabled = true;
                 confirmPayBtn.textContent = 'Already subscribed';
-              } else {
-                confirmCopyEl.textContent = 'Confirm this is you before paying. The subscription will be attached to this account.';
-                confirmPayBtn.disabled = false;
-                confirmPayBtn.textContent = 'Continue to payment';
+                if (otpBlock) otpBlock.hidden = true;
+                if (resendOtpBtn) resendOtpBtn.hidden = true;
+                showConfirmStep();
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Check account';
+                return;
               }
+              confirmCopyEl.textContent = 'Confirm this is you, then enter the code we email you before paying.';
+              confirmPayBtn.disabled = false;
+              confirmPayBtn.textContent = 'Continue to payment';
             } else {
               confirmNameEl.textContent = email;
-              confirmCopyEl.textContent = 'No Inform account yet. After payment we will create one for this email.';
+              confirmCopyEl.textContent = 'No Inform account yet. Verify this email, pay, and we will create one with login details emailed to you.';
               confirmPayBtn.disabled = false;
               confirmPayBtn.textContent = 'Continue to payment';
             }
             showConfirmStep();
             submitBtn.disabled = false;
             submitBtn.textContent = 'Check account';
+            requestSubscribeOtp().then(function (ok) {
+              if (ok && otpInput) setTimeout(function () { otpInput.focus(); }, 30);
+            });
           })
           .catch(function () {
             showError(errorEl, 'Network error. Please check your connection and try again.');
@@ -1260,21 +1316,24 @@
       confirmPayBtn.addEventListener('click', function () {
         if (!checkedEmail || !selectedPlan || confirmPayBtn.disabled) return;
         clearError(confirmErrorEl);
+        var otp = otpInput ? otpInput.value.trim() : '';
+        if (!otp) {
+          showError(confirmErrorEl, 'Enter the verification code we emailed you.');
+          if (otpInput) otpInput.focus();
+          return;
+        }
         confirmPayBtn.disabled = true;
         confirmPayBtn.textContent = 'Redirecting to payment…';
         fetch(CHECKOUT_ENDPOINT, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: checkedEmail, plan: selectedPlan }),
+          body: JSON.stringify({ email: checkedEmail, plan: selectedPlan, otp: otp }),
         })
           .then(parseJson)
           .then(function (result) {
             var checkoutUrl = result.body && result.body.data && result.body.data.checkoutUrl;
             if (!result.ok || !checkoutUrl) {
-              var apiMessage =
-                (result.body && (result.body.systemMessage || result.body.detail || result.body.message)) ||
-                'Could not start checkout. Please try again.';
-              showError(confirmErrorEl, apiMessage);
+              showError(confirmErrorEl, apiMessage(result.body, 'Could not start checkout. Please try again.'));
               confirmPayBtn.disabled = false;
               confirmPayBtn.textContent = 'Continue to payment';
               return;
