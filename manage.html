@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>INFORM — Manage subscription</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #000000;
+      --card: #0A0A0A;
+      --white: #F8F9F5;
+      --muted: #9C9C9C;
+      --label: #5A5A5A;
+      --rule: #1D1D1D;
+      --rule-mid: #2A2A2A;
+      --blue: #205BFF;
+      --red: #E85028;
+      --green: #47D386;
+    }
+
+    html, body {
+      background: var(--ink);
+      color: var(--white);
+      min-height: 100dvh;
+      font-family: 'Geist', sans-serif;
+    }
+
+    #page {
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px clamp(20px, 5vw, 60px) 48px;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(32,91,255,0.18), transparent 55%),
+        var(--ink);
+    }
+
+    header {
+      width: 100%;
+      max-width: 520px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0 28px;
+    }
+
+    .header-logo { width: 120px; display: block; color: var(--white); text-decoration: none; }
+    .header-logo svg { width: 100%; height: auto; display: block; }
+
+    .home-link {
+      font-size: 13px;
+      color: var(--muted);
+      text-decoration: none;
+    }
+    .home-link:hover { color: var(--white); }
+
+    .panel {
+      width: 100%;
+      max-width: 520px;
+      background: var(--card);
+      border: 1px solid var(--rule-mid);
+      border-radius: 20px;
+      padding: clamp(24px, 5vw, 36px);
+    }
+
+    .eyebrow {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--blue);
+      border: 1px solid rgba(32,91,255,0.45);
+      border-radius: 999px;
+      padding: 6px 10px;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-size: clamp(28px, 5vw, 40px);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1.1;
+      margin-bottom: 10px;
+    }
+
+    .lede {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.55;
+      margin-bottom: 24px;
+    }
+
+    label {
+      display: block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--label);
+      margin-bottom: 8px;
+    }
+
+    input {
+      width: 100%;
+      background: #111;
+      border: 1px solid var(--rule-mid);
+      border-radius: 12px;
+      color: var(--white);
+      font: inherit;
+      font-size: 16px;
+      padding: 14px 16px;
+      margin-bottom: 14px;
+    }
+    input:focus { outline: 2px solid var(--blue); outline-offset: 1px; }
+
+    .error {
+      color: var(--red);
+      font-size: 14px;
+      margin: 0 0 12px;
+    }
+    .error[hidden], [hidden] { display: none !important; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      border: 0;
+      border-radius: 999px;
+      background: var(--white);
+      color: var(--ink);
+      font: inherit;
+      font-weight: 600;
+      font-size: 15px;
+      padding: 14px 18px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .btn:disabled { opacity: 0.55; cursor: not-allowed; }
+    .btn-secondary {
+      background: transparent;
+      color: var(--white);
+      border: 1px solid var(--rule-mid);
+      margin-top: 10px;
+    }
+    .btn-danger {
+      background: transparent;
+      color: var(--red);
+      border: 1px solid rgba(232,80,40,0.45);
+      margin-top: 10px;
+    }
+    .btn-link {
+      display: block;
+      width: 100%;
+      margin-top: 14px;
+      background: none;
+      border: 0;
+      color: var(--muted);
+      font: inherit;
+      font-size: 14px;
+      cursor: pointer;
+      text-align: center;
+    }
+    .btn-link:hover { color: var(--white); }
+
+    .status-card {
+      background: #101010;
+      border: 1px solid var(--rule-mid);
+      border-radius: 14px;
+      padding: 18px;
+      margin-bottom: 18px;
+    }
+    .status-card .k {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--label);
+      margin-bottom: 6px;
+    }
+    .status-card .v {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .status-card .v:last-child { margin-bottom: 0; }
+    .badge {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 8px;
+      border-radius: 999px;
+      margin-bottom: 12px;
+    }
+    .badge-active { background: rgba(71,211,134,0.15); color: var(--green); }
+    .badge-ending { background: rgba(232,80,40,0.15); color: var(--red); }
+    .badge-none { background: rgba(156,156,156,0.15); color: var(--muted); }
+
+    .actions { display: flex; flex-direction: column; gap: 0; }
+    .fineprint {
+      margin-top: 18px;
+      font-size: 13px;
+      color: var(--label);
+      line-height: 1.5;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div id="page">
+    <header>
+      <a class="header-logo" href="index.html" aria-label="Inform home">
+        <svg viewBox="0 0 165 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M78.1 0C87.1 0 94 6.5 94 16s-6.9 16-15.9 16S62.3 25.5 62.3 16 69.1 0 78.1 0ZM7.4 31.4H0V.6h7.4v30.8ZM30.1 19.1V.6h6.8v30.8h-5.9L16.8 11.7v19.7H10V.6h7.1l13 18.5ZM62.3 6.7H46.9v6.9h11.6v6.1H46.9v11.8h-7.4V.6h22.8v6.1ZM109.9.6c8 0 11.9 3.7 11.9 9.6 0 4.6-2.9 7.4-6.6 7.9 3.3.6 5.1 2.6 5.5 6.2.4 4.6.6 6 1.6 7.1h-7.5c-.6-.8-1-2.8-1.3-6.1-.2-3.5-1.8-4.6-4.9-4.6h-6.2v10.7h-7.3V.6h14.8ZM147.4 19l10.2-18.5H165v30.8h-6.8V12.8L147.4 31.3h-6.8V12.8L130.3 31.3h-6.8L140.6.5h6.8V19ZM78.1 6.5c-5 0-8.1 3.8-8.1 9.5s3.2 9.5 8.1 9.5 8.2-3.8 8.2-9.5-3.2-9.5-8.2-9.5ZM102.3 15h6.4c3.8 0 5.7-1.1 5.7-4.2 0-2.7-1.9-4.3-5.7-4.3h-6.4V15Z" fill="currentColor"/>
+        </svg>
+      </a>
+      <a class="home-link" href="index.html#pricing">← Back to pricing</a>
+    </header>
+
+    <div class="panel">
+      <span class="eyebrow">Manage</span>
+      <h1>Your subscription</h1>
+      <p class="lede" id="lede">Enter the email on your Inform account. We’ll send a one-time code so you can cancel, reactivate, or open the Stripe portal.</p>
+
+      <div id="emailStep">
+        <label for="emailInput">Email address</label>
+        <input id="emailInput" type="email" autocomplete="email" placeholder="you@example.com">
+        <p class="error" id="emailError" hidden></p>
+        <button type="button" class="btn" id="sendOtpBtn">Send verification code</button>
+      </div>
+
+      <div id="otpStep" hidden>
+        <label for="otpInput">Verification code</label>
+        <input id="otpInput" type="text" inputmode="numeric" autocomplete="one-time-code" placeholder="6-digit code">
+        <p class="error" id="otpError" hidden></p>
+        <button type="button" class="btn" id="verifyOtpBtn">Verify &amp; continue</button>
+        <button type="button" class="btn-link" id="resendOtpBtn">Resend code</button>
+        <button type="button" class="btn-link" id="changeEmailBtn">Use a different email</button>
+      </div>
+
+      <div id="manageStep" hidden>
+        <div class="status-card" id="statusCard"></div>
+        <p class="error" id="manageError" hidden></p>
+        <div class="actions">
+          <button type="button" class="btn" id="portalBtn">Open billing portal</button>
+          <button type="button" class="btn-danger" id="cancelBtn" hidden>Cancel at period end</button>
+          <button type="button" class="btn-secondary" id="reactivateBtn" hidden>Reactivate subscription</button>
+          <a class="btn-secondary btn" id="subscribeLink" href="index.html#pricing" hidden style="margin-top:10px;">Choose a plan</a>
+        </div>
+        <button type="button" class="btn-link" id="signOutBtn">Use a different email</button>
+      </div>
+
+      <p class="fineprint">Cancel anytime before renewal. Access continues until the end of the current billing period.</p>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DEFAULT_API_BASE = 'http://127.0.0.1:8000';
+      var params = new URLSearchParams(window.location.search);
+      var API_BASE = (params.get('api') || window.INFORM_API_BASE || DEFAULT_API_BASE).replace(/\/$/, '');
+      var TOKEN_KEY = 'inform_billing_manage_token';
+
+      var emailStep = document.getElementById('emailStep');
+      var otpStep = document.getElementById('otpStep');
+      var manageStep = document.getElementById('manageStep');
+      var emailInput = document.getElementById('emailInput');
+      var otpInput = document.getElementById('otpInput');
+      var emailError = document.getElementById('emailError');
+      var otpError = document.getElementById('otpError');
+      var manageError = document.getElementById('manageError');
+      var statusCard = document.getElementById('statusCard');
+      var sendOtpBtn = document.getElementById('sendOtpBtn');
+      var verifyOtpBtn = document.getElementById('verifyOtpBtn');
+      var resendOtpBtn = document.getElementById('resendOtpBtn');
+      var changeEmailBtn = document.getElementById('changeEmailBtn');
+      var cancelBtn = document.getElementById('cancelBtn');
+      var reactivateBtn = document.getElementById('reactivateBtn');
+      var portalBtn = document.getElementById('portalBtn');
+      var subscribeLink = document.getElementById('subscribeLink');
+      var signOutBtn = document.getElementById('signOutBtn');
+      var lede = document.getElementById('lede');
+
+      var checkedEmail = '';
+      var manageToken = sessionStorage.getItem(TOKEN_KEY) || '';
+
+      function showError(el, message) {
+        el.textContent = message || '';
+        el.hidden = !message;
+      }
+
+      function parseJson(res) {
+        return res.json().catch(function () { return {}; }).then(function (body) {
+          return { ok: res.ok, status: res.status, body: body };
+        });
+      }
+
+      function apiMessage(body, fallback) {
+        return (body && (body.systemMessage || body.detail || body.message)) || fallback;
+      }
+
+      function planLabel(plan) {
+        var map = {
+          weekly: 'Weekly',
+          monthly: 'Monthly',
+          three_month: '3-months',
+          bi_year: '6-months'
+        };
+        return map[plan] || plan || '—';
+      }
+
+      function formatDate(iso) {
+        if (!iso) return '—';
+        try {
+          return new Date(iso).toLocaleDateString(undefined, {
+            year: 'numeric', month: 'short', day: 'numeric'
+          });
+        } catch (e) {
+          return iso;
+        }
+      }
+
+      function setStep(step) {
+        emailStep.hidden = step !== 'email';
+        otpStep.hidden = step !== 'otp';
+        manageStep.hidden = step !== 'manage';
+        if (step === 'email') {
+          lede.textContent = 'Enter the email on your Inform account. We’ll send a one-time code so you can cancel, reactivate, or open the Stripe portal.';
+        } else if (step === 'otp') {
+          lede.textContent = 'Enter the code we sent to ' + checkedEmail + '.';
+        } else {
+          lede.textContent = 'Cancel renews off at period end. Reactivate undoes a pending cancel. The billing portal handles payment methods and invoices.';
+        }
+      }
+
+      function renderSubscription(data) {
+        var sub = data && data.subscription;
+        var name = (data && data.fullName) || (data && data.email) || checkedEmail;
+        var html = '<div class="k">Account</div><div class="v">' + escapeHtml(name) + '</div>';
+
+        if (!sub || !sub.hasAccess) {
+          html += '<span class="badge badge-none">No active subscription</span>';
+          html += '<div class="k">Status</div><div class="v">Nothing to cancel right now</div>';
+          cancelBtn.hidden = true;
+          reactivateBtn.hidden = true;
+          subscribeLink.hidden = false;
+          portalBtn.hidden = true;
+        } else if (sub.cancelAtPeriodEnd) {
+          html += '<span class="badge badge-ending">Cancels at period end</span>';
+          html += '<div class="k">Plan</div><div class="v">' + escapeHtml(planLabel(sub.plan)) + '</div>';
+          html += '<div class="k">Access until</div><div class="v">' + escapeHtml(formatDate(sub.currentPeriodEnd)) + '</div>';
+          cancelBtn.hidden = true;
+          reactivateBtn.hidden = false;
+          subscribeLink.hidden = true;
+          portalBtn.hidden = false;
+        } else {
+          html += '<span class="badge badge-active">Active</span>';
+          html += '<div class="k">Plan</div><div class="v">' + escapeHtml(planLabel(sub.plan)) + '</div>';
+          html += '<div class="k">Renews</div><div class="v">' + escapeHtml(formatDate(sub.currentPeriodEnd)) + '</div>';
+          cancelBtn.hidden = false;
+          reactivateBtn.hidden = true;
+          subscribeLink.hidden = true;
+          portalBtn.hidden = false;
+        }
+
+        statusCard.innerHTML = html;
+      }
+
+      function escapeHtml(value) {
+        return String(value == null ? '' : value)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      }
+
+      function setManageToken(token) {
+        manageToken = token || '';
+        if (manageToken) sessionStorage.setItem(TOKEN_KEY, manageToken);
+        else sessionStorage.removeItem(TOKEN_KEY);
+      }
+
+      function requestOtp() {
+        var email = (emailInput.value || '').trim();
+        showError(emailError, '');
+        if (!email || email.indexOf('@') < 1) {
+          showError(emailError, 'Enter a valid email address.');
+          return;
+        }
+        checkedEmail = email;
+        sendOtpBtn.disabled = true;
+        sendOtpBtn.textContent = 'Sending…';
+        fetch(API_BASE + '/public/billing/manage/request-otp', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: email })
+        })
+          .then(parseJson)
+          .then(function (result) {
+            sendOtpBtn.disabled = false;
+            sendOtpBtn.textContent = 'Send verification code';
+            if (!result.ok) {
+              showError(emailError, apiMessage(result.body, 'Could not send code. Try again.'));
+              return;
+            }
+            setStep('otp');
+            otpInput.focus();
+          })
+          .catch(function () {
+            sendOtpBtn.disabled = false;
+            sendOtpBtn.textContent = 'Send verification code';
+            showError(emailError, 'Network error. Check your connection and try again.');
+          });
+      }
+
+      function verifyOtp() {
+        var otp = (otpInput.value || '').trim();
+        showError(otpError, '');
+        if (!otp) {
+          showError(otpError, 'Enter the verification code.');
+          return;
+        }
+        verifyOtpBtn.disabled = true;
+        verifyOtpBtn.textContent = 'Verifying…';
+        fetch(API_BASE + '/public/billing/manage/verify-otp', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: checkedEmail, otp: otp })
+        })
+          .then(parseJson)
+          .then(function (result) {
+            verifyOtpBtn.disabled = false;
+            verifyOtpBtn.textContent = 'Verify & continue';
+            if (!result.ok || !result.body || !result.body.data || !result.body.data.manageToken) {
+              showError(otpError, apiMessage(result.body, 'Invalid or expired code.'));
+              return;
+            }
+            setManageToken(result.body.data.manageToken);
+            renderSubscription(result.body.data);
+            setStep('manage');
+          })
+          .catch(function () {
+            verifyOtpBtn.disabled = false;
+            verifyOtpBtn.textContent = 'Verify & continue';
+            showError(otpError, 'Network error. Check your connection and try again.');
+          });
+      }
+
+      function postAction(path, button, busyLabel) {
+        showError(manageError, '');
+        if (!manageToken) {
+          setStep('email');
+          return;
+        }
+        var original = button.textContent;
+        button.disabled = true;
+        button.textContent = busyLabel;
+        fetch(API_BASE + path, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ manageToken: manageToken })
+        })
+          .then(parseJson)
+          .then(function (result) {
+            button.disabled = false;
+            button.textContent = original;
+            if (!result.ok) {
+              showError(manageError, apiMessage(result.body, 'Something went wrong. Try again.'));
+              if (result.status === 401) {
+                setManageToken('');
+                setStep('email');
+              }
+              return;
+            }
+            if (path.indexOf('/portal') !== -1) {
+              var portalUrl = result.body && result.body.data && result.body.data.portalUrl;
+              if (portalUrl) {
+                window.location.href = portalUrl;
+                return;
+              }
+              showError(manageError, 'Could not open the billing portal.');
+              return;
+            }
+            var sub = result.body && result.body.data && result.body.data.subscription;
+            renderSubscription({
+              email: checkedEmail,
+              fullName: null,
+              subscription: sub
+            });
+            // Refresh full snapshot so name/status stay consistent
+            return fetch(API_BASE + '/public/billing/manage/status', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ manageToken: manageToken })
+            }).then(parseJson).then(function (statusResult) {
+              if (statusResult.ok && statusResult.body && statusResult.body.data) {
+                renderSubscription(statusResult.body.data);
+              }
+            });
+          })
+          .catch(function () {
+            button.disabled = false;
+            button.textContent = original;
+            showError(manageError, 'Network error. Check your connection and try again.');
+          });
+      }
+
+      function resetToEmail() {
+        setManageToken('');
+        checkedEmail = '';
+        otpInput.value = '';
+        showError(emailError, '');
+        showError(otpError, '');
+        showError(manageError, '');
+        setStep('email');
+        emailInput.focus();
+      }
+
+      sendOtpBtn.addEventListener('click', requestOtp);
+      resendOtpBtn.addEventListener('click', requestOtp);
+      verifyOtpBtn.addEventListener('click', verifyOtp);
+      changeEmailBtn.addEventListener('click', resetToEmail);
+      signOutBtn.addEventListener('click', resetToEmail);
+      cancelBtn.addEventListener('click', function () {
+        if (!window.confirm('Cancel at the end of this billing period? You’ll keep access until then.')) return;
+        postAction('/public/billing/manage/cancel', cancelBtn, 'Cancelling…');
+      });
+      reactivateBtn.addEventListener('click', function () {
+        postAction('/public/billing/manage/reactivate', reactivateBtn, 'Reactivating…');
+      });
+      portalBtn.addEventListener('click', function () {
+        postAction('/public/billing/manage/portal', portalBtn, 'Opening portal…');
+      });
+
+      emailInput.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') requestOtp();
+      });
+      otpInput.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') verifyOtp();
+      });
+
+      // Resume an existing manage session if token still valid
+      if (manageToken) {
+        fetch(API_BASE + '/public/billing/manage/status', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ manageToken: manageToken })
+        })
+          .then(parseJson)
+          .then(function (result) {
+            if (!result.ok || !result.body || !result.body.data) {
+              setManageToken('');
+              setStep('email');
+              return;
+            }
+            checkedEmail = result.body.data.email || '';
+            renderSubscription(result.body.data);
+            setStep('manage');
+          })
+          .catch(function () {
+            setManageToken('');
+            setStep('email');
+          });
+      } else {
+        setStep('email');
+      }
+
+      var prefill = params.get('email');
+      if (prefill) emailInput.value = prefill;
+    })();
+  </script>
+</body>
+</html>

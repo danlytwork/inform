@@ -917,7 +917,7 @@
         </button>
       </div>
 
-      <p class="pricing-note reveal visible" data-delay="5">Billed per chosen cycle. Commit only to your chosen term. Cancel anytime.</p>
+      <p class="pricing-note reveal visible" data-delay="5">Billed per chosen cycle. Commit only to your chosen term. Cancel anytime. <a href="manage.html" style="color:#205BFF;text-decoration:none;">Manage subscription →</a></p>
     </div>
   </section>
 
@@ -1096,7 +1096,8 @@
     //   POST {API_BASE}/public/billing/checkout { "email": "...", "plan": "..." }
     //     → { data: { checkoutUrl } }
     (function () {
-      var DEFAULT_API_BASE = 'https://backend.informapp.com.au';
+      var DEFAULT_API_BASE = 'http://127.0.0.1:8000';
+      // var DEFAULT_API_BASE = 'https://backend.informapp.com.au';
       var params = new URLSearchParams(window.location.search);
       var API_BASE = (params.get('api') || window.INFORM_API_BASE || DEFAULT_API_BASE).replace(/\/$/, '');
       var LOOKUP_ENDPOINT = API_BASE + '/public/billing/lookup';
@@ -1230,13 +1231,15 @@
             checkedEmail = email;
             if (data.exists) {
               confirmNameEl.textContent = data.fullName || 'Inform member';
-              confirmCopyEl.textContent = data.alreadySubscribed
-                ? 'This Inform account already has an active subscription.'
-                : 'Confirm this is you before paying. The subscription will be attached to this account.';
-              confirmPayBtn.disabled = data.canSubscribe === false;
-              confirmPayBtn.textContent = data.canSubscribe === false
-                ? 'Already subscribed'
-                : 'Continue to payment';
+              if (data.alreadySubscribed) {
+                confirmCopyEl.innerHTML = 'This Inform account already has an active subscription. <a href="manage.html?email=' + encodeURIComponent(email) + '" style="color:#205BFF;">Manage it here</a>.';
+                confirmPayBtn.disabled = true;
+                confirmPayBtn.textContent = 'Already subscribed';
+              } else {
+                confirmCopyEl.textContent = 'Confirm this is you before paying. The subscription will be attached to this account.';
+                confirmPayBtn.disabled = false;
+                confirmPayBtn.textContent = 'Continue to payment';
+              }
             } else {
               confirmNameEl.textContent = email;
               confirmCopyEl.textContent = 'No Inform account yet. After payment we will create one for this email.';

@@ -166,6 +166,7 @@
     <h1 id="statusTitle">You're subscribed.</h1>
     <p id="statusBody">Confirming your subscription&hellip;</p>
     <div class="btn-row">
+      <a href="manage.html" class="ig-btn">MANAGE SUBSCRIPTION</a>
       <a href="index.html#pricing" class="ig-btn">BACK TO PRICING</a>
     </div>
     <a href="index.html" class="home-link">← BACK TO INFORM</a>
@@ -199,7 +200,7 @@
         return;
       }
 
-      var DEFAULT_API_BASE = 'https://backend.informapp.com.au';
+      var DEFAULT_API_BASE = 'http://127.0.0.1:8000';
       var API_BASE = (params.get('api') || window.INFORM_API_BASE || DEFAULT_API_BASE).replace(/\/$/, '');
 
       fetch(API_BASE + '/public/billing/confirm', {
