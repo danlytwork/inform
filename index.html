@@ -430,20 +430,24 @@
     /* ================= PHILOSOPHY ================= */
     .philosophy-section {
       padding: clamp(60px, 9vw, 110px) 0;
-      text-align: center;
+    }
+    .philosophy-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(32px, 6vw, 90px);
+      align-items: center;
+      text-align: left;
     }
     .philosophy-section h2 {
       font-size: clamp(24px, 3.4vw, 40px);
       font-weight: 700;
       letter-spacing: -0.02em;
       line-height: 1.15;
-      max-width: 680px;
-      margin: 18px auto 0;
+      margin: 18px 0 0;
     }
     .philosophy-section .ghost-line { color: var(--muted); font-weight: 300; display: block; }
     .philosophy-body {
-      max-width: 560px;
-      margin: 24px auto 0;
+      margin: 24px 0 0;
       display: flex;
       flex-direction: column;
       gap: 14px;
@@ -455,6 +459,15 @@
       line-height: 1.75;
     }
     .philosophy-body p:last-child { color: var(--white); font-weight: 400; }
+    .philosophy-media {
+      display: flex;
+      justify-content: center;
+    }
+    .philosophy-media img {
+      width: 100%;
+      height: auto;
+      border-radius: 16px;
+    }
 
     /* ================= PRICING ================= */
     .pricing-section {
@@ -709,6 +722,9 @@
       .feature-row.flip .feature-copy,
       .feature-row.flip .feature-media { order: initial; }
       .feature-copy p { margin: 0 auto; }
+      .philosophy-grid { grid-template-columns: 1fr; text-align: center; }
+      .philosophy-body { margin: 24px auto 0; }
+      .philosophy-body p { max-width: 560px; margin: 0 auto; }
       .phase-grid { grid-template-columns: repeat(2, 1fr); }
       .pricing-grid { grid-template-columns: repeat(2, 1fr); }
     }
@@ -745,7 +761,7 @@
       <a href="#standard">The Standard</a>
       <a href="#pricing">Pricing</a>
     </nav>
-    <a href="form.html" class="btn btn--ghost nav-cta">Early access</a>
+    <a href="form.html" class="btn btn--ghost nav-cta">Sign up now</a>
   </header>
 
   <!-- ================= HERO ================= -->
@@ -755,7 +771,7 @@
       <h1 class="reveal visible">Rehab doesn&rsquo;t end at the door.</h1>
       <p class="hero-sub reveal visible" data-delay="1">Built by a physiotherapist with a decade treating professional athletes across the WAFL, A-League and W-League.</p>
       <div class="hero-cta reveal visible" data-delay="2">
-        <a href="form.html" class="btn">Apply for early access</a>
+        <a href="form.html" class="btn">Sign up now</a>
       </div>
     </div>
   </section>
@@ -801,7 +817,7 @@
           <p>Today&rsquo;s session. Your rehab progress. A direct line to your physio when something feels off, not a forum, not a search bar. Inform is what fills the gap between appointments, where recovery actually happens or quietly falls apart. One physio session funds a month of it.</p>
         </div>
         <div class="feature-media reveal" data-delay="1">
-          <img src="assets/landing-v2/phone-dashboard.jpg" alt="Inform app dashboard showing today's session and rehab progress" loading="lazy">
+          <img src="assets/landing-v2/phone-todays-plan.jpg" alt="Inform app dashboard showing today's session and rehab progress" loading="lazy">
         </div>
       </div>
 
@@ -873,12 +889,19 @@
   <!-- ================= PHILOSOPHY ================= -->
   <section class="philosophy-section" id="story">
     <div class="wrap">
-      <span class="eyebrow reveal">Human in the loop</span>
-      <h2 class="reveal" data-delay="1">The judgment stays human.<span class="ghost-line">The infrastructure scales.</span></h2>
-      <div class="philosophy-body reveal" data-delay="2">
-        <p>This isn&rsquo;t AI replacing a physio. It&rsquo;s AI doing the parts a physio shouldn&rsquo;t have to.</p>
-        <p>Every protocol is written by a physiotherapist with over ten years treating professional athletes in the WAFL, A-League and W-League. The system handles tracking, progression logic and reminders.</p>
-        <p>The clinical judgment behind every plan is entirely human.</p>
+      <div class="philosophy-grid">
+        <div class="philosophy-copy reveal">
+          <span class="eyebrow">Human in the loop</span>
+          <h2 class="reveal" data-delay="1">The judgment stays human.<span class="ghost-line">The infrastructure scales.</span></h2>
+          <div class="philosophy-body reveal" data-delay="2">
+            <p>This isn&rsquo;t AI replacing a physio. It&rsquo;s AI doing the parts a physio shouldn&rsquo;t have to.</p>
+            <p>Every protocol is written by a physiotherapist with over ten years treating professional athletes in the WAFL, A-League and W-League. The system handles tracking, progression logic and reminders.</p>
+            <p>The clinical judgment behind every plan is entirely human.</p>
+          </div>
+        </div>
+        <div class="philosophy-media reveal" data-delay="1">
+          <img src="assets/landing-v2/physio-treatment.jpg" alt="Inform physiotherapist treating an athlete" loading="lazy">
+        </div>
       </div>
     </div>
   </section>
@@ -961,7 +984,7 @@
     <div class="wrap">
       <h2 class="reveal">Stop guessing what comes next.<span class="ghost-line">Recover like the professionals.</span></h2>
       <div class="reveal" data-delay="1">
-        <a href="form.html" class="btn">Apply for early access</a>
+        <a href="form.html" class="btn">Sign up now</a>
       </div>
     </div>
   </section>
