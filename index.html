@@ -1156,6 +1156,8 @@
       var selectedPlan = null;
       var checkedEmail = '';
       var lastFocusedEl = null;
+      var otpSentForEmail = '';
+      var otpRequestInFlight = null;
 
       function parseJson(res) {
         return res.json().catch(function () { return {}; }).then(function (body) {
@@ -1183,6 +1185,8 @@
         submitBtn.disabled = false;
         submitBtn.textContent = 'Check account';
         if (otpInput) otpInput.value = '';
+        otpSentForEmail = '';
+        otpRequestInFlight = null;
         clearError(errorEl);
         clearError(confirmErrorEl);
       }
@@ -1193,25 +1197,33 @@
         clearError(confirmErrorEl);
       }
 
-      function requestSubscribeOtp() {
+      function requestSubscribeOtp(options) {
+        var force = options && options.force;
         if (!checkedEmail) return Promise.resolve(false);
-        return fetch(SUBSCRIBE_OTP_ENDPOINT, {
+        if (!force && otpSentForEmail === checkedEmail) return Promise.resolve(true);
+        if (otpRequestInFlight) return otpRequestInFlight;
+
+        otpRequestInFlight = fetch(SUBSCRIBE_OTP_ENDPOINT, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email: checkedEmail }),
         })
           .then(parseJson)
           .then(function (result) {
+            otpRequestInFlight = null;
             if (!result.ok) {
               showError(confirmErrorEl, apiMessage(result.body, 'Could not send verification code.'));
               return false;
             }
+            otpSentForEmail = checkedEmail;
             return true;
           })
           .catch(function () {
+            otpRequestInFlight = null;
             showError(confirmErrorEl, 'Network error. Could not send verification code.');
             return false;
           });
+        return otpRequestInFlight;
       }
 
       function openModal(card) {
@@ -1253,7 +1265,7 @@
         resendOtpBtn.addEventListener('click', function () {
           clearError(confirmErrorEl);
           resendOtpBtn.textContent = 'Sending…';
-          requestSubscribeOtp().then(function (ok) {
+          requestSubscribeOtp({ force: true }).then(function (ok) {
             resendOtpBtn.textContent = 'Resend code';
             if (ok && otpInput) otpInput.focus();
           });
@@ -1264,8 +1276,51 @@
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
       }
 
+      function startCheckout() {
+        if (!checkedEmail || !selectedPlan || confirmPayBtn.disabled) return;
+        clearError(confirmErrorEl);
+        var otp = otpInput ? otpInput.value.trim() : '';
+        if (!otp) {
+          showError(confirmErrorEl, 'Enter the verification code we emailed you.');
+          if (otpInput) otpInput.focus();
+          return;
+        }
+        confirmPayBtn.disabled = true;
+        confirmPayBtn.textContent = 'Redirecting to payment…';
+        fetch(CHECKOUT_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: checkedEmail, plan: selectedPlan, otp: otp }),
+        })
+          .then(parseJson)
+          .then(function (result) {
+            var checkoutUrl = result.body && result.body.data && result.body.data.checkoutUrl;
+            if (!result.ok || !checkoutUrl) {
+              showError(confirmErrorEl, apiMessage(result.body, 'Could not start checkout. Please try again.'));
+              confirmPayBtn.disabled = false;
+              confirmPayBtn.textContent = 'Continue to payment';
+              return;
+            }
+            window.location.href = checkoutUrl;
+          })
+          .catch(function (err) {
+            showError(
+              confirmErrorEl,
+              (err && err.message) ? ('Network error: ' + err.message) : 'Network error. Please check your connection and try again.'
+            );
+            confirmPayBtn.disabled = false;
+            confirmPayBtn.textContent = 'Continue to payment';
+          });
+      }
+
       form.addEventListener('submit', function (e) {
         e.preventDefault();
+        // Enter inside the OTP field must continue to payment — not re-check
+        // the email (which would email another OTP).
+        if (!confirmStep.hidden) {
+          startCheckout();
+          return;
+        }
         clearError(errorEl);
 
         var email = emailInput.value.trim();
@@ -1297,6 +1352,7 @@
             }
 
             checkedEmail = email;
+            otpSentForEmail = '';
             if (otpBlock) otpBlock.hidden = false;
             if (resendOtpBtn) resendOtpBtn.hidden = false;
 
@@ -1336,42 +1392,7 @@
           });
       });
 
-      confirmPayBtn.addEventListener('click', function () {
-        if (!checkedEmail || !selectedPlan || confirmPayBtn.disabled) return;
-        clearError(confirmErrorEl);
-        var otp = otpInput ? otpInput.value.trim() : '';
-        if (!otp) {
-          showError(confirmErrorEl, 'Enter the verification code we emailed you.');
-          if (otpInput) otpInput.focus();
-          return;
-        }
-        confirmPayBtn.disabled = true;
-        confirmPayBtn.textContent = 'Redirecting to payment…';
-        fetch(CHECKOUT_ENDPOINT, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: checkedEmail, plan: selectedPlan, otp: otp }),
-        })
-          .then(parseJson)
-          .then(function (result) {
-            var checkoutUrl = result.body && result.body.data && result.body.data.checkoutUrl;
-            if (!result.ok || !checkoutUrl) {
-              showError(confirmErrorEl, apiMessage(result.body, 'Could not start checkout. Please try again.'));
-              confirmPayBtn.disabled = false;
-              confirmPayBtn.textContent = 'Continue to payment';
-              return;
-            }
-            window.location.href = checkoutUrl;
-          })
-          .catch(function (err) {
-            showError(
-              confirmErrorEl,
-              (err && err.message) ? ('Network error: ' + err.message) : 'Network error. Please check your connection and try again.'
-            );
-            confirmPayBtn.disabled = false;
-            confirmPayBtn.textContent = 'Continue to payment';
-          });
-      });
+      confirmPayBtn.addEventListener('click', startCheckout);
     }());
   </script>
 
