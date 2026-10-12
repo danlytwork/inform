@@ -399,46 +399,19 @@
       max-width: 440px;
     }
     .feature-media { display: flex; justify-content: center; }
+    /* App screenshots are 1938x2460 transparent mockups. Width drives the size, height follows
+       the native ratio, so they are never cropped or stretched. */
     .feature-media img {
       width: 100%;
-      max-width: 300px;
-      aspect-ratio: 760 / 939;
+      max-width: 340px;
+      height: auto;
+      aspect-ratio: 1938 / 2460;
       object-fit: contain;
-      border-radius: 28px;
       transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
     }
-    .feature-media:hover img,
-    .feature-media:hover .phone-placeholder { transform: translateY(-6px); }
-
-    /* Placeholder for app screenshots. Swap each .phone-placeholder for
-       <img src="/assets/off-season/....jpg" alt="..."> when the shots are ready. */
-    .phone-placeholder {
-      width: 100%;
-      max-width: 300px;
-      aspect-ratio: 760 / 939;
-      border-radius: 28px;
-      border: 1px dashed #3a3a3a;
-      background:
-        radial-gradient(ellipse 260px 200px at 50% 30%, rgba(32,91,255,0.12), transparent 70%),
-        var(--card);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      text-align: center;
-      padding: 24px;
-      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
-    }
-    .phone-placeholder svg { opacity: 0.5; }
-    .phone-placeholder span {
-      font-family: 'Geist Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--label);
-      line-height: 1.6;
-    }
+    .feature-row.no-media { grid-template-columns: 1fr; text-align: center; }
+    .feature-row.no-media .feature-copy p { margin: 0 auto; }
+    .feature-media:hover img { transform: translateY(-6px); }
 
     /* ================= CARD GRID (inclusions / steps) ================= */
     .grid-section { padding: clamp(60px, 9vw, 110px) 0; text-align: center; }
@@ -552,14 +525,26 @@
       gap: clamp(28px, 6vw, 72px);
       margin-top: 26px;
     }
-    .logos-row img {
-      height: 54px;
-      width: auto;
-      filter: grayscale(1) brightness(0) invert(1);
-      opacity: 0.55;
-      transition: opacity 0.2s ease;
+    /* Logos stay in full colour on light chips so dark crests stay readable. Each image is scaled
+       to fit its chip (object-fit: contain, auto width/height), so nothing is cropped or squashed. */
+    .logos-row { gap: 14px; }
+    .logo-chip {
+      background: var(--white);
+      border-radius: 16px;
+      width: 132px;
+      height: 112px;
+      padding: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    .logos-row img:hover { opacity: 1; }
+    .logo-chip img {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+    }
 
     /* ================= OFFER ================= */
     .offer-section { padding: clamp(60px, 9vw, 110px) 0; text-align: center; }
@@ -908,7 +893,7 @@
       }
       .triptych-grid::-webkit-scrollbar { display: none; }
       .triptych-grid img { scroll-snap-align: start; }
-      .logos-row img { height: 42px; }
+      .logo-chip { width: calc(50% - 7px); max-width: 160px; height: 104px; }
     }
 
     @media (max-width: 520px) {
@@ -1050,26 +1035,17 @@
           <p>Before a single session gets assigned, Teneka looks at your injury history, what you want out of the off-season and the role you play. A centre back and a winger don&rsquo;t need the same program. Neither does the player with a dodgy hamstring. Yours is written for you.</p>
         </div>
         <div class="feature-media reveal" data-delay="1">
-          <!-- PLACEHOLDER: swap for <img src="/assets/off-season/app-strength.jpg" alt="Inform app strength program"> -->
-          <div class="phone-placeholder">
-            <svg width="28" height="44" viewBox="0 0 28 44" fill="none"><rect x="1" y="1" width="26" height="42" rx="6" stroke="#5A5A5A" stroke-width="1.5"/><rect x="10" y="4.5" width="8" height="2" rx="1" fill="#5A5A5A"/></svg>
-            <span>App screenshot<br>Strength program</span>
-          </div>
+          <img src="/assets/off-season/app-strength.webp" width="1938" height="2460" alt="Inform app showing today's strength session" loading="lazy">
         </div>
       </div>
 
-      <div class="feature-row flip">
+      <!-- MESSAGING: no in-app messaging screenshot yet. To add one, change class to "feature-row flip" and add
+           <div class="feature-media reveal" data-delay="1"><img src="/assets/off-season/app-messaging.webp" width="1938" height="2460" alt="Inform app messaging with your physio" loading="lazy"></div> -->
+      <div class="feature-row no-media">
         <div class="feature-copy reveal">
           <span class="eyebrow">Live access</span>
           <h3>Your physio is one message away.<span class="ghost-line">Not a forum. Not a search bar. Teneka.</span></h3>
           <p>Something tight after a session? Not sure whether to push the load? Message Teneka in the app and get an answer from the person who wrote your program. That&rsquo;s the bit you can&rsquo;t get from a PDF or a generic training app.</p>
-        </div>
-        <div class="feature-media reveal" data-delay="1">
-          <!-- PLACEHOLDER: swap for <img src="/assets/off-season/app-messaging.jpg" alt="Inform app messaging with your physio"> -->
-          <div class="phone-placeholder">
-            <svg width="28" height="44" viewBox="0 0 28 44" fill="none"><rect x="1" y="1" width="26" height="42" rx="6" stroke="#5A5A5A" stroke-width="1.5"/><rect x="10" y="4.5" width="8" height="2" rx="1" fill="#5A5A5A"/></svg>
-            <span>App screenshot<br>In-app messaging</span>
-          </div>
         </div>
       </div>
 
@@ -1080,11 +1056,7 @@
           <p>Every session logged. Strength, running and conditioning tracked week to week. Teneka sees it too, so your program moves as you get stronger instead of sitting on autopilot for 12 weeks.</p>
         </div>
         <div class="feature-media reveal" data-delay="1">
-          <!-- PLACEHOLDER: swap for <img src="/assets/off-season/app-progress.jpg" alt="Inform app progress tracking"> -->
-          <div class="phone-placeholder">
-            <svg width="28" height="44" viewBox="0 0 28 44" fill="none"><rect x="1" y="1" width="26" height="42" rx="6" stroke="#5A5A5A" stroke-width="1.5"/><rect x="10" y="4.5" width="8" height="2" rx="1" fill="#5A5A5A"/></svg>
-            <span>App screenshot<br>Progress tracking</span>
-          </div>
+          <img src="/assets/off-season/app-progress.webp" width="1938" height="2460" alt="Inform app progress tracking screen" loading="lazy">
         </div>
       </div>
 
@@ -1167,12 +1139,11 @@
 
       <div class="logos reveal" id="logosStrip">
         <div class="logos-label">Trusted by</div>
-        <!-- Logos load from the clinic site. Copy them into /assets/off-season/logos/ and update the paths if you'd rather host them here. -->
         <div class="logos-row">
-          <img src="https://inform-physio.com.au/assets/logos/perth-glory.png" alt="Perth Glory FC" loading="lazy" onerror="this.remove();window.checkLogos&&checkLogos()">
-          <img src="https://inform-physio.com.au/assets/logos/peel-thunder.png" alt="Peel Thunder FC" loading="lazy" onerror="this.remove();window.checkLogos&&checkLogos()">
-          <img src="https://inform-physio.com.au/assets/logos/cockburn-city.png" alt="Cockburn City SC" loading="lazy" onerror="this.remove();window.checkLogos&&checkLogos()">
-          <img src="https://inform-physio.com.au/assets/logos/western-knights.png" alt="Western Knights SC" loading="lazy" onerror="this.remove();window.checkLogos&&checkLogos()">
+          <div class="logo-chip"><img src="/assets/off-season/logos/perth-glory.svg" width="189" height="250" alt="Perth Glory FC" loading="lazy"></div>
+          <div class="logo-chip"><img src="/assets/off-season/logos/peel-thunder.png" width="178" height="175" alt="Peel Thunder FC" loading="lazy"></div>
+          <div class="logo-chip"><img src="/assets/off-season/logos/cockburn-city.png" width="912" height="1221" alt="Cockburn City SC" loading="lazy"></div>
+          <div class="logo-chip"><img src="/assets/off-season/logos/western-knights.png" width="251" height="320" alt="Western Knights SC" loading="lazy"></div>
         </div>
       </div>
     </div>
@@ -1433,12 +1404,6 @@
       setAll('[data-countdown-badge]', left);
       setAll('[data-countdown-long]', 'Intake closes <strong>31 October</strong>. ' + left + '.');
     }());
-
-    // ============ LOGO STRIP FALLBACK ============
-    window.checkLogos = function () {
-      var strip = document.getElementById('logosStrip');
-      if (strip && !strip.querySelector('.logos-row img')) strip.style.display = 'none';
-    };
 
     // ============ IN-PAGE ANCHOR SCROLL ============
     (function () {
