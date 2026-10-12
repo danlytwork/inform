@@ -1,0 +1,1817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>12-Week Football Off-Season Program | Inform</title>
+  <meta name="description" content="12-week off-season strength and conditioning for footballers. Built around your injuries, goals and position. Work 1:1 with former Perth Glory physio Teneka Araya. Only 10 spots.">
+
+  <!-- Open Graph -->
+  <meta property="og:type"        content="website">
+  <meta property="og:url"         content="https://www.informapp.com.au/off-season">
+  <meta property="og:title"       content="Maximise your off-season. 12 weeks, 1:1 with a pro football physio.">
+  <meta property="og:description" content="Strength, running, mobility and conditioning built around your injuries, goals and position. Only 10 spots. Closes 31 October.">
+  <meta property="og:image"       content="https://www.informapp.com.au/assets/off-season/og-image.jpg">
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:title"       content="Maximise your off-season. 12 weeks, 1:1 with a pro football physio.">
+  <meta name="twitter:description" content="Strength, running, mobility and conditioning built around your injuries, goals and position. Only 10 spots. Closes 31 October.">
+  <meta name="twitter:image"       content="https://www.informapp.com.au/assets/off-season/og-image.jpg">
+
+  <link rel="canonical" href="https://www.informapp.com.au/off-season">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=Geist+Mono:wght@400;500&family=Doto:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- TRACKING: drop the Google Analytics and Meta Pixel snippets here when ready -->
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:      #000000;
+      --card:     #0A0A0A;
+      --card-2:   #101010;
+      --white:    #F8F9F5;
+      --muted:    #9C9C9C;
+      --label:    #5A5A5A;
+      --rule:     #1D1D1D;
+      --rule-mid: #2A2A2A;
+      --green:    #47D386;
+      --red:      #E85028;
+      --blue:     #205BFF;
+    }
+
+    html { scroll-behavior: auto; }
+    section[id] { scroll-margin-top: 80px; }
+    [hidden] { display: none !important; }
+
+    body {
+      background: var(--ink);
+      color: var(--white);
+      overflow-x: hidden;
+      font-family: 'Geist', -apple-system, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; }
+    img { max-width: 100%; display: block; }
+
+    .wrap {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 0 clamp(20px, 5vw, 64px);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Geist Mono', monospace;
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: var(--card);
+      border: 1px solid var(--rule-mid);
+      border-radius: 999px;
+      padding: 7px 16px;
+    }
+
+    .section-title {
+      font-size: clamp(26px, 3.6vw, 42px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.12;
+      margin-top: 18px;
+    }
+    .ghost-line { color: var(--muted); font-weight: 300; display: block; }
+    .section-sub {
+      font-weight: 300;
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 620px;
+      margin: 18px auto 0;
+    }
+    .center { text-align: center; }
+
+    /* ================= BUTTONS ================= */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--white);
+      color: var(--ink);
+      font-family: 'Geist', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      padding: 15px 30px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    }
+    .btn:hover { background: var(--blue); color: #ffffff; transform: translateY(-2px); }
+    .btn:active { transform: translateY(0); }
+    .btn:disabled, .btn.is-disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
+    .btn--blue { background: var(--blue); color: #fff; }
+    .btn--blue:hover { background: var(--ink); color: #fff; }
+    .btn--sm { font-size: 12px; font-weight: 500; padding: 9px 20px; }
+
+    /* ================= REVEAL ================= */
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal[data-delay="1"] { transition-delay: 0.08s; }
+    .reveal[data-delay="2"] { transition-delay: 0.16s; }
+    .reveal[data-delay="3"] { transition-delay: 0.24s; }
+    .reveal[data-delay="4"] { transition-delay: 0.32s; }
+    .reveal[data-delay="5"] { transition-delay: 0.40s; }
+    .reveal[data-delay="6"] { transition-delay: 0.48s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+      .word { color: var(--white) !important; }
+    }
+
+    /* ================= NAV (stripped back) ================= */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px clamp(20px, 5vw, 48px);
+      background: rgba(0,0,0,0.55);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .nav-logo { width: 100px; flex-shrink: 0; }
+    .nav-logo svg { width: 100%; height: auto; display: block; }
+    .nav-right { display: flex; align-items: center; gap: 18px; }
+    .nav-spots {
+      font-family: 'Geist Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ================= HERO ================= */
+    .hero {
+      position: relative;
+      padding: clamp(118px, 16vw, 160px) 0 36px;
+      text-align: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      z-index: 0;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 900px 500px at 50% 0%, rgba(255,255,255,0.06), transparent 70%),
+        linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.4) 60%, #000 100%);
+      z-index: 1;
+    }
+    .hero .wrap { position: relative; z-index: 2; }
+    .hero h1 {
+      font-size: clamp(36px, 6vw, 68px);
+      font-weight: 700;
+      letter-spacing: -0.035em;
+      line-height: 1.02;
+      max-width: 860px;
+      margin: 20px auto 0;
+    }
+    .hero h1 .ghost-line { font-weight: 300; font-size: 0.6em; letter-spacing: -0.025em; margin-top: 10px; }
+    .hero-sub {
+      font-weight: 300;
+      font-size: clamp(15px, 1.6vw, 17px);
+      color: var(--muted);
+      max-width: 560px;
+      line-height: 1.6;
+      margin: 22px auto 0;
+    }
+
+    /* scarcity pill */
+    .scarcity {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      font-size: 13px;
+      color: var(--white);
+      background: var(--card);
+      border: 1px solid var(--rule-mid);
+      border-radius: 999px;
+      padding: 8px 16px;
+    }
+    .scarcity .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 0 0 rgba(71,211,134,0.6);
+      animation: pulse 2s infinite;
+      flex-shrink: 0;
+    }
+    .scarcity .sep { color: var(--label); }
+    .scarcity .muted { color: var(--muted); }
+    body.is-closed .scarcity .dot { background: var(--red); animation: none; }
+    @keyframes pulse {
+      0%   { box-shadow: 0 0 0 0 rgba(71,211,134,0.55); }
+      70%  { box-shadow: 0 0 0 9px rgba(71,211,134,0); }
+      100% { box-shadow: 0 0 0 0 rgba(71,211,134,0); }
+    }
+
+    /* ================= VSL ================= */
+    .video-section { padding: 8px 0 clamp(40px, 6vw, 70px); }
+    .video-frame {
+      position: relative;
+      max-width: 1000px;
+      margin: 0 auto;
+      border-radius: 24px;
+      overflow: hidden;
+      aspect-ratio: 16/9;
+      background: #111;
+    }
+    .video-frame video {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center 20%;
+      display: block;
+    }
+    .video-frame::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.05) 40%, rgba(0,0,0,0.65) 100%);
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+    .video-frame.playing::after { opacity: 0; }
+    .video-caption {
+      position: absolute;
+      left: clamp(20px, 4vw, 44px);
+      bottom: clamp(20px, 4vw, 40px);
+      z-index: 2;
+      font-size: clamp(22px, 3.4vw, 38px);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+    .play-btn {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+      width: 76px; height: 76px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.55);
+      border: 1px solid rgba(255,255,255,0.3);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: transform 0.25s cubic-bezier(0.16,1,0.3,1), background 0.25s ease, opacity 0.25s ease;
+    }
+    .play-btn:hover { transform: translate(-50%, -50%) scale(1.1); background: var(--blue); border-color: var(--blue); }
+    .play-btn svg { margin-left: 4px; }
+    .video-frame.playing .video-caption,
+    .video-frame.playing .play-btn { opacity: 0; pointer-events: none; }
+    .video-cta { text-align: center; margin-top: 28px; }
+
+    /* ================= SCROLL-SCRUB STAT ================= */
+    .stat-section { padding: clamp(40px, 8vw, 90px) 0; text-align: center; }
+    .stat-headline {
+      font-size: clamp(24px, 3.6vw, 42px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.35;
+      max-width: 920px;
+      margin: 0 auto;
+    }
+    .word { color: #333333; transition: color 0.2s ease; }
+    .word.lit { color: var(--white); }
+
+    /* ================= PHOTO BAND ================= */
+    .photo-band { padding: 0 0 clamp(40px, 6vw, 70px); }
+    .photo-band img {
+      width: 100%;
+      aspect-ratio: 21 / 9;
+      object-fit: cover;
+      object-position: center 55%;
+      border-radius: 24px;
+    }
+
+    /* ================= WHO IT'S FOR ================= */
+    .who-section { padding: clamp(50px, 8vw, 100px) 0; }
+    .who-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: clamp(32px, 6vw, 90px);
+      align-items: center;
+    }
+    .who-list {
+      list-style: none;
+      margin-top: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .who-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      background: var(--card);
+      border: 1px solid var(--rule-mid);
+      border-radius: 16px;
+      padding: 18px 20px;
+      font-size: 15px;
+      line-height: 1.5;
+      transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+    .who-list li:hover { border-color: #3a3a3a; transform: translateX(4px); }
+    .who-list .who-num {
+      font-family: 'Doto', monospace;
+      font-weight: 700;
+      font-size: 20px;
+      color: var(--green);
+      line-height: 1.1;
+      flex-shrink: 0;
+      width: 28px;
+    }
+    .who-list strong { font-weight: 600; display: block; }
+    .who-list span.desc { font-weight: 300; color: var(--muted); font-size: 14px; }
+    .who-media img {
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      border-radius: 20px;
+    }
+
+    /* ================= FEATURE ROWS ================= */
+    .features-intro { padding-top: clamp(50px, 8vw, 90px); }
+    .feature-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(32px, 6vw, 90px);
+      align-items: center;
+      padding: clamp(50px, 8vw, 90px) 0;
+    }
+    .feature-row.flip .feature-copy { order: 2; }
+    .feature-row.flip .feature-media { order: 1; }
+    .feature-copy h3 {
+      font-size: clamp(22px, 2.8vw, 32px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin: 16px 0 14px;
+    }
+    .feature-copy .ghost-line {
+      font-size: 15px;
+      font-weight: 600;
+      margin-top: 8px;
+    }
+    .feature-copy p {
+      font-weight: 300;
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 440px;
+    }
+    .feature-media { display: flex; justify-content: center; }
+    .feature-media img {
+      width: 100%;
+      max-width: 300px;
+      aspect-ratio: 760 / 939;
+      object-fit: contain;
+      border-radius: 28px;
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
+    }
+    .feature-media:hover img,
+    .feature-media:hover .phone-placeholder { transform: translateY(-6px); }
+
+    /* Placeholder for app screenshots. Swap each .phone-placeholder for
+       <img src="/assets/off-season/....jpg" alt="..."> when the shots are ready. */
+    .phone-placeholder {
+      width: 100%;
+      max-width: 300px;
+      aspect-ratio: 760 / 939;
+      border-radius: 28px;
+      border: 1px dashed #3a3a3a;
+      background:
+        radial-gradient(ellipse 260px 200px at 50% 30%, rgba(32,91,255,0.12), transparent 70%),
+        var(--card);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      text-align: center;
+      padding: 24px;
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
+    }
+    .phone-placeholder svg { opacity: 0.5; }
+    .phone-placeholder span {
+      font-family: 'Geist Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--label);
+      line-height: 1.6;
+    }
+
+    /* ================= CARD GRID (inclusions / steps) ================= */
+    .grid-section { padding: clamp(60px, 9vw, 110px) 0; text-align: center; }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 48px;
+      text-align: left;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--rule-mid);
+      border-radius: 18px;
+      padding: 24px 22px 26px;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .card:hover { transform: translateY(-4px); border-color: #3a3a3a; }
+    .card-num {
+      font-family: 'Doto', monospace;
+      font-weight: 700;
+      font-size: 30px;
+      color: var(--rule-mid);
+      line-height: 1;
+      margin-bottom: 18px;
+      transition: color 0.2s ease;
+    }
+    .card:hover .card-num { color: var(--green); }
+    .card-label {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .card-desc {
+      font-size: 13.5px;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ================= TRIPTYCH ================= */
+    .triptych { padding: 0 0 clamp(40px, 6vw, 70px); }
+    .triptych-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .triptych-grid img {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+      border-radius: 20px;
+    }
+
+    /* ================= TENEKA ================= */
+    .physio-section { padding: clamp(60px, 9vw, 110px) 0; }
+    .physio-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(32px, 6vw, 90px);
+      align-items: center;
+    }
+    .physio-body {
+      margin-top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .physio-body p {
+      font-weight: 300;
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+    .physio-body p.strong { color: var(--white); font-weight: 400; }
+    .physio-media { position: relative; }
+    .physio-media img { width: 100%; height: auto; border-radius: 16px; }
+    .physio-tag {
+      position: absolute;
+      left: 16px; bottom: 16px;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 14px;
+      padding: 12px 16px;
+    }
+    .physio-tag strong { display: block; font-size: 15px; font-weight: 600; }
+    .physio-tag span { font-size: 12.5px; font-weight: 300; color: var(--muted); }
+
+    .logos {
+      margin-top: clamp(50px, 7vw, 80px);
+      padding-top: 32px;
+      border-top: 1px solid var(--rule);
+      text-align: center;
+    }
+    .logos-label {
+      font-family: 'Geist Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--label);
+    }
+    .logos-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: clamp(28px, 6vw, 72px);
+      margin-top: 26px;
+    }
+    .logos-row img {
+      height: 54px;
+      width: auto;
+      filter: grayscale(1) brightness(0) invert(1);
+      opacity: 0.55;
+      transition: opacity 0.2s ease;
+    }
+    .logos-row img:hover { opacity: 1; }
+
+    /* ================= OFFER ================= */
+    .offer-section { padding: clamp(60px, 9vw, 110px) 0; text-align: center; }
+    .offer-card {
+      max-width: 560px;
+      margin: 44px auto 0;
+      background: var(--white);
+      color: var(--ink);
+      border-radius: 24px;
+      border: 2px solid var(--blue);
+      padding: clamp(26px, 4vw, 36px);
+      text-align: left;
+      box-shadow: 0 30px 90px rgba(32,91,255,0.18);
+    }
+    .offer-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .offer-badge {
+      display: inline-block;
+      background: var(--blue);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: 999px;
+    }
+    .offer-badge.dark { background: var(--ink); }
+    .offer-name {
+      font-size: 17px;
+      font-weight: 700;
+      margin-top: 18px;
+    }
+    .offer-price {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      margin-top: 6px;
+    }
+    .offer-price strong {
+      font-size: clamp(44px, 7vw, 58px);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      color: var(--blue);
+    }
+    .offer-price span { font-size: 15px; color: #6B6B6B; }
+    .offer-perweek { font-size: 13px; color: #6B6B6B; margin-top: 6px; }
+    .offer-list {
+      list-style: none;
+      margin: 24px 0 26px;
+      padding-top: 22px;
+      border-top: 1px solid #E3E4DF;
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+    }
+    .offer-list li {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      font-size: 14.5px;
+      line-height: 1.45;
+    }
+    .offer-list svg { flex-shrink: 0; margin-top: 2px; }
+    .offer-cta { width: 100%; padding: 17px 30px; font-size: 15px; }
+    .offer-countdown {
+      text-align: center;
+      font-size: 13px;
+      color: #6B6B6B;
+      margin-top: 14px;
+    }
+    .offer-countdown strong { color: var(--ink); }
+    .offer-fine {
+      font-weight: 300;
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 22px;
+      line-height: 1.6;
+    }
+    .offer-fine a { color: var(--blue); text-decoration: none; }
+
+    /* ================= FAQ ================= */
+    .faq-section { padding: clamp(60px, 9vw, 110px) 0; }
+    .faq-list {
+      max-width: 760px;
+      margin: 44px auto 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .faq-item {
+      background: var(--card);
+      border: 1px solid var(--rule-mid);
+      border-radius: 16px;
+      transition: border-color 0.2s ease;
+    }
+    .faq-item[open] { border-color: #3a3a3a; }
+    .faq-item summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 20px 22px;
+      font-size: 15.5px;
+      font-weight: 600;
+    }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-icon {
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      border: 1px solid var(--rule-mid);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      transition: transform 0.25s ease, background 0.2s ease, border-color 0.2s ease;
+    }
+    .faq-item[open] .faq-icon { transform: rotate(45deg); background: var(--blue); border-color: var(--blue); }
+    .faq-answer {
+      padding: 0 22px 22px;
+      font-weight: 300;
+      font-size: 14.5px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .faq-answer a { color: var(--white); }
+
+    /* ================= FINAL CTA ================= */
+    .final-cta {
+      position: relative;
+      padding: clamp(90px, 13vw, 170px) 0;
+      text-align: center;
+      overflow: hidden;
+    }
+    .final-cta-bg {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center 40%;
+      opacity: 0.35;
+    }
+    .final-cta::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, #000 0%, rgba(0,0,0,0.35) 35%, rgba(0,0,0,0.35) 65%, #000 100%);
+    }
+    .final-cta .wrap { position: relative; z-index: 2; }
+    .final-cta h2 {
+      font-size: clamp(28px, 4.4vw, 52px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.08;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+    .final-cta .scarcity { margin-top: 26px; }
+    .final-cta .btn { margin-top: 26px; }
+
+    /* ================= CONTACT ================= */
+    .contact-section {
+      padding: clamp(60px, 9vw, 110px) 0;
+      border-top: 1px solid var(--rule-mid);
+      text-align: center;
+    }
+    .contact-form {
+      max-width: 560px;
+      margin: 40px auto 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      text-align: left;
+    }
+    .contact-form .field-full { grid-column: 1 / -1; }
+    .contact-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    .contact-input,
+    .contact-textarea {
+      width: 100%;
+      background: var(--card-2);
+      border: 1px solid var(--rule-mid);
+      border-radius: 12px;
+      padding: 13px 16px;
+      font-family: 'Geist', sans-serif;
+      font-size: 14px;
+      color: var(--white);
+      transition: border-color 0.2s ease;
+    }
+    .contact-textarea { resize: vertical; min-height: 110px; }
+    .contact-input:focus,
+    .contact-textarea:focus { outline: none; border-color: var(--blue); }
+    .contact-input::placeholder,
+    .contact-textarea::placeholder { color: #6B6B6B; }
+    .contact-submit-row { grid-column: 1 / -1; text-align: center; margin-top: 8px; }
+    .contact-status { grid-column: 1 / -1; font-size: 13.5px; text-align: center; color: var(--muted); }
+    .contact-status.is-success { color: var(--green); }
+    .contact-status.is-error { color: var(--red); }
+
+    /* ================= FOOTER ================= */
+    .footer-mark { width: 100%; overflow: hidden; line-height: 0; }
+    .footer-mark svg { width: 100%; height: auto; display: block; }
+
+    /* ================= STICKY MOBILE CTA ================= */
+    .sticky-cta {
+      position: fixed;
+      left: 12px; right: 12px; bottom: 12px;
+      z-index: 90;
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background: rgba(10,10,10,0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid var(--rule-mid);
+      border-radius: 999px;
+      padding: 8px 8px 8px 20px;
+      transform: translateY(140%);
+      transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
+    }
+    .sticky-cta.show { transform: translateY(0); }
+    .sticky-cta-text { font-size: 13px; line-height: 1.3; }
+    .sticky-cta-text strong { display: block; font-size: 14px; }
+    .sticky-cta-text span { color: var(--muted); font-weight: 300; }
+
+    /* ================= SUBSCRIBE MODAL (same as homepage) ================= */
+    .plan-modal-overlay {
+      position: fixed; inset: 0; z-index: 300;
+      background: rgba(0,0,0,0.72);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .plan-modal-overlay.is-open { display: flex; }
+    .plan-modal {
+      position: relative;
+      width: 100%;
+      max-width: 420px;
+      background: var(--card);
+      border: 1px solid var(--rule-mid);
+      border-radius: 20px;
+      padding: 32px clamp(22px, 5vw, 32px) 28px;
+      text-align: left;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.55);
+    }
+    .plan-modal-close {
+      position: absolute;
+      top: 16px; right: 16px;
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      border: 1px solid var(--rule-mid);
+      background: transparent;
+      color: var(--white);
+      font-size: 18px;
+      line-height: 1;
+      cursor: pointer;
+    }
+    .plan-modal-close:hover { border-color: var(--white); }
+    .plan-modal h3 { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; margin: 14px 0 4px; }
+    .plan-modal-price { font-size: 14px; color: var(--muted); margin-bottom: 20px; }
+    .plan-modal-label {
+      display: block;
+      font-size: 12px; font-weight: 600;
+      letter-spacing: 0.04em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 8px;
+    }
+    .plan-modal-input {
+      width: 100%;
+      background: var(--card-2);
+      border: 1px solid var(--rule-mid);
+      border-radius: 12px;
+      padding: 13px 16px;
+      font-family: 'Geist', sans-serif;
+      font-size: 14px;
+      color: var(--white);
+      transition: border-color 0.2s ease;
+    }
+    .plan-modal-input:focus { outline: none; border-color: var(--blue); }
+    .plan-modal-input::placeholder { color: #6B6B6B; }
+    .plan-modal-error { color: var(--red); font-size: 13px; margin-top: 10px; }
+    .plan-modal-error[hidden] { display: none; }
+    .plan-modal-submit { width: 100%; margin-top: 18px; }
+    .plan-modal-confirm-card {
+      background: var(--card-2);
+      border: 1px solid var(--rule-mid);
+      border-radius: 14px;
+      padding: 16px 16px 14px;
+      margin-bottom: 14px;
+    }
+    .plan-modal-confirm-label {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 6px;
+    }
+    .plan-modal-confirm-name { font-size: 20px; font-weight: 700; letter-spacing: -0.02em; color: var(--white); word-break: break-all; }
+    .plan-modal-confirm-copy { font-size: 13px; font-weight: 300; color: var(--muted); line-height: 1.55; margin-top: 8px; }
+    .plan-modal-back {
+      display: block; width: 100%; margin-top: 10px;
+      background: transparent; border: none;
+      color: var(--muted);
+      font-family: 'Geist', sans-serif; font-size: 13px;
+      cursor: pointer;
+    }
+    .plan-modal-back:hover { color: var(--white); }
+    .plan-modal-fineprint { font-size: 12px; font-weight: 300; color: var(--muted); line-height: 1.6; margin-top: 18px; }
+
+    /* ================= RESPONSIVE ================= */
+    @media (max-width: 900px) {
+      .who-grid,
+      .physio-grid { grid-template-columns: 1fr; }
+      .who-media img { aspect-ratio: 4 / 3; }
+      .feature-row { grid-template-columns: 1fr; text-align: center; }
+      .feature-row.flip .feature-copy,
+      .feature-row.flip .feature-media { order: initial; }
+      .feature-copy p { margin: 0 auto; }
+      .card-grid { grid-template-columns: repeat(2, 1fr); }
+      .physio-copy { text-align: center; }
+      .physio-body p { max-width: 560px; margin: 0 auto; }
+      .photo-band img { aspect-ratio: 16 / 10; }
+    }
+
+    @media (max-width: 640px) {
+      .nav-spots { display: none; }
+      .contact-form { grid-template-columns: 1fr; }
+      .sticky-cta { display: flex; }
+      .triptych-grid {
+        grid-template-columns: repeat(3, 72%);
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 6px;
+        scrollbar-width: none;
+      }
+      .triptych-grid::-webkit-scrollbar { display: none; }
+      .triptych-grid img { scroll-snap-align: start; }
+      .logos-row img { height: 42px; }
+    }
+
+    @media (max-width: 520px) {
+      .card-grid { grid-template-columns: 1fr; }
+      .video-frame { border-radius: 16px; aspect-ratio: 4/5; }
+      .play-btn { width: 62px; height: 62px; }
+      .photo-band img,
+      .triptych-grid img,
+      .who-media img { border-radius: 16px; }
+      .scarcity { font-size: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Inform wordmark, defined once and reused -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="inform-logo" viewBox="0 0 513 100">
+      <path d="M243.471 0C271.479 8.44234e-05 292.791 20.3366 292.791 50C292.791 79.6632 271.479 99.9999 243.471 100C215.614 99.9999 194.303 79.6632 194.303 50C194.303 20.3367 215.614 0.000146969 243.471 0ZM23.1377 98.165H0V1.83496H23.1377V98.165ZM94.126 59.6328V1.83496H115.284V98.165H96.8662L52.417 36.6973V98.165H31.1064V1.83496H53.3301L94.126 59.6328ZM194.243 20.9482H146.294V42.3545H182.676V61.3154H146.294V98.165H123.309V1.83496H194.243V20.9482ZM342.842 1.83496C367.653 1.83525 379.831 13.4568 379.831 31.958C379.831 46.1777 370.849 55.0452 359.128 56.5742C369.327 58.562 375.111 64.5269 376.177 75.8418C377.547 90.0608 378.004 94.6484 381.2 98.165H357.759C355.78 95.5657 354.561 89.2963 353.8 79.0518C353.039 68.1957 348.168 64.6777 338.578 64.6777H319.247V98.165H296.565V1.83496H342.842ZM459.723 59.3262L491.688 1.5293H513V97.8584H491.688V40.0596L459.723 97.8584H438.411V40.0596L406.444 97.8584H385.134L438.411 1.5293H459.723V59.3262ZM243.471 20.3359C227.944 20.3361 218.049 32.1103 218.049 50C218.049 67.8895 227.944 79.662 243.471 79.6621C259.149 79.662 269.044 67.8896 269.044 50C269.044 32.1103 259.149 20.336 243.471 20.3359ZM319.247 46.79H339.188C351.213 46.79 357.149 43.2724 357.149 33.793C357.149 25.2303 351.213 20.4902 339.188 20.4902H319.247V46.79Z" fill="#F8F9F5"/>
+    </symbol>
+    <symbol id="tick" viewBox="0 0 18 18">
+      <circle cx="9" cy="9" r="9" fill="#205BFF"/>
+      <path d="M5.2 9.3l2.4 2.4 5-5.2" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+  </svg>
+
+  <!-- ================= NAV (logo + one CTA only, so ad traffic stays on the page) ================= -->
+  <header class="nav">
+    <div class="nav-logo" aria-label="INFORM">
+      <svg viewBox="0 0 513 100"><use href="#inform-logo"/></svg>
+    </div>
+    <div class="nav-right">
+      <span class="nav-spots" data-countdown-short>10 spots &middot; Closes 31 Oct</span>
+      <a href="#offer" class="btn btn--sm js-cta">Claim your spot</a>
+    </div>
+  </header>
+
+  <!-- ================= TITLE ================= -->
+  <section class="hero" id="top">
+    <img class="hero-bg" src="/assets/landing-v2/hero-background.jpg" alt="" loading="eager">
+    <div class="wrap">
+      <span class="eyebrow reveal visible">Football off-season program</span>
+      <h1 class="reveal visible" data-delay="1">Maximise your <span style="white-space:nowrap">off-season.</span><span class="ghost-line">12 weeks. 1:1 with a pro football physio.</span></h1>
+      <p class="hero-sub reveal visible" data-delay="2">Strength and conditioning built around your past injuries, your goals and your position. Programmed and coached by Teneka, former Perth Glory physio.</p>
+    </div>
+  </section>
+
+  <!-- ================= VSL ================= -->
+  <section class="video-section">
+    <div class="wrap">
+      <!-- VSL: swap the poster and mp4 below for the final VSL when it's ready -->
+      <div class="video-frame reveal visible" data-delay="3" id="vslFrame">
+        <video
+          id="vslVideo"
+          poster="/assets/landing-v2/hero-video-poster.jpg"
+          playsinline
+          preload="metadata">
+          <source src="/assets/landing-v2/hero-video.mp4" type="video/mp4">
+        </video>
+        <div class="video-caption">YOUR OFF-SEASON.<br>RUN PROPERLY.</div>
+        <button class="play-btn" aria-label="Play video" id="vslPlayBtn">
+          <svg width="20" height="22" viewBox="0 0 20 22" fill="none"><path d="M19 9.26795C20.3333 10.0378 20.3333 11.9622 19 12.7321L3.25 21.8253C1.91667 22.5951 0.25 21.633 0.25 20.0933L0.25 1.90673C0.25 0.367027 1.91667 -0.595088 3.25 0.174761L19 9.26795Z" fill="white"/></svg>
+        </button>
+      </div>
+      <div class="video-cta reveal visible" data-delay="4">
+        <a href="#offer" class="btn js-cta">Claim your spot</a>
+        <div style="margin-top:18px;">
+          <span class="scarcity">
+            <span class="dot"></span>
+            <span data-spots>Only 10 spots</span>
+            <span class="sep">/</span>
+            <span class="muted" data-countdown>Closes 31 October</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PROBLEM (scroll-scrub) ================= -->
+  <section class="stat-section">
+    <div class="wrap">
+      <p class="stat-headline" id="statHeadline"></p>
+    </div>
+  </section>
+
+  <!-- ================= PHOTO BAND ================= -->
+  <section class="photo-band">
+    <div class="wrap">
+      <img class="reveal" src="/assets/off-season/squad-wide.jpg" alt="Footballers warming up together on the pitch" loading="lazy">
+    </div>
+  </section>
+
+  <!-- ================= WHO IT'S FOR ================= -->
+  <section class="who-section" id="who">
+    <div class="wrap">
+      <div class="who-grid">
+        <div class="who-copy">
+          <span class="eyebrow reveal">Who it&rsquo;s for</span>
+          <h2 class="section-title reveal" data-delay="1">If you want to maximise the off-season as a footballer, this is for you.</h2>
+          <ul class="who-list">
+            <li class="reveal" data-delay="1">
+              <span class="who-num">01</span>
+              <span><strong>Footballers aged 18 to 30</strong><span class="desc">Any position, any level. NPL, State League, Sunday league, semi-pro.</span></span>
+            </li>
+            <li class="reveal" data-delay="2">
+              <span class="who-num">02</span>
+              <span><strong>You want to use the break, not waste it</strong><span class="desc">Turn up to pre-season ahead of the group, not catching up.</span></span>
+            </li>
+            <li class="reveal" data-delay="3">
+              <span class="who-num">03</span>
+              <span><strong>You want to stay injury free</strong><span class="desc">Hamstrings, groins, ankles, knees. Fix the weak links before they cost you games.</span></span>
+            </li>
+            <li class="reveal" data-delay="4">
+              <span class="who-num">04</span>
+              <span><strong>You want to get stronger</strong><span class="desc">Proper strength work, programmed for a footballer, not a bodybuilder.</span></span>
+            </li>
+          </ul>
+        </div>
+        <div class="who-media reveal" data-delay="2">
+          <img src="/assets/off-season/first-touch.jpg" alt="Footballer controlling the ball during a training session" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FEATURE ROWS ================= -->
+  <section id="how-it-works" class="features-intro">
+    <div class="wrap">
+
+      <div class="center">
+        <span class="eyebrow reveal">The program</span>
+        <h2 class="section-title reveal" data-delay="1">Professional athlete level programs.<span class="ghost-line">Built for one player. You.</span></h2>
+      </div>
+
+      <div class="feature-row">
+        <div class="feature-copy reveal">
+          <span class="eyebrow">Individualised</span>
+          <h3>Not a template off Instagram.<span class="ghost-line">A program built around your body, your goals and your position.</span></h3>
+          <p>Before a single session gets assigned, Teneka looks at your injury history, what you want out of the off-season and the role you play. A centre back and a winger don&rsquo;t need the same program. Neither does the player with a dodgy hamstring. Yours is written for you.</p>
+        </div>
+        <div class="feature-media reveal" data-delay="1">
+          <!-- PLACEHOLDER: swap for <img src="/assets/off-season/app-strength.jpg" alt="Inform app strength program"> -->
+          <div class="phone-placeholder">
+            <svg width="28" height="44" viewBox="0 0 28 44" fill="none"><rect x="1" y="1" width="26" height="42" rx="6" stroke="#5A5A5A" stroke-width="1.5"/><rect x="10" y="4.5" width="8" height="2" rx="1" fill="#5A5A5A"/></svg>
+            <span>App screenshot<br>Strength program</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="feature-row flip">
+        <div class="feature-copy reveal">
+          <span class="eyebrow">Live access</span>
+          <h3>Your physio is one message away.<span class="ghost-line">Not a forum. Not a search bar. Teneka.</span></h3>
+          <p>Something tight after a session? Not sure whether to push the load? Message Teneka in the app and get an answer from the person who wrote your program. That&rsquo;s the bit you can&rsquo;t get from a PDF or a generic training app.</p>
+        </div>
+        <div class="feature-media reveal" data-delay="1">
+          <!-- PLACEHOLDER: swap for <img src="/assets/off-season/app-messaging.jpg" alt="Inform app messaging with your physio"> -->
+          <div class="phone-placeholder">
+            <svg width="28" height="44" viewBox="0 0 28 44" fill="none"><rect x="1" y="1" width="26" height="42" rx="6" stroke="#5A5A5A" stroke-width="1.5"/><rect x="10" y="4.5" width="8" height="2" rx="1" fill="#5A5A5A"/></svg>
+            <span>App screenshot<br>In-app messaging</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="feature-row">
+        <div class="feature-copy reveal">
+          <span class="eyebrow">Progress tracking</span>
+          <h3>Turn up to pre-season with numbers.<span class="ghost-line">Not just a feeling you did enough.</span></h3>
+          <p>Every session logged. Strength, running and conditioning tracked week to week. Teneka sees it too, so your program moves as you get stronger instead of sitting on autopilot for 12 weeks.</p>
+        </div>
+        <div class="feature-media reveal" data-delay="1">
+          <!-- PLACEHOLDER: swap for <img src="/assets/off-season/app-progress.jpg" alt="Inform app progress tracking"> -->
+          <div class="phone-placeholder">
+            <svg width="28" height="44" viewBox="0 0 28 44" fill="none"><rect x="1" y="1" width="26" height="42" rx="6" stroke="#5A5A5A" stroke-width="1.5"/><rect x="10" y="4.5" width="8" height="2" rx="1" fill="#5A5A5A"/></svg>
+            <span>App screenshot<br>Progress tracking</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= WHAT'S IN THE APP ================= -->
+  <section class="grid-section" id="included">
+    <div class="wrap">
+      <span class="eyebrow reveal">Access to the app</span>
+      <h2 class="section-title reveal" data-delay="1">Everything you need for the off-season.<span class="ghost-line">In one app.</span></h2>
+
+      <div class="card-grid">
+        <div class="card reveal" data-delay="1">
+          <div class="card-num">01</div>
+          <div class="card-label">Strength program</div>
+          <div class="card-desc">Designed for you. Built around your injuries, goals and position.</div>
+        </div>
+        <div class="card reveal" data-delay="2">
+          <div class="card-num">02</div>
+          <div class="card-label">On-pitch running</div>
+          <div class="card-desc">Running programs on the grass to build your engine before pre-season.</div>
+        </div>
+        <div class="card reveal" data-delay="3">
+          <div class="card-num">03</div>
+          <div class="card-label">Mobility</div>
+          <div class="card-desc">Mobility programs to keep hips, hamstrings and ankles moving properly.</div>
+        </div>
+        <div class="card reveal" data-delay="4">
+          <div class="card-num">04</div>
+          <div class="card-label">Conditioning</div>
+          <div class="card-desc">Conditioning work so you&rsquo;re match fit when pre-season starts, not three weeks after.</div>
+        </div>
+        <div class="card reveal" data-delay="5">
+          <div class="card-num">05</div>
+          <div class="card-label">In-app messaging</div>
+          <div class="card-desc">A direct line to Teneka for the full 12 weeks.</div>
+        </div>
+        <div class="card reveal" data-delay="6">
+          <div class="card-num">06</div>
+          <div class="card-label">Progress tracking</div>
+          <div class="card-desc">See your strength and fitness climb week by week.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TRIPTYCH ================= -->
+  <section class="triptych">
+    <div class="wrap">
+      <div class="triptych-grid">
+        <img class="reveal" src="/assets/off-season/dribble-bw.jpg" alt="Footballer dribbling through cones" loading="lazy">
+        <img class="reveal" data-delay="1" src="/assets/off-season/high-knees.jpg" alt="Players doing high knee running drills" loading="lazy">
+        <img class="reveal" data-delay="2" src="/assets/off-season/warmup-bw.jpg" alt="Players warming up on the pitch" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TENEKA ================= -->
+  <section class="physio-section" id="teneka">
+    <div class="wrap">
+      <div class="physio-grid">
+        <div class="physio-copy reveal">
+          <span class="eyebrow">Your physio</span>
+          <h2 class="section-title">Work 1:1 with Teneka.<span class="ghost-line">A physio who&rsquo;s worked in professional football.</span></h2>
+          <div class="physio-body">
+            <p>Teneka Araya is a sports physiotherapist and the former physio for Perth Glory&rsquo;s A-League men&rsquo;s team.</p>
+            <p>She&rsquo;s spent her career keeping footballers strong, on the park and coming back from injury. This program takes the same standard she used with professional players and puts it in your pocket.</p>
+            <p class="strong">No coach reading off a spreadsheet. You get Teneka, for the full 12 weeks.</p>
+          </div>
+        </div>
+        <div class="physio-media reveal" data-delay="1">
+          <img src="/assets/landing-v2/physio-treatment.jpg" alt="Teneka treating an athlete" loading="lazy">
+          <div class="physio-tag">
+            <strong>Teneka Araya</strong>
+            <span>Sports physiotherapist &middot; Ex Perth Glory</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="logos reveal" id="logosStrip">
+        <div class="logos-label">Trusted by</div>
+        <!-- Logos load from the clinic site. Copy them into /assets/off-season/logos/ and update the paths if you'd rather host them here. -->
+        <div class="logos-row">
+          <img src="https://inform-physio.com.au/assets/logos/perth-glory.png" alt="Perth Glory FC" loading="lazy" onerror="this.remove();window.checkLogos&&checkLogos()">
+          <img src="https://inform-physio.com.au/assets/logos/peel-thunder.png" alt="Peel Thunder FC" loading="lazy" onerror="this.remove();window.checkLogos&&checkLogos()">
+          <img src="https://inform-physio.com.au/assets/logos/cockburn-city.png" alt="Cockburn City SC" loading="lazy" onerror="this.remove();window.checkLogos&&checkLogos()">
+          <img src="https://inform-physio.com.au/assets/logos/western-knights.png" alt="Western Knights SC" loading="lazy" onerror="this.remove();window.checkLogos&&checkLogos()">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= HOW IT WORKS ================= -->
+  <section class="grid-section" id="steps">
+    <div class="wrap">
+      <span class="eyebrow reveal">How it works</span>
+      <h2 class="section-title reveal" data-delay="1">Three steps.<span class="ghost-line">Start today.</span></h2>
+
+      <div class="card-grid">
+        <div class="card reveal" data-delay="1">
+          <div class="card-num">01</div>
+          <div class="card-label">Claim your spot</div>
+          <div class="card-desc">Lock in one of 10 spots below. Pay securely through Stripe.</div>
+        </div>
+        <div class="card reveal" data-delay="2">
+          <div class="card-num">02</div>
+          <div class="card-label">Download the app</div>
+          <div class="card-desc">Grab the Inform app and log in with the details we email you.</div>
+        </div>
+        <div class="card reveal" data-delay="3">
+          <div class="card-num">03</div>
+          <div class="card-label">Get your program</div>
+          <div class="card-desc">Tell Teneka about your injuries, goals and position. She builds your 12 weeks and you start.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= OFFER ================= -->
+  <section class="offer-section" id="offer">
+    <div class="wrap">
+      <span class="eyebrow reveal visible">Claim your spot</span>
+      <h2 class="section-title reveal visible" data-delay="1">12 weeks. One physio. Built for you.</h2>
+      <p class="section-sub reveal visible" data-delay="2">We&rsquo;re capping this intake at 10 players so Teneka can give every one of them proper 1:1 attention. Intake closes 31 October.</p>
+
+      <div class="offer-card reveal visible" data-delay="3">
+        <div class="offer-top">
+          <span class="offer-badge" data-spots>Only 10 spots</span>
+          <span class="offer-badge dark" data-countdown-badge>Closes 31 Oct</span>
+        </div>
+        <div class="offer-name">12-Week Off-Season Program</div>
+        <div class="offer-price"><strong>$499</strong><span>for 12 weeks</span></div>
+        <div class="offer-perweek">Works out to about $42 a week. Less than one physio appointment.</div>
+
+        <ul class="offer-list">
+          <li><svg width="18" height="18"><use href="#tick"/></svg>1:1 with Teneka, former Perth Glory physio</li>
+          <li><svg width="18" height="18"><use href="#tick"/></svg>Strength program built for your injuries, goals and position</li>
+          <li><svg width="18" height="18"><use href="#tick"/></svg>On-pitch running and conditioning programs</li>
+          <li><svg width="18" height="18"><use href="#tick"/></svg>Mobility programs</li>
+          <li><svg width="18" height="18"><use href="#tick"/></svg>In-app messaging with Teneka</li>
+          <li><svg width="18" height="18"><use href="#tick"/></svg>Progress tracking</li>
+          <li><svg width="18" height="18"><use href="#tick"/></svg>Train anywhere in Australia. Gym preferred, not required</li>
+        </ul>
+
+        <button type="button" class="btn btn--blue offer-cta" id="offerCheckoutBtn">Claim your spot</button>
+        <p class="offer-countdown" data-countdown-long>Intake closes <strong>31 October</strong></p>
+      </div>
+
+      <p class="offer-fine reveal visible" data-delay="4">Secure checkout via Stripe. Already on Inform? Use the same email. <a href="/manage.html">Manage subscription &rarr;</a></p>
+    </div>
+  </section>
+
+  <!-- ================= SUBSCRIBE MODAL ================= -->
+  <div class="plan-modal-overlay" id="planModalOverlay" role="dialog" aria-modal="true" aria-labelledby="planModalTitle" aria-hidden="true">
+    <div class="plan-modal" id="planModal">
+      <button type="button" class="plan-modal-close" id="planModalClose" aria-label="Close">&times;</button>
+      <span class="eyebrow">Off-season program</span>
+      <h3 id="planModalTitle">Claim your spot</h3>
+      <p class="plan-modal-price" id="planModalPlanPrice">12-Week Off-Season Program &middot; $499</p>
+      <form id="planModalForm" novalidate>
+        <div id="planModalEmailStep">
+          <label class="plan-modal-label" for="planModalEmail">Email address</label>
+          <input class="plan-modal-input" id="planModalEmail" name="email" type="email" placeholder="you@example.com" autocomplete="email" required>
+          <p class="plan-modal-error" id="planModalError" hidden></p>
+          <button type="submit" class="btn plan-modal-submit" id="planModalSubmit">Continue</button>
+        </div>
+        <div id="planModalConfirmStep" hidden>
+          <div class="plan-modal-confirm-card">
+            <div class="plan-modal-confirm-label">Inform account</div>
+            <div class="plan-modal-confirm-name" id="planModalConfirmName"></div>
+            <p class="plan-modal-confirm-copy" id="planModalConfirmCopy"></p>
+          </div>
+          <div id="planModalOtpBlock">
+            <label class="plan-modal-label" for="planModalOtp">Verification code</label>
+            <input class="plan-modal-input" id="planModalOtp" name="otp" type="text" inputmode="numeric" autocomplete="one-time-code" placeholder="6-digit code" maxlength="12">
+            <p class="plan-modal-fineprint" style="margin:8px 0 0;">We sent a code to this email. Enter it to continue.</p>
+          </div>
+          <p class="plan-modal-error" id="planModalConfirmError" hidden></p>
+          <button type="button" class="btn plan-modal-submit" id="planModalConfirmPay">Continue to payment</button>
+          <button type="button" class="plan-modal-back" id="planModalResendOtp">Resend code</button>
+          <button type="button" class="plan-modal-back" id="planModalBack">Use a different email</button>
+        </div>
+      </form>
+      <p class="plan-modal-fineprint">You&rsquo;ll verify your email, then pay securely via Stripe. After payment, download the Inform app and log in with the details we email you.</p>
+    </div>
+  </div>
+
+  <!-- ================= FAQ ================= -->
+  <section class="faq-section" id="faq">
+    <div class="wrap center">
+      <span class="eyebrow reveal">FAQ</span>
+      <h2 class="section-title reveal" data-delay="1">Questions, answered.</h2>
+
+      <div class="faq-list" style="text-align:left;">
+        <details class="faq-item reveal">
+          <summary>Who is this program for?<span class="faq-icon"><svg width="10" height="10" viewBox="0 0 10 10"><path d="M5 0v10M0 5h10" stroke="#F8F9F5" stroke-width="1.5"/></svg></span></summary>
+          <div class="faq-answer">Footballers aged 18 to 30 who want to use the off-season properly. Whether you play NPL, State League or Sunday league, the program is built around you, so it works at any level and in any position.</div>
+        </details>
+        <details class="faq-item reveal">
+          <summary>Is it in person?<span class="faq-icon"><svg width="10" height="10" viewBox="0 0 10 10"><path d="M5 0v10M0 5h10" stroke="#F8F9F5" stroke-width="1.5"/></svg></span></summary>
+          <div class="faq-answer">No. It&rsquo;s fully remote through the Inform app, so you can do it from anywhere in Australia. Your sessions, your running, your progress and your messages with Teneka all live in the app.</div>
+        </details>
+        <details class="faq-item reveal">
+          <summary>Do I need a gym?<span class="faq-icon"><svg width="10" height="10" viewBox="0 0 10 10"><path d="M5 0v10M0 5h10" stroke="#F8F9F5" stroke-width="1.5"/></svg></span></summary>
+          <div class="faq-answer">Gym access is preferable but not required. Your program is custom built around the equipment you have, so tell Teneka what you&rsquo;ve got and she&rsquo;ll program to it.</div>
+        </details>
+        <details class="faq-item reveal">
+          <summary>I&rsquo;ve had injuries before. Can I still do it?<span class="faq-icon"><svg width="10" height="10" viewBox="0 0 10 10"><path d="M5 0v10M0 5h10" stroke="#F8F9F5" stroke-width="1.5"/></svg></span></summary>
+          <div class="faq-answer">That&rsquo;s exactly who it&rsquo;s built for. Teneka reviews your injury history before writing anything, so your program targets the areas that have let you down before instead of ignoring them.</div>
+        </details>
+        <details class="faq-item reveal">
+          <summary>How much time will it take each week?<span class="faq-icon"><svg width="10" height="10" viewBox="0 0 10 10"><path d="M5 0v10M0 5h10" stroke="#F8F9F5" stroke-width="1.5"/></svg></span></summary>
+          <!-- CONFIRM: replace with a typical week (e.g. sessions per week, minutes per session) -->
+          <div class="faq-answer">It depends on your goals and your schedule. Tell Teneka how many days you can train and she&rsquo;ll build your week around that.</div>
+        </details>
+        <details class="faq-item reveal">
+          <summary>What happens after I pay?<span class="faq-icon"><svg width="10" height="10" viewBox="0 0 10 10"><path d="M5 0v10M0 5h10" stroke="#F8F9F5" stroke-width="1.5"/></svg></span></summary>
+          <div class="faq-answer">You&rsquo;ll get an email with your Inform login details. Download the Inform app, log in, and complete your intake so Teneka can build your program. You can start today.</div>
+        </details>
+        <details class="faq-item reveal">
+          <summary>What happens after the 12 weeks?<span class="faq-icon"><svg width="10" height="10" viewBox="0 0 10 10"><path d="M5 0v10M0 5h10" stroke="#F8F9F5" stroke-width="1.5"/></svg></span></summary>
+          <!-- CONFIRM: this must match how the $499 plan bills in Stripe (one-off vs renewing) -->
+          <div class="faq-answer">You&rsquo;ll head into pre-season stronger and fitter. If you want to keep going with Teneka, you can stay on Inform. If not, you can cancel any time from <a href="/manage.html">Manage subscription</a>.</div>
+        </details>
+        <details class="faq-item reveal">
+          <summary>Why only 10 spots?<span class="faq-icon"><svg width="10" height="10" viewBox="0 0 10 10"><path d="M5 0v10M0 5h10" stroke="#F8F9F5" stroke-width="1.5"/></svg></span></summary>
+          <div class="faq-answer">Because every program is written and managed 1:1 by Teneka. Keeping the intake small is how every player gets real attention, not a copy and paste plan.</div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FINAL CTA ================= -->
+  <section class="final-cta">
+    <img class="final-cta-bg" src="/assets/off-season/shot-bw.jpg" alt="" loading="lazy">
+    <div class="wrap">
+      <h2 class="reveal">Next season starts now.<span class="ghost-line">Make the off-season count.</span></h2>
+      <div class="reveal" data-delay="1">
+        <span class="scarcity">
+          <span class="dot"></span>
+          <span data-spots>Only 10 spots</span>
+          <span class="sep">/</span>
+          <span class="muted" data-countdown>Closes 31 October</span>
+        </span>
+      </div>
+      <div class="reveal" data-delay="2">
+        <a href="#offer" class="btn js-cta">Claim your spot</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CONTACT ================= -->
+  <section class="contact-section" id="contact">
+    <div class="wrap">
+      <span class="eyebrow reveal">Get in touch</span>
+      <h2 class="section-title reveal" data-delay="1">Not sure if it&rsquo;s right for you?<span class="ghost-line">Send us a message.</span></h2>
+
+      <form class="contact-form reveal" data-delay="2" id="contactForm">
+        <input type="hidden" name="_subject" value="Off-season program enquiry">
+        <input type="hidden" name="source" value="Off-season landing page">
+        <div>
+          <label class="contact-label" for="contactName">Name</label>
+          <input class="contact-input" id="contactName" name="name" type="text" placeholder="Your name" autocomplete="name" required>
+        </div>
+        <div>
+          <label class="contact-label" for="contactEmail">Email</label>
+          <input class="contact-input" id="contactEmail" name="email" type="email" placeholder="you@example.com" autocomplete="email" required>
+        </div>
+        <div class="field-full">
+          <label class="contact-label" for="contactPhone">Phone (optional)</label>
+          <input class="contact-input" id="contactPhone" name="phone" type="tel" placeholder="04xx xxx xxx" autocomplete="tel">
+        </div>
+        <div class="field-full">
+          <label class="contact-label" for="contactMessage">Message</label>
+          <textarea class="contact-textarea" id="contactMessage" name="message" placeholder="Tell us about your position, level and any injuries" required></textarea>
+        </div>
+        <div class="contact-submit-row">
+          <button type="submit" class="btn" id="contactSubmitBtn">Send message</button>
+        </div>
+        <p class="contact-status" id="contactStatus" hidden></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <div class="footer-mark" aria-label="INFORM">
+    <svg viewBox="0 0 513 100" preserveAspectRatio="xMidYMid meet"><use href="#inform-logo"/></svg>
+  </div>
+
+  <!-- ================= STICKY MOBILE CTA ================= -->
+  <div class="sticky-cta" id="stickyCta" aria-hidden="true">
+    <div class="sticky-cta-text"><strong>$499 &middot; 12 weeks</strong><span data-countdown-short>10 spots &middot; Closes 31 Oct</span></div>
+    <a href="#offer" class="btn btn--sm js-cta" tabindex="-1">Claim your spot</a>
+  </div>
+
+  <script>
+    // ============ OFFER CONFIG ============
+    // Change these in one place.
+    var OFFER = {
+      // Plan key sent to the billing backend. 'three_month' is the existing $499 plan.
+      // If you set up a dedicated one-off off-season price, swap this for its key.
+      plan: 'three_month',
+      label: '12-Week Off-Season Program',
+      price: '$499',
+      spots: 10,
+      // Intake closes end of 31 October, Perth time.
+      deadline: new Date('2026-10-31T23:59:59+08:00')
+    };
+
+    // ============ DEADLINE + COUNTDOWN ============
+    (function () {
+      var now = new Date();
+      var msLeft = OFFER.deadline - now;
+      var closed = msLeft <= 0;
+
+      function setAll(selector, html) {
+        document.querySelectorAll(selector).forEach(function (el) { el.innerHTML = html; });
+      }
+
+      if (closed) {
+        document.body.classList.add('is-closed');
+        setAll('[data-spots]', 'Intake closed');
+        setAll('[data-countdown]', 'Get in touch for the next one');
+        setAll('[data-countdown-short]', 'Intake closed');
+        setAll('[data-countdown-badge]', 'Closed');
+        setAll('[data-countdown-long]', 'This intake has closed. <a href="#contact" style="color:#205BFF;">Get in touch</a> to hear about the next one.');
+        document.querySelectorAll('.js-cta').forEach(function (a) {
+          a.setAttribute('href', '#contact');
+          a.textContent = 'Join the next intake';
+        });
+        var btn = document.getElementById('offerCheckoutBtn');
+        if (btn) { btn.disabled = true; btn.textContent = 'Intake closed'; }
+        return;
+      }
+
+      var days = Math.floor(msLeft / 86400000);
+      var hours = Math.floor((msLeft % 86400000) / 3600000);
+      var left;
+      if (days >= 2) left = days + ' days left';
+      else if (days === 1) left = '1 day left';
+      else left = hours <= 1 ? 'Final hour' : hours + ' hours left';
+
+      setAll('[data-countdown]', 'Closes 31 October &middot; ' + left);
+      setAll('[data-countdown-short]', OFFER.spots + ' spots &middot; ' + left);
+      setAll('[data-countdown-badge]', left);
+      setAll('[data-countdown-long]', 'Intake closes <strong>31 October</strong>. ' + left + '.');
+    }());
+
+    // ============ LOGO STRIP FALLBACK ============
+    window.checkLogos = function () {
+      var strip = document.getElementById('logosStrip');
+      if (strip && !strip.querySelector('.logos-row img')) strip.style.display = 'none';
+    };
+
+    // ============ IN-PAGE ANCHOR SCROLL ============
+    (function () {
+      document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+        link.addEventListener('click', function (e) {
+          var id = link.getAttribute('href').slice(1);
+          var target = document.getElementById(id);
+          if (!target) return;
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      });
+    }());
+
+    // ============ SCROLL REVEAL ============
+    (function () {
+      var reveals = document.querySelectorAll('.reveal:not(.visible)');
+      if (!('IntersectionObserver' in window)) {
+        reveals.forEach(function (el) { el.classList.add('visible'); });
+        return;
+      }
+      var obs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      reveals.forEach(function (el) { obs.observe(el); });
+    }());
+
+    // ============ VSL PLAYBACK ============
+    (function () {
+      var frame = document.getElementById('vslFrame');
+      var video = document.getElementById('vslVideo');
+      var playBtn = document.getElementById('vslPlayBtn');
+      if (!frame || !video || !playBtn) return;
+      playBtn.addEventListener('click', function () {
+        video.controls = true;
+        video.play();
+        frame.classList.add('playing');
+      });
+      video.addEventListener('ended', function () {
+        frame.classList.remove('playing');
+        video.controls = false;
+        video.currentTime = 0;
+      });
+    }());
+
+    // ============ SCROLL-SCRUBBED TEXT ============
+    (function () {
+      var el = document.getElementById('statHeadline');
+      if (!el) return;
+      var text = "The season ends and most players switch off. Six weeks on the couch, then pre-season hits and the hamstrings go. The off-season is where next season is won or lost. Time to win it.";
+      el.innerHTML = text.split(' ').map(function (w) {
+        return '<span class="word">' + w + '</span>';
+      }).join(' ');
+      var words = el.querySelectorAll('.word');
+
+      function update() {
+        var rect = el.getBoundingClientRect();
+        var vh = window.innerHeight;
+        var start = vh * 0.9;
+        var end = vh * 0.15 - rect.height;
+        var progress = (start - rect.top) / (start - end);
+        progress = Math.max(0, Math.min(1, progress));
+        var active = Math.round(progress * words.length);
+        words.forEach(function (w, i) { w.classList.toggle('lit', i < active); });
+      }
+      var ticking = false;
+      function onScroll() {
+        if (!ticking) {
+          requestAnimationFrame(function () { update(); ticking = false; });
+          ticking = true;
+        }
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll);
+      update();
+    }());
+
+    // ============ STICKY MOBILE CTA ============
+    // Shows once the VSL is scrolled past, hides while the offer card is on screen.
+    (function () {
+      var bar = document.getElementById('stickyCta');
+      var vsl = document.getElementById('vslFrame');
+      var offer = document.getElementById('offer');
+      if (!bar || !vsl || !offer || !('IntersectionObserver' in window)) return;
+      var pastVsl = false, offerVisible = false;
+      function sync() {
+        var show = pastVsl && !offerVisible;
+        bar.classList.toggle('show', show);
+        bar.setAttribute('aria-hidden', show ? 'false' : 'true');
+        var link = bar.querySelector('a');
+        if (link) link.tabIndex = show ? 0 : -1;
+      }
+      new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) { pastVsl = !e.isIntersecting && e.boundingClientRect.top < 0; });
+        sync();
+      }).observe(vsl);
+      new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) { offerVisible = e.isIntersecting; });
+        sync();
+      }, { threshold: 0.1 }).observe(offer);
+    }());
+
+    // ============ CHECKOUT (Stripe by email + OTP, same backend as homepage) ============
+    //   POST {API_BASE}/public/billing/lookup               { email }
+    //   POST {API_BASE}/public/billing/subscribe/request-otp { email }
+    //   POST {API_BASE}/public/billing/checkout             { email, plan, otp }
+    (function () {
+      var DEFAULT_API_BASE = 'https://backend.informapp.com.au';
+      var params = new URLSearchParams(window.location.search);
+      var API_BASE = (params.get('api') || window.INFORM_API_BASE || DEFAULT_API_BASE).replace(/\/$/, '');
+      var LOOKUP_ENDPOINT = API_BASE + '/public/billing/lookup';
+      var SUBSCRIBE_OTP_ENDPOINT = API_BASE + '/public/billing/subscribe/request-otp';
+      var CHECKOUT_ENDPOINT = API_BASE + '/public/billing/checkout';
+
+      var trigger = document.getElementById('offerCheckoutBtn');
+      var overlay = document.getElementById('planModalOverlay');
+      var closeBtn = document.getElementById('planModalClose');
+      var form = document.getElementById('planModalForm');
+      var emailStep = document.getElementById('planModalEmailStep');
+      var confirmStep = document.getElementById('planModalConfirmStep');
+      var emailInput = document.getElementById('planModalEmail');
+      var otpInput = document.getElementById('planModalOtp');
+      var otpBlock = document.getElementById('planModalOtpBlock');
+      var errorEl = document.getElementById('planModalError');
+      var confirmErrorEl = document.getElementById('planModalConfirmError');
+      var submitBtn = document.getElementById('planModalSubmit');
+      var confirmNameEl = document.getElementById('planModalConfirmName');
+      var confirmCopyEl = document.getElementById('planModalConfirmCopy');
+      var confirmPayBtn = document.getElementById('planModalConfirmPay');
+      var resendOtpBtn = document.getElementById('planModalResendOtp');
+      var backBtn = document.getElementById('planModalBack');
+      if (!trigger || !overlay || !form) return;
+
+      var checkedEmail = '';
+      var lastFocusedEl = null;
+      var otpSentForEmail = '';
+      var otpRequestInFlight = null;
+
+      function parseJson(res) {
+        return res.json().catch(function () { return {}; }).then(function (body) {
+          return { ok: res.ok, body: body };
+        });
+      }
+      function showError(el, message) { el.textContent = message; el.hidden = false; }
+      function clearError(el) { el.hidden = true; el.textContent = ''; }
+      function apiMessage(body, fallback) {
+        return (body && (body.systemMessage || body.detail || body.message)) || fallback;
+      }
+      function resetSubmit() { submitBtn.disabled = false; submitBtn.textContent = 'Continue'; }
+
+      function showEmailStep() {
+        confirmStep.hidden = true;
+        emailStep.hidden = false;
+        resetSubmit();
+        otpInput.value = '';
+        otpSentForEmail = '';
+        otpRequestInFlight = null;
+        clearError(errorEl);
+        clearError(confirmErrorEl);
+      }
+      function showConfirmStep() {
+        emailStep.hidden = true;
+        confirmStep.hidden = false;
+        clearError(confirmErrorEl);
+      }
+
+      function requestSubscribeOtp(options) {
+        var force = options && options.force;
+        if (!checkedEmail) return Promise.resolve(false);
+        if (!force && otpSentForEmail === checkedEmail) return Promise.resolve(true);
+        if (otpRequestInFlight) return otpRequestInFlight;
+        otpRequestInFlight = fetch(SUBSCRIBE_OTP_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: checkedEmail })
+        })
+          .then(parseJson)
+          .then(function (result) {
+            otpRequestInFlight = null;
+            if (!result.ok) {
+              showError(confirmErrorEl, apiMessage(result.body, 'Could not send verification code.'));
+              return false;
+            }
+            otpSentForEmail = checkedEmail;
+            return true;
+          })
+          .catch(function () {
+            otpRequestInFlight = null;
+            showError(confirmErrorEl, 'Network error. Could not send verification code.');
+            return false;
+          });
+        return otpRequestInFlight;
+      }
+
+      function openModal() {
+        if (document.body.classList.contains('is-closed')) return;
+        checkedEmail = '';
+        form.reset();
+        showEmailStep();
+        lastFocusedEl = document.activeElement;
+        overlay.classList.add('is-open');
+        overlay.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        setTimeout(function () { emailInput.focus(); }, 30);
+      }
+      function closeModal() {
+        overlay.classList.remove('is-open');
+        overlay.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        if (lastFocusedEl && typeof lastFocusedEl.focus === 'function') lastFocusedEl.focus();
+      }
+
+      trigger.addEventListener('click', openModal);
+      closeBtn.addEventListener('click', closeModal);
+      overlay.addEventListener('click', function (e) { if (e.target === overlay) closeModal(); });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && overlay.classList.contains('is-open')) closeModal();
+      });
+      backBtn.addEventListener('click', function () { showEmailStep(); emailInput.focus(); });
+      resendOtpBtn.addEventListener('click', function () {
+        clearError(confirmErrorEl);
+        resendOtpBtn.textContent = 'Sending...';
+        requestSubscribeOtp({ force: true }).then(function (ok) {
+          resendOtpBtn.textContent = 'Resend code';
+          if (ok) otpInput.focus();
+        });
+      });
+
+      function isValidEmail(value) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value); }
+
+      function startCheckout() {
+        if (!checkedEmail || confirmPayBtn.disabled) return;
+        clearError(confirmErrorEl);
+        var otp = otpInput.value.trim();
+        if (!otp) {
+          showError(confirmErrorEl, 'Enter the verification code we emailed you.');
+          otpInput.focus();
+          return;
+        }
+        confirmPayBtn.disabled = true;
+        confirmPayBtn.textContent = 'Redirecting to payment...';
+        fetch(CHECKOUT_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: checkedEmail, plan: OFFER.plan, otp: otp })
+        })
+          .then(parseJson)
+          .then(function (result) {
+            var checkoutUrl = result.body && result.body.data && result.body.data.checkoutUrl;
+            if (!result.ok || !checkoutUrl) {
+              showError(confirmErrorEl, apiMessage(result.body, 'Could not start checkout. Please try again.'));
+              confirmPayBtn.disabled = false;
+              confirmPayBtn.textContent = 'Continue to payment';
+              return;
+            }
+            window.location.href = checkoutUrl;
+          })
+          .catch(function () {
+            showError(confirmErrorEl, 'Network error. Please check your connection and try again.');
+            confirmPayBtn.disabled = false;
+            confirmPayBtn.textContent = 'Continue to payment';
+          });
+      }
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        if (!confirmStep.hidden) { startCheckout(); return; }
+        clearError(errorEl);
+        var email = emailInput.value.trim();
+        if (!isValidEmail(email)) {
+          showError(errorEl, 'Enter a valid email address.');
+          emailInput.focus();
+          return;
+        }
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Checking...';
+        fetch(LOOKUP_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: email })
+        })
+          .then(parseJson)
+          .then(function (result) {
+            var data = (result.body && result.body.data) || {};
+            if (!result.ok) {
+              showError(errorEl, apiMessage(result.body, 'Could not check this email.'));
+              resetSubmit();
+              return;
+            }
+            checkedEmail = email;
+            otpSentForEmail = '';
+            otpBlock.hidden = false;
+            resendOtpBtn.hidden = false;
+
+            if (data.exists) {
+              confirmNameEl.textContent = data.fullName || 'Inform member';
+              if (data.alreadySubscribed) {
+                confirmCopyEl.innerHTML = 'This account already has an active Inform subscription. <a href="/manage.html?email=' + encodeURIComponent(email) + '" style="color:#205BFF;">Manage it here</a>, or <a href="#contact" id="planModalContactLink" style="color:#205BFF;">message us</a> to join the off-season program.';
+                confirmPayBtn.disabled = true;
+                confirmPayBtn.textContent = 'Already subscribed';
+                otpBlock.hidden = true;
+                resendOtpBtn.hidden = true;
+                showConfirmStep();
+                resetSubmit();
+                var contactLink = document.getElementById('planModalContactLink');
+                if (contactLink) contactLink.addEventListener('click', function (ev) {
+                  ev.preventDefault();
+                  closeModal();
+                  document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+                });
+                return;
+              }
+              confirmCopyEl.textContent = 'Welcome back. Enter the code we just emailed you, then head to payment.';
+            } else {
+              confirmNameEl.textContent = email;
+              confirmCopyEl.textContent = 'Enter the code we just emailed you, then pay. We\'ll create your Inform account and email your login details so you can download the app and start.';
+            }
+            confirmPayBtn.disabled = false;
+            confirmPayBtn.textContent = 'Continue to payment';
+            showConfirmStep();
+            resetSubmit();
+            requestSubscribeOtp().then(function (ok) {
+              if (ok) setTimeout(function () { otpInput.focus(); }, 30);
+            });
+          })
+          .catch(function () {
+            showError(errorEl, 'Network error. Please check your connection and try again.');
+            resetSubmit();
+          });
+      });
+
+      confirmPayBtn.addEventListener('click', startCheckout);
+    }());
+
+    // ============ CONTACT FORM (same Formspree endpoint as homepage) ============
+    (function () {
+      var CONTACT_ENDPOINT = 'https://formspree.io/f/mvkgrpzo';
+      var form = document.getElementById('contactForm');
+      if (!form) return;
+      var submitBtn = document.getElementById('contactSubmitBtn');
+      var statusEl = document.getElementById('contactStatus');
+      function setStatus(text, kind) {
+        statusEl.textContent = text;
+        statusEl.hidden = false;
+        statusEl.classList.remove('is-success', 'is-error');
+        if (kind) statusEl.classList.add(kind);
+      }
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sending...';
+        statusEl.hidden = true;
+        fetch(CONTACT_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Accept': 'application/json' },
+          body: new FormData(form)
+        })
+          .then(function (res) {
+            if (res.ok) { form.reset(); setStatus('Thanks. We\'ll be in touch shortly.', 'is-success'); }
+            else { setStatus('Something went wrong. Please try again.', 'is-error'); }
+          })
+          .catch(function () { setStatus('Network error. Please check your connection and try again.', 'is-error'); })
+          .then(function () { submitBtn.disabled = false; submitBtn.textContent = 'Send message'; });
+      });
+    }());
+  </script>
+
+  <script defer src="/_vercel/insights/script.js"></script>
+  <script defer src="/_vercel/speed-insights/script.js"></script>
+</body>
+</html>
